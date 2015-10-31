@@ -51,8 +51,6 @@
 %\RequirePackage{natbib}
 %\RequirePackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
-\usepackage{graphicx}
-\usepackage{multirow}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -73,8 +71,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%\def\includegraphic{}
-%\def\includegraphics{}
+\def\includegraphic{}
+\def\includegraphics{}
 
 
 
@@ -98,8 +96,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{GNParser -- a Scientific Names Parser
-  from Global Names Architecture Project}
+\title{GNParser -- a Scientific Names Parser from Global Names Project }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -257,14 +254,14 @@ Every scientific name can be expressed through a large amount of name-strings
 with codes of nomenclature (ICZN, ICBN, Bacteria, Viruses, cultivated plants,
 Biocode, Phylocode). Codes of nomenclature determine rules for composing
 scientific names from infraspecific to family level. Other levels comply with
-community practices.
+community practices.  
 
 The names of organisms are invaluable in the world of big biodiversity data
 because they can be used as near universal metadata to index, organize and
 interconnect distributed information (Patterson et al., 2010). Nevertheless,
 use of names for informatics purposes presents an array of problems. Many of
 these problems can be solved by parsing, or deducing the semantic meaning of
-words occurred in the name-strings.
+words occurred in the name-strings. 
 
 How can we match all the possible name-strings of the same name? Parsing allows
 to remove the most variable parts (like authorship, rank, a year of
@@ -273,50 +270,39 @@ form of a name. Such approach brings us to another problem -- the same
 canonical form may be used for more than one taxon or concept in case of
 homonyms, or subtleties of intraspecific ranks. Analysis of ranks and the
 authors revealed in the name-strings by parser helps to separate homonyms and
-similar names from each  other.
+similar names from each  other.  
 
-\begin{table}[h!]
-  \begin{center}
-    \begin{tabular}{| l | c |}
-    \hline
-    Carex scirpoidea convoluta &
-    \multirow{25}{*}{\includegraphics[scale=0.3]{images/carex.png}} \\
-    Carex scirpoidea var. convoluta & \\
-    Carex scirpoidea subsp. convoluta & \\
-    Carex scirpoidea convoluta Gardner & \\
-    Carex scirpoidea convoluta Kükenth. & \\
-    Carex scirpoidea var. convoluta Kuk. & \\
-    Carex scirpoidea var. convoluta Kük. & \\
-    Carex scirpoidea var. convoluta Kükenth. & \\
-    Carex scirpoidea var. convoluta Kükenthal & \\
-    Carex scirpoidea Michx. var. convoluta Kük. & \\
-    Carex scirpoidea ssp. convoluta (Kük.) Dunlop & \\
-    Carex scirpoidea Michx. var. convoluta Kükenth. & \\
-    Carex scirpoidea subsp. convoluta (Kük.) Dunlop & \\
-    Carex scirpoidea ssp. convoluta (Kukenth.) Dunlop & \\
-    Carex scirpoidea Michaux var. convoluta Kükenthal & \\
-    Carex scirpoidea subsp. convoluta (Kük.) D.A.Dunlop & \\
-    Carex scirpoidea subsp. convoluta (Kük.) D.A. Dunlop & \\
-    Carex scirpoidea Michx. ssp. convoluta (Kük.) Dunlop & \\
-    Carex scirpoidea subsp. convoluta (Kuk.) D. A. Dunlop & \\
-    Carex scirpoidea Michx. subsp. convoluta (Kük.) Dunlop & \\
-    Carex scirpoidea Michx. ssp. convoluta (Kükenth.) Dunlop & \\
-    Carex scirpoidea subsp. convoluta (Kükenthal) D.A. Dunlop & \\
-    Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A.Dunlop & \\
-    Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A. Dunlop & \\
-    Carex scirpoidea subsp. convoluta (Kükenthal 1909) D.A. Dunlop 1998 & \\
-    \hline
-    \end{tabular}
-  \end{center}
-  \caption{
-     Some legitimate versions of the scientific name for the Northern Bulrush
-     or Singlespike sedge.  The genus (Carex), species (scirpoidea), and
-     subspecies (convoluta) may be annotated (var. subsp., and ssp.) or have
-     the name of the original authority for the subspecies (Kükenthal), the
-     species (Michaux), the combination (Dunlop), sometimes abbreviated and
-     with or without dates. Image by courtesy \cite{FNA2002}.
-  }
-\end{table}
+\begin{tabular}{| l | r |}
+\hline
+Carex scirpoidea convoluta & \\
+Carex scirpoidea var. convoluta & \\
+Carex scirpoidea subsp. convoluta & \\
+Carex scirpoidea var. convoluta Kuk. & \\
+Carex scirpoidea convoluta Gardner & \\
+Carex scirpoidea convoluta Kükenth. & \\
+Carex scirpoidea var. convoluta Kük. & \\
+Carex scirpoidea var. convoluta Kükenth. & \\
+Carex scirpoidea var. convoluta Kükenthal & \\
+Carex scirpoidea Michx. var. convoluta Kük. & \\
+Carex scirpoidea ssp. convoluta (Kük.) Dunlop & \\
+Carex scirpoidea Michx. var. convoluta Kükenth. & \\
+Carex scirpoidea subsp. convoluta (Kük.) Dunlop & \\
+Carex scirpoidea ssp. convoluta (Kukenth.) Dunlop & \\
+Carex scirpoidea Michaux var. convoluta Kükenthal & \\
+Carex scirpoidea subsp. convoluta (Kük.) D.A.Dunlop & \\
+Carex scirpoidea subsp. convoluta (Kük.) D.A. Dunlop & \\
+Carex scirpoidea Michx. ssp. convoluta (Kük.) Dunlop & \\
+Carex scirpoidea subsp. convoluta (Kuk.) D. A. Dunlop & \\
+Carex scirpoidea Michx. subsp. convoluta (Kük.) Dunlop & \\
+Carex scirpoidea Michx. ssp. convoluta (Kükenth.) Dunlop & \\
+Carex scirpoidea subsp. convoluta (Kükenthal) D.A. Dunlop & \\
+Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A.Dunlop & \\
+Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A. Dunlop & \\
+Carex scirpoidea subsp. convoluta (Kükenthal 1909) D.A. Dunlop 1998 & 
+test
+\\
+\hline
+\end{tabular}
 
 A significant number of biodiversity informatics projects (EOL, GBIF, CoL,
 WoRMS, iDigBio, VetNet) aggregate information from many different sources.
@@ -326,14 +312,14 @@ contain annotations which are not part of the name. There are also “surrogate
 names” -- they depict organisms which were not fully identified and mapped to a
 formally described taxon, instead they were associated with a name string that
 narrows down identification choices to some higher clade. Parser helps to
-recognize such names and mark them as surrogate name-strings.
+recognize such names and mark them as surrogate name-strings.  
 
 After parsing of a large name-string collection a researcher can collect all
 the semantic data, and use it as a basis for statistical analysis, or for
 practical purposes, for example for introducing search by authors name, year of
 publication, species epithet etc. If a name-string cannot be ingested by a high
 quality parser, the string is almost certainly not a well-formed scientific
-name.
+name. 
 
 Due to intrinsic diversity of name-strings a simple string matching by
 automated systems is not powerful enough to link distributed big data to
@@ -345,13 +331,13 @@ not allow for multiple points of view, nor for changes in taxonomic
 perspective.  The reconciliation process involves folding of all known
 name-strings into lexical groups.  This requires that we collate all synonyms
 and other identifiers, as well as all variant spellings and representations of
-names. Parsing is a necessary component of name reconciliation.
+names. Parsing is a necessary component of name reconciliation. 
 
 A second challenge is to replace old names with ones that are endorsed by
 taxonomic authorities - this is a process referred to as resolution. Resolution
 requires an up to date high quality taxonomic and nomenclatural data to map a
 reconciled name-string to the currently used name/names. This process normally
-does not include a parsing step.
+does not include a parsing step. 
 
 Through the early history of biodiversity problem of parsing had been usually
 addressed by a home-grown scripts running regular expressions (uBio something
@@ -359,7 +345,7 @@ else as an example) or by manual splitting of a name into its canonical form
 and the authorship part. Both approaches proved to be limited. Regular
 expressions are cumbersome and impractical when dealing with complex
 name-strings, especially hybrids. Manual approach is error-prone, expensive,
-slow and inflexible.
+slow and inflexible.  
 
 In 2008 we decided to create a specialized parsing library "biodiversity"
 written in Ruby and based on Parsing Expression Grammar (PEG) methodology. We
@@ -371,7 +357,7 @@ complex and recursive, for example hybrid name strings contain more than one
 name, or infraspecies names might have authorship attached to both specific and
 infraspecific parts of the name. Authorship itself is quite complex and can
 include original authors who described a name, authors of a new combination, or
-authors who made a name, but did not publish it.
+authors who made a name, but did not publish it.  
 
 We found that PEG approach allows us to solve all these complexity gracefully.
 From other side PEG gave us enough flexibility to incorporate edge cases and
@@ -380,18 +366,18 @@ noticeable popularity. At the time of writing it had been downloaded x number
 of times, it is used by many reconciliation sites: Canadian Register of MArine
 Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of
 Marine Species (WoRMS) \cite{worms}.  Biodiversity parser was marked as the
-most popular bio-library in Ruby language.
+most popular bio-library in Ruby language. 
 
 In 2009 GBIF created another parser library written in Java (name-parser). It
 is loosely based on the test suite of "biodiversity" Ruby parser, and is the
-most popular regular expression-based approach to the parsing problem.
+most popular regular expression-based approach to the parsing problem. 
 
 We considered biodiversity parser library to be a working prototype -- a
 playground which allowed us to identify parsing problems and implement
 solutions for them. We also found that PEG is very well suited for breaking
 scientific names into semantic elements. In 2015 we decided to use everything
 we learned and create a new version of parser in Scala with underlying PEG
-library -- parboiled2.
+library -- parboiled2. 
 
 Scala is a strongly typed language built from the ground up as a combination of
 object oriented and functional programming paradigms. One of the main features
@@ -405,7 +391,7 @@ languages (Java, Jython, Renjin, JRuby etc.). Scala, is a language designed for
 scalability. Projects like Akka and Spark create flexibility of approaches in
 concurrency and parallelization, allowing to execute code on many CPU and
 computers at the same time, dramatically reducing response time for large
-computational tasks.
+computational tasks. 
 
 The library parboiled2 had been initiated by one of the authors of this
 manuscript, Alexander Myltsev in 2013 while participating in the Google Summer
@@ -437,4 +423,3 @@ major contributor in gnparser code.
 % \end{thebibliography}
 
 \end{document}
-		
