@@ -119,15 +119,15 @@
 \author[
    addressref={aff1},
    corref={aff1},                       % id of corresponding address, if any
-   email={dmozzherin@gmail.com}
-]{\inits{DYM}\fnm{Dmitry Y} \snm{Mozzherin}}
+   email={dmozzherin@illinois.edu}
+]{\inits{DYM}\fnm{Dmitry Y.} \snm{Mozzherin}}
 \author[                  % id's of addresses, e.g. {aff1,aff2}
    noteref={n1},% id's of article notes, if any
    email={alexander.myltsev@phystech.edu}   % email address
-]{\inits{AAM}\fnm{Alexander A} \snm{Myltsev}}
+]{\inits{AAM}\fnm{Alexander A.} \snm{Myltsev}}
 \author[
    email={dpatterson.mbl@gmail.com}
-]{\inits{DJP}\fnm{David J} \snm{Patterson}}
+]{\inits{DJP}\fnm{David J.} \snm{Patterson}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -138,12 +138,13 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\address[id=aff1]{%                          % unique id
-  \orgname{Marine Biological Laboratory},    % university, etc
-  \street{7 MBL Street},                     %
-  \postcode{02543}                           % post or zip code
-  \city{Woods Hole},                         % city
-  \cny{US}                                   % country
+\address[id=aff1]{%                    % unique id
+  \orgname{University of Illinois},    % university, etc
+  \street{1816 South Oak St.},         %
+  \city{Champaign},                    % city
+  \state{IL},
+  \zip{61820},
+  \cny{US}                             % country
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -185,14 +186,14 @@ names exist in a variety of alternative forms like for example ``\textit{Aedes
 (Cancraedes) thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'',
 therefore a simple string matching is insufficient for finding names in a
 majority of cases. Global Names Parser breaks names into semantic elements,
-allowing to normalize them into ``canonical forms'' (\textit{Aedes thurmanae}
-for both examples). It reveals elements ``hidden'' within names (like ranks,
-years of publication, names of authors etc.). Global Names Parser is written in
-Scala, a Java Virtual Machine language. It is fast (\textgreater 10 million
-names/hour per CPU), can be used in any JVM-based language (Scala, Java, JRuby,
-R, Jythion etc.), and accurate (X/X Precision/Recall ratio). The program is
-based on Parsing Expression Grammar which provides additional flexibility and
-is able to deal with the most complex name strings.
+allowing to normalize them into \textit{canonical forms} (\textit{Aedes
+thurmanae} for both examples). It reveals elements ``hidden'' within names
+(like ranks, years of publication, names of authors etc.). Global Names Parser
+is written in Scala, a Java Virtual Machine language. It is fast (\textgreater
+10 million names/hour per CPU), can be used in any JVM-based language (Scala,
+Java, JRuby, R, Jythion etc.), and accurate (X/X Precision/Recall ratio). The
+program is based on Parsing Expression Grammar which provides additional
+flexibility and is able to deal with the most complex name strings.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,30 +249,35 @@ is able to deal with the most complex name strings.
 \section*{Conventions}
 
 Throughout the paper we distinguish between two terms -- ``name'' and
-``name-string''.  Term ``name'' varies in its meaning for different
-nomenclatural codes. In botany \textit{Pinus silvestris} is considered to be a
-single name\cite{ICN}, while in zoology \textit{Parus major} is considered to
-be a combination of two names -- \textit{Parus} and \textit{major}\cite{ICZN}.
-We state that ``name-string'' term removes such distinctions, and both
+``name-string''. Term ``name'' varies in its meaning for different
+nomenclatural codes. According to botanical code of nomenclature \cite{ICN}
+\textit{Pinus silvestris} is considered to be a single name. According to
+zoological code \cite{ICZN} \textit{Parus major} is considered to be a
+combination of two names -- \textit{Parus} and \textit{major}. In the paper we
+use term ``name'' in ``botanical'' sense unless stated otherwise.
+
+The ``name-string'' term represents a sequence of characters (letters, numbers,
+punctuation, spaces, symbols) used to represent a name in its entirety. Both
 \textit{Pinus silvestris} and \textit{Parus major} correspond to one
-name-string each. In addition a name can be expressed through many spelling
-variants, some are well-formed and code compliant, and others are not. These
-spelling variants are different name-strings, representing the same name or
-name combination (see Table~\ref{table:carex}). There are millions of
-scientific names and billions of possible ``correct'' name strings.
+name-string each.
+
+A name can be expressed by many name-strings, some are well-formed and code
+compliant, and others are not (for example see Table~\ref{table:carex}). There
+are millions of scientific names and billions of possible legitimate name
+strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
-code of nomenclature (Zoological\cite{ICZN}, Botanical\cite{ICN},
-Bacterial\cite{ICNB}, Viral\cite{ICTV}, Cultivated plants\cite{ICNCP},
-Phylocode\cite{ICPN}). Codes of nomenclature determine rules for composing
+code of nomenclature (Zoological \cite{ICZN}, Botanical \cite{ICN},
+Bacteria \cite{ICNB}, Viruses \cite{ICTV}, Cultivated plants \cite{ICNCP},
+Phylocode \cite{ICPN}). Codes of nomenclature determine rules for composing
 scientific names from infraspecific to family level. Other levels comply with
-csommunity practices.
+community practices.
 
 \section*{Introduction}
 
 The names of organisms are invaluable in the world of big biodiversity data
 because they can be used as near universal metadata to index, organize and
-interconnect distributed information (Patterson et al., 2010). Nevertheless,
+interconnect distributed information \cite{Patterson2010}. Nevertheless,
 use of names for informatics purposes presents an array of problems. Many of
 these problems can be solved by parsing, or deducing the semantic meaning of
 words occurred in the name-strings.
