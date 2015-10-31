@@ -43,7 +43,8 @@
 
 %%% loading packages, author definitions
 
-%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
+%\documentclass[twocolumn]{bmcart}
+% uncomment this for twocolumn layout and comment line below
 \documentclass{bmcart}
 
 %%% Load packages
@@ -359,11 +360,11 @@ requires an up to date high quality taxonomic and nomenclatural data to map a
 reconciled name-string to the currently used name/names. This process normally
 does not include a parsing step.
 
-Through the early history of biodiversity problem of parsing had been usually
-addressed by a home-grown scripts running regular expressions (uBio something
-else as an example) or by manual splitting of a name into its canonical form
-and the authorship part. Both approaches proved to be limited. Regular
-expressions are cumbersome and impractical when dealing with complex
+Through the early history of biodiversity informatics problem of parsing had
+been usually addressed by a home-grown scripts running regular expressions
+(uBio something else as an example) or by manual splitting of a name into its
+canonical form and the authorship part. Both approaches proved to be limited.
+Regular expressions are cumbersome and impractical when dealing with complex
 name-strings, especially hybrids. Manual approach is error-prone, expensive,
 slow and inflexible.
 
@@ -383,7 +384,7 @@ We found that PEG approach allows us to solve all these complexity gracefully.
 From other side PEG gave us enough flexibility to incorporate edge cases and
 common mistakes in formation of names. The library biodiversity enjoyed a
 noticeable popularity. At the time of writing it had been downloaded x number
-of times, it is used by many reconciliation sites: Canadian Register of MArine
+of times, it is used by many reconciliation sites: Canadian Register of Marine
 Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of
 Marine Species (WoRMS) \cite{worms}.  Biodiversity parser was marked as the
 most popular bio-library in Ruby language.
