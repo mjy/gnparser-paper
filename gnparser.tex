@@ -190,9 +190,9 @@ for both examples). It reveals elements ``hidden'' within names (like ranks,
 years of publication, names of authors etc.). Global Names Parser is written in
 Scala, a Java Virtual Machine language. It is fast (\textgreater 10 million
 names/hour per CPU), can be used in any JVM-based language (Scala, Java, JRuby,
-Rengin, Jythion etc.), and accurate (X/X Precision/Recall ratio). The program
-is based on Parsing Expression Grammar which provides additional flexibility
-and is able to deal with the most complex name strings.
+R, Jythion etc.), and accurate (X/X Precision/Recall ratio). The program is
+based on Parsing Expression Grammar which provides additional flexibility and
+is able to deal with the most complex name strings.
 
 \end{abstract}
 
@@ -246,20 +246,28 @@ and is able to deal with the most complex name strings.
 %%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
 % <put your article body there>
 
-\section*{Introduction}
+\section*{Conventions}
 
-Throughout the paper we distinguish between two terms -- name and name-string.
-Name is an entity which can be mapped to a nomenclatural event. Nomenclatural
-event is a declaration of a name in a code-compliant publication. A name can be
-expressed through many spelling variants, some are well-formed and code
-compliant, and others are not. These spelling variants we call name-strings.
-Every scientific name can be expressed through a large amount of name-strings
-(Table 1).  There are millions of scientific names and billions of possible
-"correct" name strings. When we talk about 'code-compliancy' we mean compliance
-with codes of nomenclature (ICZN, ICBN, Bacteria, Viruses, cultivated plants,
-Biocode, Phylocode). Codes of nomenclature determine rules for composing
-scientific names from infraspecific to family level. Other levels comply with
-community practices.
+Throughout the paper we distinguish between two terms -- ``name'' and
+``name-string''.  Term ``name'' varies in its meaning for different
+nomenclatural codes. In botany \textit{Pinus silvestris} is considered to be
+one name\cite{ICN}, while in zoology \textit{Parus major} would be considered
+to be a combination of two names -- \textit{Parus} and
+\textit{major}\cite{ICZN}. We state that ``name-string'' term removes such
+distinctions, and both examples above would represent one name-string each. In
+addition a name can be expressed through many spelling variants, some are
+well-formed and code compliant, and others are not. These spelling variants are
+different name-strings, representing the same name or name combination (see
+table~\ref{table:carex}). There are millions of scientific names and billions
+of possible ``correct'' name strings.
+
+When we talk about ``code-compliancy'' we mean compliance with codes of
+nomenclature (ICZN, ICBN, Bacteria, Viruses, cultivated plants, Biocode,
+Phylocode). Codes of nomenclature determine rules for composing scientific
+names from infraspecific to family level. Other levels comply with community
+practices.
+
+\section*{Introduction}
 
 The names of organisms are invaluable in the world of big biodiversity data
 because they can be used as near universal metadata to index, organize and
@@ -278,6 +286,7 @@ authors revealed in the name-strings by parser helps to separate homonyms and
 similar names from each  other.
 
 \begin{table}[h!]
+  \label{table:carex}
   \begin{center}
     \begin{tabular}{| l | c |}
     \hline
