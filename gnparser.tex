@@ -51,6 +51,8 @@
 %\RequirePackage{natbib}
 %\RequirePackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
+\usepackage{multirow}
+
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -71,8 +73,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\def\includegraphic{}
-\def\includegraphics{}
+%\def\includegraphic{}
+%\def\includegraphics{}
 
 
 
@@ -274,7 +276,8 @@ similar names from each  other.
 
 \begin{tabular}{| l | r |}
 \hline
-Carex scirpoidea convoluta & \\
+Carex scirpoidea convoluta & 
+\multirow{25}{*}{\includegraphics{images/carex.png}}\\
 Carex scirpoidea var. convoluta & \\
 Carex scirpoidea subsp. convoluta & \\
 Carex scirpoidea var. convoluta Kuk. & \\
@@ -298,9 +301,7 @@ Carex scirpoidea Michx. ssp. convoluta (Kükenth.) Dunlop & \\
 Carex scirpoidea subsp. convoluta (Kükenthal) D.A. Dunlop & \\
 Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A.Dunlop & \\
 Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A. Dunlop & \\
-Carex scirpoidea subsp. convoluta (Kükenthal 1909) D.A. Dunlop 1998
-&
-\\
+Carex scirpoidea subsp. convoluta (Kükenthal 1909) D.A. Dunlop 1998 & \\
 \hline
 \end{tabular}
 
