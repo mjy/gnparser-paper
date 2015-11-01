@@ -143,7 +143,7 @@
   \street{1816 South Oak St.},         %
   \city{Champaign},                    % city
   \state{IL},
-  \zip{61820},
+  \postcode{61820},
   \cny{US}                             % country
 }
 
@@ -257,9 +257,8 @@ combination of two names -- \textit{Parus} and \textit{major}. In the paper we
 use term ``name'' in ``botanical'' sense unless stated otherwise.
 
 The ``name-string'' term represents a sequence of characters (letters, numbers,
-punctuation, spaces, symbols) used to represent a name in its entirety. Both
-\textit{Pinus silvestris} and \textit{Parus major} correspond to one
-name-string each.
+punctuation, spaces, symbols) used to represent a name. Both \textit{Pinus
+silvestris} and \textit{Parus major} correspond to one name-string each.
 
 A name can be expressed by many name-strings, some are well-formed and code
 compliant, and others are not (for example see Table~\ref{table:carex}). There
@@ -277,28 +276,20 @@ community practices.
 
 The names of organisms are invaluable in the world of big biodiversity data
 because they can be used as near universal metadata to index, organize and
-interconnect distributed information \cite{Patterson2010}. Nevertheless,
-use of names for informatics purposes presents an array of problems. Many of
-these problems can be solved by parsing, or deducing the semantic meaning of
-words occurred in the name-strings.
-
-How can we match all the possible name-strings of the same name? Parsing allows
-to remove the most variable parts (like authorship, rank, a year of
-publication) and compare names by the most stable component -- the canonical
-form of a name. Such approach brings us to another problem -- the same
-canonical form may be used for more than one taxon or concept in case of
-homonyms, or subtleties of intraspecific ranks. Analysis of ranks and the
-authors revealed in the name-strings by parser helps to separate homonyms and
-similar names from each  other.
+interconnect distributed information \cite{Patterson2010}. Nevertheless, use of
+names for informatics purposes presents an array of problems. As we demonstrate
+further many of these problems can be solved by parsing, or deducing the
+semantic meaning of words occurred in the name-strings.
 
 \begin{table}[!htb]
   \begin{center}
   \caption{Some legitimate versions of the scientific name for the Northern
     Bulrush or Singlespike sedge.  The genus (Carex), species (scirpoidea), and
     subspecies (convoluta) may be annotated (var. subsp., and ssp.) or have the
-    name of the original authority for the subspecies (Kükenthal), the species
-    (Michaux), the combination (Dunlop), sometimes abbreviated and with or
-    without dates. Image courtesy of \cite{FNA2002}.}\label{table:carex}
+    name of the original authority for the infraspecies (Kükenthal), the species
+    (Michaux), the current infraspecific combination (Dunlop), sometimes
+    abbreviated and with or without dates. Image courtesy of \cite{FNA2002}.
+  }\label{table:carex}
     \begin{tabular}{| l | c |}
     \hline
     Carex scirpoidea convoluta &
@@ -331,77 +322,125 @@ similar names from each  other.
   \end{center}
 \end{table}
 
-A significant number of biodiversity informatics projects (EOL, GBIF, CoL,
-WoRMS, iDigBio, VertNet) aggregate information from many different sources.
-Resulting name-strings are inconsistent in their format. Parsed names can be
-normalized to the same style. Some name strings are not properly formed, other
-contain annotations which are not part of the name. There are also “surrogate
-names” -- they depict organisms which were not fully identified and mapped to a
-formally described taxon, instead they were associated with a name string that
-narrows down identification choices to some higher clade. Parser helps to
-recognize such names and mark them as surrogate name-strings.
-
-After parsing of a large name-string collection a researcher can save all
-the semantic data, and use it as a basis for statistical analysis, or for
-practical purposes, for example for introducing search by authors name, year of
-publication, species epithet etc. If a name-string cannot be ingested by a high
-quality parser, the string is almost certainly not a well-formed scientific
-name.
-
-Due to intrinsic diversity of name-strings a simple string matching by
-automated systems is not powerful enough to link distributed big data to
+Due to intrinsic diversity of name-strings (Table~\ref{table:carex}) an exact
+string matching is not powerful enough to link distributed big data via
 scientific names. This problem can be addressed by promoting a rigid standard
-restricting each name to a single name-string, or through reconciliation. The
-former strategy would require a costly international coordination, would not
-eliminate future human mistakes, it cannot be applied to older documents, does
-not allow for multiple points of view, nor for changes in taxonomic
-perspective.  The reconciliation process involves folding of all known
-name-strings into lexical groups.  This requires that we collate all synonyms
-and other identifiers, as well as all variant spellings and representations of
-names. Parsing is a necessary component of name reconciliation.
+restricting each name to a single name-string, or through
+\textit{reconciliation}. The former strategy would require a costly
+international coordination, would not eliminate future human mistakes, it
+cannot be applied to older documents, does not allow for multiple points of
+view, nor for changes in taxonomic perspective.
 
-A second challenge is to replace old names with ones that are endorsed by
-taxonomic authorities - this is a process referred to as resolution. Resolution
-requires an up to date high quality taxonomic and nomenclatural data to map a
-reconciled name-string to the currently used name/names. This process normally
-does not include a parsing step.
+The reconciliation process involves folding of all known name-strings into
+lexical groups. This requires that we collate all variant spellings of names.
+Parsing in crucial for creating lexical groups of name-strings: it allows to
+find the most common denominator of spelling variants -- a canonical form
+(\textit{Carex scirpoidea convoluta} in case of Table~\ref{table:carex}) and
+extract other important for reconciliation  information (infraspecific ranks,
+original and combination authorities etc.). Lexical groups would then require
+another level of folding into reconciliation groups where homotypic and
+heterotypic synonyms are placed together. This process requires an accurate
+database of nomenclatural events (for example Global Names Usage Bank
+\cite{Pyle2003}).
 
-Through the early history of biodiversity informatics problem of parsing had
-been usually addressed by a home-grown scripts running regular expressions
-(uBio something else as an example) or by manual splitting of a name into its
-canonical form and the authorship part. Both approaches proved to be limited.
-Regular expressions are cumbersome and impractical when dealing with complex
-name-strings, especially hybrids. Manual approach is error-prone, expensive,
-slow and inflexible.
+Reconciliation uses the most stable component of a name-string -- its canonical
+form. Such approach brings us to another problem -- the same canonical form may
+be used for more than one taxon or concept in case of homonyms, chresonyms, or
+ranks of infraspecies. Analysis of ranks and the authors found by a
+parser in name-strings helps to separate homonyms and similar names from each
+other.
 
-In 2008 we decided to create a specialized parsing library "biodiversity"
-written in Ruby and based on Parsing Expression Grammar (PEG) methodology. We
-used an excellent TreeTop Ruby library as an underlying PEG implementation. PEG
-is well suited for recursive texts with formally defined grammars. Scientific
-names follow rules of nomenclatural codes, and therefore order and
-capitalization of elements in the name are well structured. Names can be quite
-complex and recursive, for example hybrid name strings contain more than one
-name, or infraspecies names might have authorship attached to both specific and
-infraspecific parts of the name. Authorship itself is quite complex and can
-include original authors who described a name, authors of a new combination, or
-authors who made a name, but did not publish it.
+The next challenge is to replace outdated names with ones that are endorsed by
+taxonomic authorities -- this is a process referred to as \textit{resolution}.
+Resolution requires an up to date high quality taxonomic and nomenclatural data
+to map a reconciled name-string to the currently used name/names. A
+reconciliation of name-strings used by a taxonomic authority with name-strings
+supplied by user makes parsing a very important step at this stage as well.
+
+A significant number of biodiversity informatics projects (Encyclopedia of Life
+\cite{eol}, Global Biodiversity Informatics Facility \cite{gbif}, Catalogue of
+Life \cite{col}, World Register of Marine Species \cite{worms}, iDigBio
+\cite{idigbio}, VertNet \cite{vertnet} etc.) aggregate information from many
+different sources.  Resulting name-strings are inconsistent in their format.
+Parsed names can be normalized to the same style. Some name strings are not
+properly formed, other contain annotations which are not part of the name.
+There are also “surrogate names” -- they depict organisms which were not fully
+identified and mapped to a formally described taxon, instead they were
+associated with a name string that narrows down identification choices to some
+higher clade. Parser helps to recognize such names and mark them as surrogate
+name-strings.
+
+After collecting parsed data from a large name-string repository a researcher
+can use the data as a basis for statistical analysis, or for practical
+purposes. For example parsed data can be used to introduce faceted search by
+authors name, year of publication, species epithet etc. If a name-string cannot
+be ingested by a high quality parser, the string is almost certainly not a
+well-formed scientific name. As a result parser can weed out problematic name
+strings from collection.
+
+\section*{Prior Art}
+
+Until recently the problem of scientific name parsing had been addressed by
+home-grown scripts running regular expressions or by manual splitting of a name
+into its canonical form and the authorship part. Both approaches proved to be
+limited. Regular expressions are not designed for recursive patterns (and
+complex scientific name strings are recursive by nature, as it is most obvious
+with hybrid formulae). Manual approach of splitting names into 2 parts is
+expensive, slow, inflexible and cannot elegantly deal with name-strings where
+authorship is present in the middle of the name.
+
+Names can be quite complex (for example ``\textit{Brassica oleracea} L.
+\textit{subsp.  capitata} (L.) DC. \textit{convar. fruticosa} (Metzg.) Alef.
+$\times$ \textit{B. oleracea} L.  \textit{subsp. capitata} (L.) \textit{var.
+costata} DC.'')  and include authorship for every mentioned taxon, include or
+omit infraspecific ranks, original and combination authors etc. Authorship
+itself is quite complex and can include original authors who described a name,
+authors of a new combination, or authors who made a name, but did not publish
+it. We obviously do not want to exclude names from biodiversity informatics
+just because they are not simple enough. We need an approach that is able to
+deal with names of any complexity.
+
+In 2008 we decided to create a specialized parsing library
+``\textit{biodiversity}'' \cite{biodiversity} written in Ruby and based on
+Parsing Expression Grammar (PEG) methodology \cite{Ford2004}. We used an
+excellent TreeTop Ruby library \cite{treetop} as an underlying PEG
+implementation. PEG is well suited for recursive texts with formally defined
+grammars. Scientific names follow rules of nomenclatural codes, and therefore
+order and capitalization of elements in the name are well structured.
 
 We found that PEG approach allows us to solve all these complexity gracefully.
-From other side PEG gave us enough flexibility to incorporate edge cases and
-common mistakes in formation of names. The library biodiversity enjoyed a
-noticeable popularity. At the time of writing it had been downloaded x number
-of times, it is used by many reconciliation sites: Canadian Register of Marine
-Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of
-Marine Species (WoRMS) \cite{worms}.  Biodiversity parser was marked as the
-most popular bio-library in Ruby language.
+Also PEG gave us enough flexibility to incorporate edge cases and common
+mistakes in formation of names. The library \textit{biodiversity} enjoyed
+noticeable popularity. At the time of writing it had been downloaded more than
+150,000 times \cite{bdiv_downloads}, it is used by many taxon name resolution
+projects (for example by Canadian Register of Marine Species (CARMS)
+\cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of Marine Species
+(WoRMS) \cite{worms}.  According to BioRuby statistics \textit{biodiversity}
+parser is the most popular bio-library in Ruby language \cite{biogems}.
 
-We considered biodiversity parser library to be a working prototype -- a
+We consider \textit{biodiversity} parser library to be a working prototype -- a
 playground which allowed us to identify parsing problems and implement
-solutions for them. We also found that PEG is very well suited for breaking
-scientific names into semantic elements. In 2015 we decided to use everything
-we learned and create a new version of parser in Scala with underlying PEG
-library -- parboiled2.
+solutions for them. In the process we found that Parsing Expression Grammar is
+very well suited for breaking scientific names into semantic elements. In 2015
+we decided to use everything we learned and write ``\textit{gnparser}'' a
+completely new parser in Scala to achieve significant boost in speed,
+scalability and portability of the library. In this manuscript we describe
+features, performance and discuss future enhancements of this new parser.
 
+\section*{Methods}
+
+To describe how did we make the parser, how did we test it.
+
+\section*{Results}
+
+To describe paprser's features and performance as well as comparison of the
+parser with other 2 parsers.
+
+\section*{Discussion}
+
+To describe parser's features, performance, use cases, future developments.
+
+\section*{Leftovers to use in sections above}
 Scala is a strongly typed language built from the ground up as a combination of
 object oriented and functional programming paradigms. One of the main features
 of functional programming is preservation of immutable state, as a result it is
