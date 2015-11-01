@@ -177,23 +177,34 @@
 \begin{abstractbox}
 
 \begin{abstract} % abstract
-Modern biology is unthinkable without names based on Linnaean nomenclature.
-Names of organisms are pervasive, they are metadata which allows to communicate
-information in biodiversity, ecology, molecular biology, medicine and many
-other fields. However indexing and organizing such information via scientific
-names is challenging for several reasons. One of the most significant ones:
-names exist in a variety of alternative forms like for example ``\textit{Aedes
-(Cancraedes) thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'',
-therefore a simple string matching is insufficient for finding names in a
-majority of cases. Global Names Parser breaks names into semantic elements,
-allowing to normalize them into \textit{canonical forms} (\textit{Aedes
-thurmanae} for both examples). It reveals elements ``hidden'' within names
-(like ranks, years of publication, names of authors etc.). Global Names Parser
-is written in Scala, a Java Virtual Machine language. It is fast (\textgreater
-10 million names/hour per CPU), can be used in any JVM-based language (Scala,
-Java, JRuby, R, Jythion etc.), and accurate (X/X Precision/Recall ratio). The
-program is based on Parsing Expression Grammar which provides additional
-flexibility and is able to deal with the most complex name strings.
+  \subsection*{Background}
+  Modern biology is unthinkable without names based on Linnaean nomenclature.
+  Names of organisms are pervasive, they are metadata which allows to
+  communicate information in biodiversity, ecology, molecular biology, medicine
+  and many other fields. However indexing and organizing such information via
+  scientific names is challenging for several reasons. As an example -- names
+  exist in a variety of alternative forms like ``\textit{Aedes (Cancraedes)
+  thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'', therefore a
+  simple string comparison often fails to connect information via names due to
+  these variations. Parsing would break names into semantic elements, allowing
+  to compare them by their \textit{canonical form} (\textit{Aedes thurmanae}
+  for both examples).
+  \subsection*{Results}
+  We introduce Global Names Parser (\textit{gnparser}) -- a tool based on
+  Parsing Expression Grammar algorithm. The parser is able to deal with the
+  most complex scientific name strings. It finds semantic meaning for all
+  words within a scientific name (like ranks, years of publication, names of
+  authors etc.). Global Names Parser is written in Scala, a Java Virtual
+  Machine language.  Measured throughput was up to 20 million names/hour per
+  CPU. Precision was X, Recall X, F-value X. We show that \testit{gnparser} is
+  compatible with Scala, Java, R, Jython, and JRuby.
+  \subsection*{Conclusions}
+  Global Names Parser (\textit{gnparser}) is a long awaited tool for
+  biodiversity informatics. It is released under Open Source MIT license. It
+  allows to disassemble scientific names of any complexity into their semantic
+  elements. It is scalable to deal with billions of name strings an hour, can
+  be directly incorporated by many popular languages. The parser can be used as
+  a command line application, socket server, or a web server.
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -272,7 +283,7 @@ Phylocode \cite{ICPN}). Codes of nomenclature determine rules for composing
 scientific names from infraspecific to family level. Other levels comply with
 community practices.
 
-\section*{Introduction}
+\section*{Background}
 
 The names of organisms are invaluable in the world of big biodiversity data
 because they can be used as near universal metadata to index, organize and
@@ -378,7 +389,7 @@ be ingested by a high quality parser, the string is almost certainly not a
 well-formed scientific name. As a result parser can weed out problematic name
 strings from collection.
 
-\section*{Prior Art}
+\subsection*{Prior Art}
 
 Until recently the problem of scientific name parsing had been addressed by
 home-grown scripts running regular expressions or by manual splitting of a name
@@ -406,7 +417,7 @@ Parsing Expression Grammar (PEG) methodology \cite{Ford2004}. We used an
 excellent TreeTop Ruby library \cite{treetop} as an underlying PEG
 implementation. PEG is well suited for recursive texts with formally defined
 grammars. Scientific names follow rules of nomenclatural codes, and therefore
-order and capitalization of elements in the name are well structured.
+order and capitalization of elements in scientific names are well structured.
 
 We found that PEG approach allows us to solve all these complexity gracefully.
 Also PEG gave us enough flexibility to incorporate edge cases and common
@@ -427,18 +438,36 @@ completely new parser in Scala to achieve significant boost in speed,
 scalability and portability of the library. In this manuscript we describe
 features, performance and discuss future enhancements of this new parser.
 
-\section*{Methods}
+\section*{Implementation}
 
 To describe how did we make the parser, how did we test it.
 
-\section*{Results}
+\section*{Results and Discussion}
 
 To describe paprser's features and performance as well as comparison of the
 parser with other 2 parsers.
 
-\section*{Discussion}
+To describe parser's use cases, future developments.
 
-To describe parser's features, performance, use cases, future developments.
+\section*{Conclusions}
+
+Put conclusions here
+
+\section*{Availability and Requirements}
+
+Where to find the program etc.
+
+\section*{Abbreviations}
+
+PEG -- Parsin Expression Grammer
+
+\section*{Author's Contributions}
+
+Who did what
+
+\section*{Acknowledgements}
+
+Grant and people to mention
 
 \section*{Leftovers to use in sections above}
 Scala is a strongly typed language built from the ground up as a combination of
