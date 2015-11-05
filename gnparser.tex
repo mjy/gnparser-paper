@@ -508,7 +508,39 @@ of different quality. Good correspondance to what to expect 'in reality'
 
 \section*{Results and Discussion}
 
-To describe parser's use cases, future developments.
+- Disclamer: parsers check structure, not content, so we test if names
+parsed predictably, not that they are valid.
+
+- Testing against biodiversity and imarine parsers. Explanation of difference between them.
+
+- Performance test. Explanation how it is done.
+
+- Precision test. False positives.
+
+- Recall tetse. False negatives.
+
+- F-value (it we find it makes sense)
+
+- Table with tests and features: PEG or RE, parsing details, performance,
+Precision, Recall, F-value
+
+- Discussion of the comparison
+
+- Discussion why did we decide to move from biodiversity to gnparser.
+
+  - robust design
+
+  - better scalability
+
+  - better portability
+
+  - better speed. BHL example -- indexing in 1 day instead of 40
+
+  - incorporation of parser into Spark for Big Data analysis
+
+- Discussion of parser terms -- conformance with TCS schema in different format
+
+- Name string id -- discussion of its value for biology
 
 \section*{Conclusions}
 
