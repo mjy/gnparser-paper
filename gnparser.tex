@@ -439,12 +439,74 @@ features, performance and discuss future enhancements of this new parser.
 
 \section*{Implementation}
 
-To describe how did we make the parser, how did we test it.
+- written in Scala. What was the reason for the choice
+
+- gnparser consists of three parts. Short description of parts
+
+\subsection*{Parser}
+
+- explanation of functionality: parser engine
+
+- dependency of the rest 2 components on this one
+
+- versions of scala supported
+
+- relation to biodiversity parserj
+
+- relationship to parboiled2, mention Alex' role in paraboiled2
+
+- changes in parboiled2
+
+- optimizations in parser
+
+- input: name string, output: JSON object.
+
+- Figure with output example and short explanation
+
+- Quality output -- short explanation.
+
+- reference to JSON schema (attachment), simple explanation of fields
+(attachment)
+
+- short explanations of tests. Connection between tests and schema
+
+- usage with other languages as a library
+
+\subsection*{Runner}
+
+- explanation of functionalilty: command line tool, socket server
+
+- command line tool -- input for one name, output, intput for file, output
+
+- socket server -- very short explanation how it runs. Input, Output
+
+- TODO: should we change input output to be more similar to REST API?
+  Make it JSON array of names as input, array of gnparser objects as output
+
+\subsection*{Web}
+
+- explanation of functionality: Web GUI, REST API
+
+- input and output for API use via GET and POST
+
+\subsection*{Installation}
+
+- reference to README. Reference and short explanation of the Docker project
+(in attachments)
+
+- MIT license
+
+\subsection*{Testing Material}
+
+- random 100 000 names from 23 million names in GN. Used for performance,
+precision tests
+
+- random 1000 names to test Recall
+
+- explanation of quality of the names -- they are from the wild, from sources
+of different quality. Good correspondance to what to expect 'in reality'
 
 \section*{Results and Discussion}
-
-To describe paprser's features and performance as well as comparison of the
-parser with other 2 parsers.
 
 To describe parser's use cases, future developments.
 
