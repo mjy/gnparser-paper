@@ -6,6 +6,10 @@
 *.bbl
 *.blg
 *.dvi
+*.rtf
 t
 .latexmkrc
 *.json
+*.rb
+*.md
+*100k*
