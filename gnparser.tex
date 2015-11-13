@@ -439,7 +439,11 @@ features, performance and discuss future enhancements of this new parser.
 
 \section*{Implementation}
 
-- written in Scala. What was the reason for the choice
+- existing language classes: regular languages, Deterministic context-free languages, Parsing expression grammars, General context-free. Why PEGs?
+
+- existing implementations of PEG parser generator % https://en.wikipedia.org/wiki/Comparison_of_parser_generators}
+
+- existing combinator parsers. written in parboiled2/Scala. What was the reason for the choice?
 
 - gnparser consists of three parts. Short description of parts
 
@@ -455,11 +459,11 @@ features, performance and discuss future enhancements of this new parser.
 
 - relationship to parboiled2, mention Alex' role in paraboiled2
 
-- changes in parboiled2
+- patches to parboiled2 (+ links to human-readable explanation: blog or published paper)
 
-- optimizations in parser
+- bottlenecks optimizations in parser
 
-- input: name string, output: JSON object.
+- input: name string(s), output: JSON object.
 
 - Figure with output example and short explanation
 
@@ -479,6 +483,8 @@ features, performance and discuss future enhancements of this new parser.
 - command line tool -- input for one name, output, intput for file, output
 
 - socket server -- very short explanation how it runs. Input, Output
+
+- mention parallelization in parsing
 
 - TODO: should we change input output to be more similar to REST API?
   Make it JSON array of names as input, array of gnparser objects as output
