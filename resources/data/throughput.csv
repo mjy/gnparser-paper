@@ -1,0 +1,16 @@
+parser,threads,mph
+gnparser,1,21.4
+gnparser,2,41.1
+gnparser,4,73.8
+gnparser,8,89.3
+gnparser,12,93.8
+gbif-parser,1,23.0
+gbif-parser,2,45.5
+gbif-parser,4,76.3
+gbif-parser,8,111.5
+gbif-parser,12,114.6
+biodiversity,1,4.0
+biodiversity,2,6.2
+biodiversity,4,9.2
+biodiversity,8,10.0
+biodiversity,12,9.1
