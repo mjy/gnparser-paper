@@ -550,6 +550,13 @@ found and is calculated as \(Recall = tp / (tp + fn)\). \textit{F1 measure} is
 a balanced harmonic mean (where Recall and Precision have the same weight) and
 is calculated as \(F1 = 2 * Precision * Recall /(Precision + Recall)\)
 
+Accuracy for unparsed results had been calculated as \(Accuracy =
+fn/(tn+fn)\).This accuracy shows how many names that should had been parsed
+were not parsed. We processed 100 000 random name-strings by each parser and
+found by hand which unparsed resultes were false negatives. Also we looked at
+names uniquely unparsed by each program and collected them in
+unparsed-comparisons.txt file.
+
 \section*{Results and Discussion}
 
 \subsection*{Throughput testing}
@@ -604,9 +611,27 @@ was 1.22 times faster.
   \end{center}
 \end{table}
 
+\begin{table}[htb]
+  \begin{center}
+    \caption{Acuracy of unparsed results, out of 100 000
+    name-strings}\label{table:unparsed}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                             & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{Total unparsed}& 1131     & 1082        & 1161         \\
+      \textit{True Negative} & 1129     & 940         & 1152         \\
+      \textit{False Negative}& 2        & 142         & 9            \\
+      \textit{Accuracy}      & 0.998231 & 0.868761    & 0.9922481    \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 Both gnparser and GBIF parser had been significantly faster than biodiversity,
 and scaled better as well. At 12 threads biodiversity became slightly slower
 than at 8 threads.
+
+
 
 \subsection*{Precision measurements}
 - Disclamer: parsers check structure, not content, so we test if names
