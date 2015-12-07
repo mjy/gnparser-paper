@@ -585,6 +585,25 @@ was 1.22 times faster.
   \end{center}
 \end{figure}
 
+\begin{table}[htb]
+  \begin{center}
+    \caption{Precision/Recall Results}\label{table:precision}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                             & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{True Positive} & 976      & 955         & 971          \\
+      \textit{True Negative} & 13       & 12          & 13           \\
+      \textit{False Positive}& 11       & 33          & 16           \\
+      \textit{False Negative}& 0        & 0           & 0            \\
+      \textit{Precision}     & 0.9888551& 0.966599    & 0.9837893    \\
+      \textit{Recall}        & 1.0      & 1.0         & 1.0          \\
+      \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
 Both gnparser and GBIF parser had been significantly faster than biodiversity,
 and scaled better as well. At 12 threads biodiversity became slightly slower
 than at 8 threads.
