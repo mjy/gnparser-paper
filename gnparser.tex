@@ -517,8 +517,9 @@ strings misused as names.
 We compared performance of gnparser with 2 other projects -- Biodiversity
 parser (also developed by Global Names), and GBIF name-parser. Another parser
 we considered was YASMEEN parser from iMarine project\cite{VandenBerghe2015},
-however we found that on our dataset it generated two orders of magnitude more
-mistakes than other parsers, and we decided to exclude it from the tests.
+however we found that with our dataset it generated dramatically more mistakes
+than other parsers (Precision 0.534, F1 0.6962), and we decided to exclude it
+from the tests.
 
 To find out the throughput of parsing we used a computer with Intel i7-4930K
 CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB
@@ -536,26 +537,27 @@ For precision and recall we picked combination of canonical form and
 authorship as criteria. When they are determined correctly we get true
 positive \textit{tp}, when they are determined in a non-name string -- it is
 false positive \textit{fp}. Correctly found non-parseable strings are true
-negatives \textit{tn}, false negatives \textit{fn} which faild to be parsed
-correctly. We determined canonical form and terminal authorship by human
-driven pattern matching. If name-strings contain spelling mistakes but
-canonical form and/or terminal authorship could be extracted by human, we
-considered them as theoretically parseable. Name strings had to correspond to
-common format of scientific names, but not to be really valid names.
-Validation of names is out of scope of parsers.
+negatives \textit{tn}, false negatives \textit{fn} name strings a `valid
+scientific names` which completely failed parsing. We determined canonical
+form and terminal authorship by human driven pattern matching. If name-strings
+contain spelling mistakes but canonical form and/or terminal authorship could
+be extracted by human, we considered them as theoretically parseable. Name
+strings had to correspond to common format of scientific names, but not to be
+really valid names. Validation of names is out of scope of parsers.
 
-Precision is a percentage of name that been parsed correctly and is calculated
-as \(Precision = tp / (tp + fp)\). Recall is a percentage of correct items
-found and is calculated as \(Recall = tp / (tp + fn)\). \textit{F1 measure} is
-a balanced harmonic mean (where Recall and Precision have the same weight) and
-is calculated as \(F1 = 2 * Precision * Recall /(Precision + Recall)\)
+Precision is a percentage of names that been parsed correctly and is
+calculated as \(Precision = tp / (tp + fp)\). Recall is a percentage of
+correct items found and is calculated as \(Recall = tp / (tp + fn)\).
+\textit{F1 measure} is a balanced harmonic mean (where Recall and Precision
+have the same weight) and is calculated as \(F1 = 2 * Precision * Recall
+/(Precision + Recall)\)
 
-Accuracy for unparsed results had been calculated as \(Accuracy =
-fn/(tn+fn)\).This accuracy shows how many names that should had been parsed
-were not parsed. We processed 100 000 random name-strings by each parser and
-found by hand which unparsed resultes were false negatives. Also we looked at
-names uniquely unparsed by each program and collected them in
-unparsed-comparisons.txt file.
+Precision for results where parsing failed was calculated from 100 000
+dataset. Approximately 1000 names out of 100 000 had been discarded by the
+parsers. Precision in this case shows percentage of correctly discarded names.
+We do not know recall, as it was not feasible to manually find it for 100 000
+names. To get a glimpse on names which had to be discarded, but were parsed
+instead we analysed differences in failed parsing results between 3 parsers.
 
 \section*{Results and Discussion}
 
@@ -594,17 +596,18 @@ was 1.22 times faster.
 
 \begin{table}[htb]
   \begin{center}
-    \caption{Precision/Recall Results}\label{table:precision}
+    \caption{Precision/Recall for processed by parsers 1000
+    name-strings}\label{table:precision}
     \begin{tabular}{|l|*{3}{l}|}
       \hline
                              & gnparser & gbif-parser & biodiversity \\
       \hline
       \textit{True Positive} & 976      & 955         & 971          \\
       \textit{True Negative} & 13       & 12          & 13           \\
-      \textit{False Positive}& 11       & 33          & 16           \\
-      \textit{False Negative}& 0        & 0           & 0            \\
-      \textit{Precision}     & 0.9888551& 0.966599    & 0.9837893    \\
-      \textit{Recall}        & 1.0      & 1.0         & 1.0          \\
+      \textit{False Positive}& 11       & 32          & 16           \\
+      \textit{False Negative}& 0        & 1           & 0            \\
+      \textit{Precision}     & 0.9888551& 0.967578    & 0.9837893    \\
+      \textit{Recall}        & 1.0      & 0.998954    & 1.0          \\
       \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
       \hline
     \end{tabular}
@@ -613,16 +616,16 @@ was 1.22 times faster.
 
 \begin{table}[htb]
   \begin{center}
-    \caption{Acuracy of unparsed results, out of 100 000
+    \caption{Precision for discarded by parsers names, out of 100 000
     name-strings}\label{table:unparsed}
     \begin{tabular}{|l|*{3}{l}|}
       \hline
-                             & gnparser & gbif-parser & biodiversity \\
+                              & gnparser & gbif-parser & biodiversity \\
       \hline
-      \textit{Total unparsed}& 1131     & 1082        & 1161         \\
-      \textit{True Negative} & 1129     & 940         & 1152         \\
-      \textit{False Negative}& 2        & 142         & 9            \\
-      \textit{Accuracy}      & 0.998231 & 0.868761    & 0.9922481    \\
+      \textit{Total discarded}& 1131     & 1082        & 1161         \\
+      \textit{True Positive}  & 1129     & 940         & 1152         \\
+      \textit{False Positive} & 2        & 142         & 9            \\
+      \textit{Accuracy}       & 0.998231 & 0.868761    & 0.9922481    \\
       \hline
     \end{tabular}
   \end{center}
