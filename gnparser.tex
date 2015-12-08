@@ -55,6 +55,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{doi}
+\usepackage{amsmath}
 \usepackage{multirow}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
@@ -506,58 +507,93 @@ features, performance and discuss future enhancements of this new parser.
 
 - MIT license
 
-\subsection*{Testing Material}
+\subsection*{Testing Methods}
 
-Data for our tests were 1000, 100,000 and 1,000,000 name-strings randomly
-chosen from 24 million names of the Global Names Index. These datasets consist
-of name-strings acquired from a variety of data sources and are a mixture of
+Data for our tests were name-strings randomly chosen from 24 million
+name-strings of the Global Names Index. These resulting datasets consisted of
+strings acquired from a variety of data sources and were a mixture of
 well-formed names, names with formatting and spelling mistakes, and non-name
-strings misused as names.
+strings misrepresented as names.
 
 We compared performance of gnparser with 2 other projects -- Biodiversity
-parser (also developed by Global Names), and GBIF name-parser. Another parser
-we considered was YASMEEN parser from iMarine project\cite{VandenBerghe2015},
-however we found that with our dataset it generated dramatically more mistakes
-than other parsers (Precision 0.534, F1 0.6962), and we decided to exclude it
+parser\cite{biodiversity} (also developed by Global Names), and GBIF
+name-parser\cite{gbifNameParser}. Another project we considered was YASMEEN
+parser from iMarine\cite{VandenBerghe2015}, however we found that with our
+dataset it generated dramatically more mistakes than other parsers
+($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and we decided to exclude it
 from the tests.
 
 To find out the throughput of parsing we used a computer with Intel i7-4930K
-CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB
-Samsung 840 EVO SSD, running Ubuntu version 14.04. Each parser processed
-1000000 name-strings.
+CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840
+EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing
+1,000,000 name-strings.
 
-For determining precision and recall dataset size was 1000 names. For
-determining false negatives accuracy dataset size was 100,000 names.  We
-decided to concentrate on the most common denominator of output from the
-parsers -- canonical form, and terminal aurhorship. Canonical form represents
-the most stable parts of the name, while terminal aurhorship corresponds to
-authors of the lowest element of the name.
+To study effects of parallel execution on throughput we used
+\textit{ParallelParser} class from Biodiversity parser and \textit{gnparse}
+command line interface for gnparser. For GBIF name-parser we created a thin
+wrapper with multi-threaded capabilities\cite{gbifparser}.
 
-For precision and recall we picked combination of canonical form and
-authorship as criteria. When they are determined correctly we get true
-positive \textit{tp}, when they are determined in a non-name string -- it is
-false positive \textit{fp}. Correctly found non-parseable strings are true
-negatives \textit{tn}, false negatives \textit{fn} name strings a `valid
-scientific names` which completely failed parsing. We determined canonical
-form and terminal authorship by human driven pattern matching. If name-strings
-contain spelling mistakes but canonical form and/or terminal authorship could
-be extracted by human, we considered them as theoretically parseable. Name
-strings had to correspond to common format of scientific names, but not to be
-really valid names. Validation of names is out of scope of parsers.
+For determining $Precision$ and $Recall$ of parsed names the dataset size was
+1000 name-strings. To estimate quality for all parsers we needed to pick a
+feature which is common for all three of them and is a good indicator of
+performance.  We decided to use a combination of canonical form and terminal
+authorship.  Canonical form represents the most stable elements of a name,
+while terminal authorship corresponds to the authority of the most detailed
+element of the name. For example in "\textit{Oriastrum lycopodioides} Wedd.
+var.  \textit{glabriusculum} Reiche" canonical form is "\textit{Oriastrum
+lycopodioides glabriusculum}" and terminal authorship is "Reiche", not
+"Wedd.".  Algorithms necessary to select components of a canonical form of a
+name and to find the terminal authorship are good indicators of a parser
+quality.
 
-Precision is a percentage of names that been parsed correctly and is
-calculated as \(Precision = tp / (tp + fp)\). Recall is a percentage of
-correct items found and is calculated as \(Recall = tp / (tp + fn)\).
-\textit{F1 measure} is a balanced harmonic mean (where Recall and Precision
-have the same weight) and is calculated as \(F1 = 2 * Precision * Recall
-/(Precision + Recall)\)
+When both the canonical form and the terminal authorship were determined
+correctly we marked the result as true positive ($tp$).  If one or both of
+them were determined incorrectly -- the result was marked a false positive
+($fp$). Correctly discarded from parsing name-strings were marked as true
+negatives ($tn$). False negatives ($fn$) were "suitable" name-strings which
+should be parsed, but were nevertheless discarded.
 
-Precision for results where parsing failed was calculated from 100 000
-dataset. Approximately 1000 names out of 100 000 had been discarded by the
-parsers. Precision in this case shows percentage of correctly discarded names.
-We do not know recall, as it was not feasible to manually find it for 100 000
-names. To get a glimpse on names which had to be discarded, but were parsed
-instead we analysed differences in failed parsing results between 3 parsers.
+Some names in the dataset were not well-formed. If a human could extract the
+canonical form and the terminal authorship from them we did count them.
+Examples of such name-strings are \textbf{"Bumetopia (bumetopia)
+quadripunctata Breuning"} (low case subgenus), \textbf{"Campylium gollanii C.
+M?ller ex Vohra 1970 [1972]"} (miscoded UTF-8 symbol and additional year in
+square brackets), \textbf{"Myosorex muricauda (Miller, 1900)."} (period after
+authorship).
+
+$Precision$ is a percentage of names parsed correctly and is calculated as
+
+\[Precision = \dfrac{tp}{(tp + fp)}\]
+
+$Recall$ is a percentage of names detected and is calculated as
+
+\[Recall = \dfrac{tp}{(tp + fn)}\]
+
+$F1-measure$ is a balanced harmonic mean (where $Precision$ and $Recall$ have
+the same weight). When both $Precision$ and $Recall$ vary, $F1-measure$ allows
+to compare results nevertheless. It is calculated as
+
+\[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
+
+Validity of names was not taken into account, as it is out of scope of
+parsers' functionality. For example in case of a name-string \textbf{"Example
+name Word var.  something Capitalized Words, 1900"}, canonical form
+\textbf{"Example name something"} and terminal authorship \textbf{"Capitalized
+Words, 1900"} would be considered a true positive.
+
+It is important for parser to accurately distinguish between strings of
+scientific names, names of viruses, surrogate names, and non-names. To find
+out how well parsers distinguished strings which are not scientific names, we
+calculated $Precision$ for discarded/non-parsed strings. If done correctly
+not-parsed strings would include only names of viruses and non-scientific
+names.
+
+We processed 100,000 name-strings by each parser, and about 1000 of them had
+been discarded as not-parseable. $Precision$ in this case showed percentage of
+correctly discarded names.  We do not know $Recall$, as it was not feasible to
+manually find it for 100 000 names. To get a glimpse on names which had to be
+discarded, but were parsed instead we analysed intersections and differences
+of the results between the three parsers.
 
 \section*{Results and Discussion}
 
@@ -625,7 +661,7 @@ was 1.22 times faster.
       \textit{Total discarded}& 1131     & 1082        & 1161         \\
       \textit{True Positive}  & 1129     & 940         & 1152         \\
       \textit{False Positive} & 2        & 142         & 9            \\
-      \textit{Accuracy}       & 0.998231 & 0.868761    & 0.9922481    \\
+      \textit{Precision}       & 0.998231 & 0.868761    & 0.9922481    \\
       \hline
     \end{tabular}
   \end{center}
