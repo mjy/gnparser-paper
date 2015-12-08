@@ -53,6 +53,9 @@
 %\RequirePackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{doi}
+\usepackage{amsmath}
 \usepackage{multirow}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
@@ -293,13 +296,15 @@ semantic meaning of words occurred in the name-strings.
 
 \begin{table}[!htb]
   \begin{center}
+
   \caption{Some legitimate versions of the scientific name for the Northern
-    Bulrush or Singlespike sedge.  The genus (Carex), species (scirpoidea), and
-    subspecies (convoluta) may be annotated (var. subsp., and ssp.) or have the
-    name of the original authority for the infraspecies (Kükenthal), the species
-    (Michaux), the current infraspecific combination (Dunlop), sometimes
-    abbreviated and with or without dates. Image courtesy of \cite{FNA2002}.
-  }\label{table:carex}
+    Bulrush or Singlespike sedge.  The genus (Carex), species (scirpoidea),
+    and subspecies (convoluta) may be annotated (var. subsp., and ssp.) or
+    have the name of the original authority for the infraspecies (Kükenthal),
+    the species (Michaux), the current infraspecific combination (Dunlop),
+    sometimes abbreviated and with or without dates. Image courtesy of
+  \cite{FNA2002}.}\label{table:carex}
+
     \begin{tabular}{| l | c |}
     \hline
     Carex scirpoidea convoluta &
@@ -502,18 +507,172 @@ features, performance and discuss future enhancements of this new parser.
 
 - MIT license
 
-\subsection*{Testing Material}
+\subsection*{Testing Methods}
 
-- random 100 000 names from 23 million names in GN. Used for performance,
-precision tests
+Data for our tests were name-strings randomly chosen from 24 million
+name-strings of the Global Names Index. These resulting datasets consisted of
+strings acquired from a variety of data sources and were a mixture of
+well-formed names, names with formatting and spelling mistakes, and non-name
+strings misrepresented as names.
 
-- random 1000 names to test Recall
+We compared performance of gnparser with 2 other projects -- Biodiversity
+parser\cite{biodiversity} (also developed by Global Names), and GBIF
+name-parser\cite{gbifNameParser}. Another project we considered was YASMEEN
+parser from iMarine\cite{VandenBerghe2015}, however we found that with our
+dataset it generated dramatically more mistakes than other parsers
+($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and we decided to exclude it
+from the tests.
 
-- explanation of quality of the names -- they are from the wild, from sources
-of different quality. Good correspondance to what to expect 'in reality'
+To find out the throughput of parsing we used a computer with Intel i7-4930K
+CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840
+EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing
+1,000,000 name-strings.
+
+To study effects of parallel execution on throughput we used
+\textit{ParallelParser} class from Biodiversity parser and \textit{gnparse}
+command line interface for gnparser. For GBIF name-parser we created a thin
+wrapper with multi-threaded capabilities\cite{gbifparser}.
+
+For determining $Precision$ and $Recall$ of parsed names the dataset size was
+1000 name-strings. To estimate quality for all parsers we needed to pick a
+feature which is common for all three of them and is a good indicator of
+performance.  We decided to use a combination of canonical form and terminal
+authorship.  Canonical form represents the most stable elements of a name,
+while terminal authorship corresponds to the authority of the most detailed
+element of the name. For example in "\textit{Oriastrum lycopodioides} Wedd.
+var.  \textit{glabriusculum} Reiche" canonical form is "\textit{Oriastrum
+lycopodioides glabriusculum}" and terminal authorship is "Reiche", not
+"Wedd.".  Algorithms necessary to select components of a canonical form of a
+name and to find the terminal authorship are good indicators of a parser
+quality.
+
+When both the canonical form and the terminal authorship were determined
+correctly we marked the result as true positive ($tp$).  If one or both of
+them were determined incorrectly -- the result was marked a false positive
+($fp$). Correctly discarded from parsing name-strings were marked as true
+negatives ($tn$). False negatives ($fn$) were "suitable" name-strings which
+should be parsed, but were nevertheless discarded.
+
+Some names in the dataset were not well-formed. If a human could extract the
+canonical form and the terminal authorship from them we did count them.
+Examples of such name-strings are \textbf{"Bumetopia (bumetopia)
+quadripunctata Breuning"} (low case subgenus), \textbf{"Campylium gollanii C.
+M?ller ex Vohra 1970 [1972]"} (miscoded UTF-8 symbol and additional year in
+square brackets), \textbf{"Myosorex muricauda (Miller, 1900)."} (period after
+authorship).
+
+$Precision$ is a percentage of names parsed correctly and is calculated as
+
+\[Precision = \dfrac{tp}{(tp + fp)}\]
+
+$Recall$ is a percentage of names detected and is calculated as
+
+\[Recall = \dfrac{tp}{(tp + fn)}\]
+
+$F1-measure$ is a balanced harmonic mean (where $Precision$ and $Recall$ have
+the same weight). When both $Precision$ and $Recall$ vary, $F1-measure$ allows
+to compare results nevertheless. It is calculated as
+
+\[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
+
+Validity of names was not taken into account, as it is out of scope of
+parsers' functionality. For example in case of a name-string \textbf{"Example
+name Word var.  something Capitalized Words, 1900"}, canonical form
+\textbf{"Example name something"} and terminal authorship \textbf{"Capitalized
+Words, 1900"} would be considered a true positive.
+
+It is important for parser to accurately distinguish between strings of
+scientific names, names of viruses, surrogate names, and non-names. To find
+out how well parsers distinguished strings which are not scientific names, we
+calculated $Precision$ for discarded/non-parsed strings. If done correctly
+not-parsed strings would include only names of viruses and non-scientific
+names.
+
+We processed 100,000 name-strings by each parser, and about 1000 of them had
+been discarded as not-parseable. $Precision$ in this case showed percentage of
+correctly discarded names.  We do not know $Recall$, as it was not feasible to
+manually find it for 100 000 names. To get a glimpse on names which had to be
+discarded, but were parsed instead we analysed intersections and differences
+of the results between the three parsers.
 
 \section*{Results and Discussion}
 
+\subsection*{Throughput testing}
+
+Results of the speed performance is given in Figure~\ref{figure:throughput}.
+On one to 4 processors gnparser and gbif parser showed similar throughput,
+while biodiversity parser was ~5 times slower on one thread and ~8 times
+slower on 4 threads. GBIF parser scaled better and for 12 parallel threads it
+was 1.22 times faster.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \caption{
+      Names parsed per second by GN, GBIF and Biodiversity parsers
+      (runing on 1-12 parallel threads).
+    }\label{figure:throughput}
+    \vspace{0.5cm}
+    \begin{tabular}{| l | *{3}{r} | c c c |}
+      \hline
+      \multirow{1}{*}Threads & gnparser & gbif-paser & biodiversity
+      & \multicolumn{3}{c |}{Ratio} \\
+      \cline{5-7}
+      & & & & gn & gbif & bio \\
+      \hline
+      1  & 5944  & 6389  & 1111 & 1 & 1.07 & 0.19 \\
+      2  & 11416 & 12638 & 1722 & 1 & 1.11 & 0.14 \\
+      4  & 20500 & 21994 & 2556 & 1 & 1.07 & 0.12 \\
+      8  & 24805 & 30972 & 2777 & 1 & 1.25 & 0.11 \\
+      12 & 26055 & 31833 & 2527 & 1 & 1.22 & 0.10 \\
+      \hline
+    \end{tabular}
+    \include{throughput}
+  \end{center}
+\end{figure}
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{Precision/Recall for processed by parsers 1000
+    name-strings}\label{table:precision}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                             & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{True Positive} & 976      & 955         & 971          \\
+      \textit{True Negative} & 13       & 12          & 13           \\
+      \textit{False Positive}& 11       & 32          & 16           \\
+      \textit{False Negative}& 0        & 1           & 0            \\
+      \textit{Precision}     & 0.9888551& 0.967578    & 0.9837893    \\
+      \textit{Recall}        & 1.0      & 0.998954    & 1.0          \\
+      \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{Precision for discarded by parsers names, out of 100 000
+    name-strings}\label{table:unparsed}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                              & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{Total discarded}& 1131     & 1082        & 1161         \\
+      \textit{True Positive}  & 1129     & 940         & 1152         \\
+      \textit{False Positive} & 2        & 142         & 9            \\
+      \textit{Precision}       & 0.998231 & 0.868761    & 0.9922481    \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+Both gnparser and GBIF parser had been significantly faster than biodiversity,
+and scaled better as well. At 12 threads biodiversity became slightly slower
+than at 8 threads.
+
+
+
+\subsection*{Precision measurements}
 - Disclamer: parsers check structure, not content, so we test if names
 parsed predictably, not that they are valid.
 
