@@ -56,10 +56,19 @@
 \usepackage{tikz}
 \usepackage{doi}
 \usepackage{amsmath}
+\usepackage{listings}
+\usepackage{bera}
 \usepackage{multirow}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
-
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{white},
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                             %%
@@ -533,25 +542,25 @@ To study effects of parallel execution on throughput we used
 command line interface for gnparser. For GBIF name-parser we created a thin
 wrapper with multi-threaded capabilities\cite{gbifparser}.
 
-For determining $Precision$ and $Recall$ of parsed names the dataset size was
-1000 name-strings. To estimate quality for all parsers we needed to pick a
-feature which is common for all three of them and is a good indicator of
-performance.  We decided to use a combination of canonical form and terminal
-authorship.  Canonical form represents the most stable elements of a name,
-while terminal authorship corresponds to the authority of the most detailed
-element of the name. For example in "\textit{Oriastrum lycopodioides} Wedd.
-var.  \textit{glabriusculum} Reiche" canonical form is "\textit{Oriastrum
-lycopodioides glabriusculum}" and terminal authorship is "Reiche", not
-"Wedd.".  Algorithms necessary to select components of a canonical form of a
-name and to find the terminal authorship are good indicators of a parser
-quality.
+For determining $Precision$, $Recall$ and $Accuracy$ of parsed names the
+dataset size was 1000 name-strings. To estimate quality for all parsers we
+needed to pick a feature which is common for all three of them and is a good
+indicator of performance.  We decided to use a combination of canonical form
+and terminal authorship.  Canonical form represents the most stable elements
+of a name, while terminal authorship corresponds to the authority of the most
+detailed element of the name. For example in "\textit{Oriastrum lycopodioides}
+Wedd.  var.  \textit{glabriusculum} Reiche" canonical form is
+"\textit{Oriastrum lycopodioides glabriusculum}" and terminal authorship is
+"Reiche", not "Wedd.".  Algorithms necessary to select components of a
+canonical form of a name and to find the terminal authorship are good
+indicators of a parser quality.
 
 When both the canonical form and the terminal authorship were determined
-correctly we marked the result as true positive ($tp$).  If one or both of
-them were determined incorrectly -- the result was marked a false positive
-($fp$). Correctly discarded from parsing name-strings were marked as true
-negatives ($tn$). False negatives ($fn$) were "suitable" name-strings which
-should be parsed, but were nevertheless discarded.
+correctly we marked the result as true positive ($\text{tp}$).  If one or both
+of them were determined incorrectly -- the result was marked a false positive
+($\text{fp}$). Correctly discarded from parsing name-strings were marked as
+true negatives ($\text{tn}$). False negatives ($\text{fn}$) were "suitable"
+name-strings which should be parsed, but were nevertheless discarded.
 
 Some names in the dataset were not well-formed. If a human could extract the
 canonical form and the terminal authorship from them we did count them.
@@ -563,17 +572,22 @@ authorship).
 
 $Precision$ is a percentage of names parsed correctly and is calculated as
 
-\[Precision = \dfrac{tp}{(tp + fp)}\]
+\[Precision = \dfrac{\text{tp}}{(\text{tp} + \text{fp})}\]
 
 $Recall$ is a percentage of names detected and is calculated as
 
-\[Recall = \dfrac{tp}{(tp + fn)}\]
+\[Recall = \dfrac{\text{tp}}{(\text{tp} + \text{fn})}\]
 
 $F1-measure$ is a balanced harmonic mean (where $Precision$ and $Recall$ have
 the same weight). When both $Precision$ and $Recall$ vary, $F1-measure$ allows
 to compare results nevertheless. It is calculated as
 
 \[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
+
+$Accuracy$ is a pecentage of correct results. It is calculated as
+
+\[Accuracy = \dfrac{\text{tp} + \text{tn}}
+  {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
 
 Validity of names was not taken into account, as it is out of scope of
 parsers' functionality. For example in case of a name-string \textbf{"Example
@@ -597,13 +611,200 @@ of the results between the three parsers.
 
 \section*{Results and Discussion}
 
-\subsection*{Throughput testing}
+The goal of Global Names Architecture is to create an infrastructure for
+biology which uses scientific names to connect and inter-exchange biological
+data in the most complete and painless way. Parsing is the first step to this
+goal. What are requirements for a parser to be suitable for such a task?
 
-Results of the speed performance is given in Figure~\ref{figure:throughput}.
-On one to 4 processors gnparser and gbif parser showed similar throughput,
-while biodiversity parser was ~5 times slower on one thread and ~8 times
-slower on 4 threads. GBIF parser scaled better and for 12 parallel threads it
-was 1.22 times faster.
+1. \textbf{High Quality}. Parser should be able to break names into their
+semantic elements as good or better than a human. If we able to reach this
+goal we become independent on how names are stored in various databases. We
+will not be limited to sources with already preparsed names. Moreover, we hope
+to make obsolete a very expensive step of humans prepasing names by the
+advent of accessible high quality parsers.
+
+2. \textbf{Global Scope}. Parser should be able to support all types of
+scientific names, including the most complex ones like hybrid formulas,
+multi-infraspecific names, names with nested authorships etc. Without parsing
+ability to find the same name in different sources is severely diminished
+and for unparsed names it will mean that information attached to them will be
+hidden from the eyes of the researchers.
+
+3. \textbf{Parsing Completeness}. All information indluded into a name is
+important, not only canonical form. Authorship, year, rank information allows
+to distinguish homonyms, synonyms, spelling mistakes, chresonyms from each
+other, narrow search down to relevant information. From other side it allows
+people who manage large collections of names to weed out mistakes and
+increase quality of their databases.
+
+4. \textbf{Speed}. If Global Names serves its goal well it will need to be
+very fast and effective to satisfy needs of users everywhere on the globe.
+High throughput of parsing becomes very important and from one side it
+increases speed with which people will receive requested information, from
+other side it directly influences the cost of required hardware, as well as
+the cost of hardware upgrades.
+
+5. \textbf{Accessibility}. We think it is important to make parsing ubiquitos
+and accessible to everyone. It should be assessible as a library, as a command
+line tool, as a desktop or GUI program. It should be easy to use, easy to
+install. As a library it has to be usable in many languages. It should have
+
+In further text we are going to talk about gnparser from the point of these 5
+requirements
+
+\subsection*{High quality parsing}
+
+High quality parsing is probaby the most important of the 5 requirements. We
+tested gnparser together with 3 other parsing projects. To our knowledge these
+three represent the state of the art for parsing biological names. GBIF parser
+uses regular expressions approach and gnparser and biodiversity parser use PEG
+approach.
+
+Results for our quality measurements are shown in Table~\ref{table:precision}.
+With datasets where true negatives ($\text{tn}$) create a large proportion of
+data $Accuracy$ is not a good measure, as it would favor algorithms which
+distinquish negative results rather than finding positive ones. However in our
+case true negatives are rare and have a very little influence. We can also see
+that $Recal$ for all parsers was very high, which means false negatives had
+almost no influence on results as well. Taking this in account we think
+$Accuracy$ is the best measure for our tests and alone is sufficient to
+compare quality for all cases.
+
+Altogether we find that all 3 parsers performed very well with our tests
+showing $Accuracy \textgreater 95\%$ while gnparser and biodiversity parser
+approaching 99\% mark. Moreover, most of the false positives came from names
+with mistakes. For example, out of 11 false positives for gnparser only 2 were
+well-formed names:
+
+\begin{verbatim}
+    Eucalyptus subser. Regulares Brooker
+    Jacquemontia spiciflora (Choisy) Hall. fil.
+
+    Acanthocephala declivis variety guianensis Osborn, 1904
+    Atysa (?) frontalis
+    Bumetopia (bumetopia) quadripunctata Breuning, 1950
+    Cyclotella kã¼tzingiana Thwaites
+    Elaphidion (romaleum) tæniatum Leconte, 1873
+    Hieracium nobile subsp. perclusum (Arv. -Touv. ) O. Bolòs & Vigo
+    Leptomitus vitreus (Roth) Agardh{?}
+    Myosorex muricauda (Miller, 1900).
+    Papillaria amblyacis (M<81>ll.Hal.) A.Jaeger
+\end{verbatim}
+
+When parsers reach close to 90\% accuracy they hit a "long tail" of problems
+where each particular case of wrong parsing is rare, and every new random test
+reveals new problems. Good thing that for all 3 parsers developer teams
+performed this meticulous work adding one rare case after another to the list
+of problems and finding ways to incoporate solutions. Quality of parsing rules
+is constantly improving, and we belive reaching  $Accuracy \textgreater
+99.5\%$ reliably is achievable with PEG parsers.
+
+During incorporation of new rules and increasing $Recall$ it is important to
+judge if a problem has a potential of bringing down $Precision$ by introducing
+new false positives.  For example GBIF name-parser allows genus of a
+name-string to be in a lowcase. As a restult the strings below got parsed as
+scientific names, while other parsers ignored them:
+
+
+\begin{verbatim}
+    acid mine drainage metagenome
+    agricultural soil bacterium CRS5639T18-1
+    agricultural soil bacterium SC-I-8
+    algal symbiont of Cladonia variegata MN075
+    alpha proteobacterium AP-24
+    anaerobic bacterium ANA No.5
+    anoxygenic photosynthetic bacterium G16
+    archaeon enrichment culture clone AOM-SR-A23
+    bacterium endosymbiont of Plateumaris fulvipes
+    bacterium enrichment culture DGGE band 61_3_FG_L
+    barley rhizosphere bacterium JJ-220
+    bovine rumen bacterium niuO17
+\end{verbatim}
+
+Solutions like these significantly increase $Recall$ for certain low-quality
+datasets, but as we see in this example they also bring risk to precipitously
+decrease $Precision$ with other datasets as we found out in case of YASMEEN
+iMarine parser.
+
+We think that in cases like this to write parsers carefully considering every
+case of increased $Recall$ and investigate what kind of problems it might
+bring to $Precision$. If parser is written for a very specific "dirty" dataset
+it might be appropriate to deviate singificantly from adopted nomenclatural
+rules. In our case we want to write a \textbf{generic} parser suitable for
+majority of users. If such users do have a "dirty" dataset with very
+predictable problems (like lowcase genus) we recommend to write a preparser
+script which "normalizes" known problems and then use a high quality parser.
+
+Our testing also revealed differences between regular expressions approach and
+PEG approaches. Our results show that both appraches can achieve high quality,
+but regular expressions approach hits the ceiling faster. The reason for this
+is recursive nature of scientific names. It is much easier to cover simpler
+structured (probably ~80\%) of scientific names with regular expression, than
+with PEG, but after easy part is done complications arising from recursive
+nature of names arise until they become unsurmantable.
+
+\subsection*{Global Scope}
+
+If we want to trully connect biological data using scientific names, no names
+should be left behind, no matter how complex they are. We use PEG approach to
+parsing because it allows to nest parsing rules within each other, making it
+possible to create progressively more and more comples rules. The first rule
+just defines what space is, the last rule defines hybrid formula. Regular
+expressions do not support recursion as a result the more complex name is the
+harder it becomes to support them.
+
+During out testing we found that $Accuracy$ of GBIF parser was negatively
+affected by inability to parse hybrid formulas and incorrect parsing of
+infrasubspecies names (names with more then one infraspecific epithet). For
+example:
+
+\begin{verbatim}
+    Crataegus chlorosarca subtaxon pubescens E.L.Wolf
+    Erigeron peregrinus ssp.callianthemus var. eucallianthemus
+    Salvelinus fontinalis x Salmo gairdneri
+    Echinocereus fasciculatus var. bonkerae × E. fasciculatus var. fasciculatus
+\end{verbatim}
+
+We have to support names like this, and PEG parsers allow us do do that.
+
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{Precision/Recall for processed by parsers 1000
+    name-strings}\label{table:precision}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                             & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{True Positive} & 976      & 955         & 971          \\
+      \textit{True Negative} & 13       & 12          & 13           \\
+      \textit{False Positive}& 11       & 32          & 16           \\
+      \textit{False Negative}& 0        & 1           & 0            \\
+      \textit{Precision}     & 0.9888551& 0.967578    & 0.9837893    \\
+      \textit{Recall}        & 1.0      & 0.998954    & 1.0          \\
+      \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
+      \textit{Accuracy}      & 0.989    & 0.967       & 0.984        \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{Precision for discarded by parsers names, out of 100 000
+    name-strings}\label{table:unparsed}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                              & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{Total discarded}& 1131     & 1082        & 1161         \\
+      \textit{True Positive}  & 1129     & 940         & 1152         \\
+      \textit{False Positive} & 2        & 142         & 9            \\
+      \textit{Precision}      & 0.998231 & 0.868761    & 0.9922481    \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 
 \begin{figure}[htbp]
   \begin{center}
@@ -630,82 +831,104 @@ was 1.22 times faster.
   \end{center}
 \end{figure}
 
-\begin{table}[htb]
-  \begin{center}
-    \caption{Precision/Recall for processed by parsers 1000
-    name-strings}\label{table:precision}
-    \begin{tabular}{|l|*{3}{l}|}
-      \hline
-                             & gnparser & gbif-parser & biodiversity \\
-      \hline
-      \textit{True Positive} & 976      & 955         & 971          \\
-      \textit{True Negative} & 13       & 12          & 13           \\
-      \textit{False Positive}& 11       & 32          & 16           \\
-      \textit{False Negative}& 0        & 1           & 0            \\
-      \textit{Precision}     & 0.9888551& 0.967578    & 0.9837893    \\
-      \textit{Recall}        & 1.0      & 0.998954    & 1.0          \\
-      \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
+\subsection*{Parsing Completness}
 
-\begin{table}[htb]
-  \begin{center}
-    \caption{Precision for discarded by parsers names, out of 100 000
-    name-strings}\label{table:unparsed}
-    \begin{tabular}{|l|*{3}{l}|}
-      \hline
-                              & gnparser & gbif-parser & biodiversity \\
-      \hline
-      \textit{Total discarded}& 1131     & 1082        & 1161         \\
-      \textit{True Positive}  & 1129     & 940         & 1152         \\
-      \textit{False Positive} & 2        & 142         & 9            \\
-      \textit{Precision}       & 0.998231 & 0.868761    & 0.9922481    \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
+By far extraction of canonical form is the most useful and the most practiced
+parsing technique. However it is not enough, because canonical form does not
+determine a name completely. For example as we showed in the beginning of the
+paper \textbf{Carex scirpoidea convoluta} is a canonical form for
+\textbf{Carex scirpoidea var. convoluta Kükenthal} and \textbf{Carex
+scirpoidea ssp. convoluta (Kük.) Dunlop}. In the first case name string
+describes a variety \textbf{convoluta} of \textbr{Carex scirpoidea} species
+described by Kükenthal. In the second case it Dunlop recategorized \textbf
+{convoluta} as variety of the species. We would not be able to distinguish
+between these two different names without seing a rank of a name and
+corresponding authorship. Furthermore it was important to see in the second
+example that \textbf{(Kük.)} was original author and \textbf{Dunlop} was the author of the new combination.
+
+As we see ranks, authors and types of authors are important to distinguish
+similar names after match by canonical form is done. Name-string \textbf{Carex
+scirpoidea Michx. var. convoluta Kükenth.} gives additional clue that we talk
+about \textbf{Carex scripoidea} species described by \textbf{Michx}
+
+All components of a name are important, and as such need to be parsed and
+categorized. With gnparser we describe meaning of every word in the parsed
+name-string expressed in JSON format:
+
+\begin{lstlisting}[language=json]
+  {"name_string_id":"203213f3-99d1-5f5e-810a-4453c4d220cb","parsed":true,"quality":1,"parser_version":"0.2.0","verbatim":"Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A. Dunlop","normalized":"Carex scirpoidea Michx. ssp. convoluta (Kük.) D. A. Dunlop","canonical_name":{"value":"Carex scirpoidea convoluta","extended":"Carex scirpoidea ssp. convoluta"},"hybrid":false,"surrogate":false,"virus":false,"details":[{"genus":{"value":"Carex"},"specific_epithet":{"value":"scirpoidea","authorship":{"value":"Michx.","basionym_authorship":{"authors":["Michx."]}}},"infraspecific_epithets":[{"value":"convoluta","rank":"ssp.","authorship":{"value":"(Kük.) D. A. Dunlop","basionym_authorship":{"authors":["Kük."]},"combination_authorship":{"authors":["D. A. Dunlop"]}}}]}],"positions":[["genus",0,5],["specific_epithet",6,16],["author_word",17,23],["rank",24,30],["infraspecific_epithet",31,40],["author_word",42,46],["author_word",48,50],["author_word",50,52],["author_word",53,59]]}
+\end{lstlisting}
+
+A new exciting feature we added to gnparser is detection and reposting
+mistakesin name-srtings. Such reports are part of the returning JSON value.
+
+Whole description of the JSON fields in the output can be found in gnparser
+JSON schema
+
+\subsection*{Parsing Speed}
+
+In our discussion so far there was little difference between biodiversity
+parser and gnparser. Parsing speed and ability to scale create a big
+distintion between them. Parsing speed is important for two reasons. Firstly a
+client gets results faster with a faster parser. Secondly if parser is 10
+times faster it means the cost of hardware to run it can be 10 times cheaper
+for the same amount of work to be done.
+
+For example, it took us 40 days to find and index names in Biodiversity
+Heritage Library. Just parsing step alone took more than a day. Now, when
+somene find a problem with name resolution, to fix it for BHL is not feasible
+at the moment. Our goal is to be able to reindex whole BHL in 1 day, so when
+our algorithms improve we can regularly completely rebuild indexes of BHL.
+
+One of the main reasons of rewriting parser from scratch was a necessity to
+increase throughput of parsing. Resolution of names is a very common problem
+and to solve it well we need to work on removing existing bottlenecks, one of
+the obvious ones is parsing.
+
+Results of the speed performance is given in Figure~\ref{figure:throughput}.
+On one to 4 processors gnparser and gbif parser showed similar throughput,
+while biodiversity parser was ~5 times slower on one thread and ~8 times
+slower on 4 threads. GBIF parser scaled better and for 12 parallel threads it
+was 1.22 times faster.
+
 Both gnparser and GBIF parser had been significantly faster than biodiversity,
 and scaled better as well. At 12 threads biodiversity became slightly slower
 than at 8 threads.
 
+As we see when gnparser runs on 4 CPU it performs 8 times faster than
+biodiversity, which means we need to spend 8 times less on the hardware using
+gnparser, also it means that performance-wise we are eliminating parsing step
+as a bottleneck in the process simultaneously gaining in quality of parsing.
 
+\subsection*{Accessibility}
 
-\subsection*{Precision measurements}
-- Disclamer: parsers check structure, not content, so we test if names
-parsed predictably, not that they are valid.
+Under accessibility we mean ability of a code to be used by the widest
+audience possible. For Open Source projects accessibility is very important,
+as the more people use a software the lower is the cost of its creation. We
+designed gnparser with accessibility in mind from the start.
 
-- Testing against biodiversity and imarine parsers. Explanation of difference between them.
+Scala language allows to use parser as a library in Scala, Java, Python,
+JRuby, R, JavaScript and a great variety of languages based on Java Virtual
+Machine. If a user wants to use in any modern language they also can connect
+to the parser via socket server interface. There is also a command line tool,
+web interface, and RESTful api available.
 
-- Performance test. Explanation how it is done.
+We pay close attention to documentation, trying to keep it detailed, clear
+and up to date. We have an extensive test suite which describes parser's
+behavior and also is a great source of examples whoing what parser is capable
+of.
 
-- Precision test. False positives.
+All this creates larger potentiall autidence for the parser, and will,
+hopefully help many researches and programmers to deal with this complex
+problem in biodiversity informatics.
 
-- Recall tetse. False negatives.
+\subsection*{Future plans}
 
-- F-value (it we find it makes sense)
-
-- Table with tests and features: PEG or RE, parsing details, performance,
-Precision, Recall, F-value
-
-- Discussion of the comparison
-
-- Discussion why did we decide to move from biodiversity to gnparser.
-
-  - robust design
-
-  - better scalability
-
-  - better portability
-
-  - better speed. BHL example -- indexing in 1 day instead of 40
-
-  - incorporation of parser into Spark for Big Data analysis
-
-- Discussion of parser terms -- conformance with TCS schema in different format
-
-- Name string id -- discussion of its value for biology
+In the following years we will continue to work on parser and continue to
+improve its accuracy and speed. We are planning to incorporating gnparser into
+new, high throughput, high fidelity name finding, resolution and
+reconciliation services. We would like to incorporate parsing of taxon concept
+annotations for even better distinction between matched names.
 
 \section*{Conclusions}
 
