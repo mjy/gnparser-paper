@@ -211,11 +211,11 @@
   name-strings. Measured throughput was 21.4 million names/hour per CPU (73.4
   million names/hour per 4 CPUs).  The \textit{gnparser} library is compatible
   with Scala, Java, R, Jython, and JRuby. The parser can be used as a command
-  line application, socker server, webb-app or RESTful http-service.
+  line application, socket server, webb-app or RESTful http-service.
   \parttitle{Conclusions}
   Global Names Parser (\textit{gnparser}) is a high precision tool for
   biodiversity informatics. It is released under Open Source MIT license. We
-  beleive that with popularisation of this project very expensive and
+  believe that with popularisation of this project very expensive and
   error-prone manual parsing will not be needed anymore for the vast majority
   of situations.
 \end{abstract}
@@ -618,7 +618,7 @@ and differences of the results between the three parsers.
 The goal of Global Names Architecture is creation of an infrastructure for
 biology which uses scientific names to connect and inter-exchange biological
 data in the most complete, accurate and painless way. Parsing is the first
-step to this goal. We believe a scienific name parser needs to correspond to
+step to this goal. We believe a scientific name parser needs to correspond to
 the following requirements to be up to the task:
 
 1. \textbf{High Quality}. A parser should be able to break names into their
@@ -660,7 +660,7 @@ requirements
 
 \subsection*{High quality parsing}
 
-High quality parsing is probaby the most important out of the 5 requirements.
+High quality parsing is probably the most important out of the 5 requirements.
 We tested gnparser together with 2 other parsing projects. To our knowledge
 these three represent state of the art for parsing biological scientific
 names. GBIF name-parser uses regular expressions approach, while gnparser and
@@ -751,7 +751,7 @@ complications become unsurmantable.
 
 \subsection*{Global Scope}
 
-If we want to trully connect biological data using scientific names, no names
+If we want to truly connect biological data using scientific names, no names
 should be left behind, no matter how complex they are. During out testing we
 found that $Accuracy$ of GBIF name-parser was negatively affected by not
 dealing with hybrid formulae and infrasubspecific names (names with more then
@@ -815,7 +815,7 @@ scientific names.
   \begin{center}
     \caption{
       Names parsed per second by GN, GBIF and Biodiversity parsers
-      (runing on 1-12 parallel threads).
+      (running on 1-12 parallel threads).
     }\label{figure:throughput}
     \vspace{0.5cm}
     \begin{tabular}{| l | *{3}{r} | c c c |}
@@ -847,7 +847,7 @@ convoluta (Kük.) Dunlop}. In the first case name string describes a variety
 \textbf{convoluta} of \textbf{Carex scirpoidea} species described by
 \textbf{Kükenthal}. In the second case \textbf{Dunlop} recategorized \textbf
 {convoluta} as subspecies of \textbf{Carex scirpoidea}. We would not be able
-to distinguish between these two different names without seing a rank of a
+to distinguish between these two different names without seeing a rank of a
 name and the corresponding authorship. Furthermore it was important to see in
 the second example that \textbf{(Kük.)} was original author and
 \textbf{Dunlop} was the author of the new combination.
@@ -904,7 +904,7 @@ faster it means the cost of hardware to run it can be 10 times cheaper for the
 same amount of work to be done.
 
 For example, it took us 40 days to find and index names in Biodiversity
-Heritage Library. Just parsing step alone took more than a day. When somene
+Heritage Library. Just parsing step alone took more than a day. When someone
 finds a problem with name resolution in BHL, is not feasible to fix it at the
 moment, as it would take 40 days of reindexing whole BHL corpus of data. Our
 goal is to do this job in 1 day, so when our algorithms improve we can
@@ -1002,11 +1002,15 @@ Where to find the program etc.
 
 \section*{Abbreviations}
 
-GBIF -- Global Biological Informatics Facility
-
-PEG -- Parsing Expression Grammer
-
-REST --
+\begin{description}
+  \item[API] -- Application Program Interface
+  \item[BHL] -- Biodiversity Heritage Library
+  \item[GBIF] -- Global Biological Informatics Facility
+  \item[GNA] -- Global Names Architecture
+  \item[JSON] -- JavaScript Object Notation
+  \item[PEG] -- Parsing Expression Grammar
+  \item[REST] -- Representational State Transfer
+\end{description}
 
 \section*{Author's Contributions}
 
@@ -1015,26 +1019,6 @@ Who did what
 \section*{Acknowledgements}
 
 Grant and people to mention
-
-\section*{Leftovers to use in sections above}
-Scala is a strongly typed language built from the ground up as a combination of
-object oriented and functional programming paradigms. One of the main features
-of functional programming is preservation of immutable state, as a result it is
-possible to run several parts of program in parallell without danger of
-modifying state. Scala creates a rare flexibility of approaches to solve
-computational problems. Scala had been written on Java Virtual Machine. It
-means that the vast resources developed in Java are easily accessible in Scala.
-And vice versa -- the libraries we produce can be used in a plethora of
-languages (Java, Jython, Renjin, JRuby etc.). Scala, is a language designed for
-scalability. Projects like Akka and Spark create flexibility of approaches in
-concurrency and parallelization, allowing to execute code on many CPU and
-computers at the same time, dramatically reducing response time for large
-computational tasks.
-
-The library parboiled2 had been initiated by one of the authors of this
-manuscript, Alexander Myltsev in 2013 while participating in the Google Summer
-of Code project initiated by TypeSafe organization. Alexander also had been the
-major contributor in gnparser code.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%
