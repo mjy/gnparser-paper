@@ -950,8 +950,32 @@ All this creates larger potential audience for the parser, and will help many
 researches and programmers to deal with the complex problem in biodiversity
 informatics.
 
-We present the summary of the results/discussion in a
+The summary of results and discussion is depicted in
 Table~\ref{table:summary}
+
+\begin{table}[htb]
+  \begin{center}
+    \caption{Summary comparison of Scientific Name Parsers}
+    \label{table:summary}
+    \begin{tabular}{|l|*{3}{l}|}
+      \hline
+                             & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{Accuracy}      & $98.9\%$ & $96.7\%$    & $98.4\%$     \\
+      \textit{Hybrid formulas support}      & Yes     & No     & Yes \\
+      \textit{Infrasubspecies support}& Yes       & No         & Yes \\
+      \textit{Throughput (names/s)}& 5944  & 6389       & 1111         \\
+      \textit{Parsing details}     & Complete & Partial    & Complete    \\
+      \textit{Library for the same language}    & Yes      & Yes    & Yes \\
+      \textit{Library for other languages}            & Yes & Yes    & No    \\
+      \textit{Command line tool}      & Yes    & No       & Yes        \\
+      \textit{Socket server}      & Yes    & No       & Yes        \\
+      \textit{Web Interface}      & Yes    & Yes       & Yes        \\
+      \textit{RESTful service}      & Yes    & Yes       & Yes        \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
 
 \subsection*{Future plans}
 
