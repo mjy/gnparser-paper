@@ -961,17 +961,17 @@ Table~\ref{table:summary}
       \hline
                              & gnparser & gbif-parser & biodiversity \\
       \hline
-      \textit{Accuracy}      & $98.9\%$ & $96.7\%$    & $98.4\%$     \\
-      \textit{Hybrid formulas support}      & Yes     & No     & Yes \\
-      \textit{Infrasubspecies support}& Yes       & No         & Yes \\
-      \textit{Throughput (names/s)}& 5944  & 6389       & 1111         \\
-      \textit{Parsing details}     & Complete & Partial    & Complete    \\
-      \textit{Library for the same language}    & Yes      & Yes    & Yes \\
-      \textit{Library for other languages}            & Yes & Yes    & No    \\
-      \textit{Command line tool}      & Yes    & No       & Yes        \\
-      \textit{Socket server}      & Yes    & No       & Yes        \\
-      \textit{Web Interface}      & Yes    & Yes       & Yes        \\
-      \textit{RESTful service}      & Yes    & Yes       & Yes        \\
+      \textit{Accuracy}                     & $98.9\%$ & $96.7\%$ & $98.4\%$\\
+      \textit{Hybrid formulas support}      & Yes      & No       & Yes     \\
+      \textit{Infrasubspecies support}      & Yes      & No       & Yes     \\
+      \textit{Throughput (names/s)}         & 5944     & 6389     & 1111    \\
+      \textit{Parsing details}              & Complete & Partial  & Complete\\
+      \textit{Library for the same language}& Yes      & Yes      & Yes     \\
+      \textit{Library for other languages}  & Yes      & Yes      & No      \\
+      \textit{Command line tool}            & Yes      & No       & Yes     \\
+      \textit{Socket server}                & Yes      & No       & Yes     \\
+      \textit{Web Interface}                & Yes      & Yes      & Yes     \\
+      \textit{RESTful service}              & Yes      & Yes      & Yes     \\
       \hline
     \end{tabular}
   \end{center}
@@ -994,11 +994,22 @@ matching, finding them in texts, sharing them in standardised forms,
 extracting, comparing and analysing metadata ``hidden'' in the name strings.
 The gnparser tool is released under MIT Open Source license, contains command
 line executable, socket, web, and REST services, and is optimized for use as a
-library in languages like Scala, Java, R, Jyphon, Jruby.
+library in languages like Scala, Java, R, Jyphon, JRuby.
 
 \section*{Availability and Requirements}
 
-Where to find the program etc.
+\begin{description}
+  \item[Project Name:] gnparser
+  \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser
+  \item[Operating System:] Platform independent
+  \item[Programming Language:] Scala
+  \item[License:] The MIT License
+  \item[Any restrictions to use by non-academic:] no restriction
+\end{description}
+
+\section*{Additional Files}
+
+TODO: submit test files
 
 \section*{Abbreviations}
 
@@ -1012,13 +1023,24 @@ Where to find the program etc.
   \item[REST] -- Representational State Transfer
 \end{description}
 
+\section*{Competing Interests}
+
+The authors declare that they have no competing interests.
+
 \section*{Author's Contributions}
 
-Who did what
+DYM and AAM designed gnparser. DYM created requirements and test suite. AAM
+optimized gnparser for speed, refactored it into three internal subprojects.
+DYM set docker containers and kubernetes scripts. DYM and AAM wrote online
+documentation and JSON schema to formalize output. DJP corrected parser's
+results, calibrated quality output and errors output. DYM and AAM drafted
+manuscript and DJP edited its final version. All authors read and approved the
+final manuscript.
 
 \section*{Acknowledgements}
 
-Grant and people to mention
+This work is supported by National Science Foundation under grant number NSF
+DBI-1356347
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%
