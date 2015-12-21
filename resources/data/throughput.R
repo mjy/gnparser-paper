@@ -2,6 +2,7 @@
 
 require(ggplot2)
 require(tikzDevice)
+require(grid)
 
 data <- read.csv("throughput.csv")
 
@@ -22,6 +23,7 @@ ggplot(data=data, aes(x=threads, y=nps(mph),
       legend.position = c(0.8,0.35),
       panel.grid.major = element_line(colour = "white"),
       axis.line = element_line(colour = "black"),
+      axis.title.y = element_text(vjust = 1),
       axis.ticks = element_line(colour = "black"),
       axis.text = element_text(colour = "black", size = 10),
       panel.grid.minor = element_blank(),
