@@ -59,6 +59,7 @@
 \usepackage{listings}
 \usepackage{bera}
 \usepackage{multirow}
+\usepackage{fancyvrb}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 \lstdefinelanguage{json}{
@@ -130,7 +131,7 @@
 \author[
    addressref={aff1},
    corref={aff1},                       % id of corresponding address, if any
-   email={dmozzherin@illinois.edu}
+   email={mozzheri@illinois.edu}
 ]{\inits{DYM}\fnm{Dmitry Y.} \snm{Mozzherin}}
 \author[                  % id's of addresses, e.g. {aff1,aff2}
    noteref={n1},% id's of article notes, if any
@@ -763,6 +764,7 @@ higher than $95\%$. Both gnparser and biodiversity parser were approaching
 mistakes. For example, out of 11 false positives for gnparser only 2 were
 well-formed names:
 
+\vspace{0.5cm}
 \begin{verbatim}
     Eucalyptus subser. Regulares Brooker
     Jacquemontia spiciflora (Choisy) Hall. fil.
@@ -777,6 +779,7 @@ well-formed names:
     Myosorex muricauda (Miller, 1900).
     Papillaria amblyacis (M<81>ll.Hal.) A.Jaeger
 \end{verbatim}
+\vspace{0.5cm}
 
 As it is seen from the name-strings above we do expect parsers to deal with
 mistakes, annotations, and unicode characters miscodings. To alert users
@@ -800,6 +803,7 @@ start with a lowercase character. As a result the strings below were parsed as
 scientific names, while other parsers ignored them:
 
 
+\vspace{0.5cm}
 \begin{verbatim}
     acid mine drainage metagenome
     agricultural soil bacterium CRS5639T18-1
@@ -814,6 +818,7 @@ scientific names, while other parsers ignored them:
     barley rhizosphere bacterium JJ-220
     bovine rumen bacterium niuO17
 \end{verbatim}
+\vspace{0.5cm}
 
 Solutions like these might increase $Recall$ for certain low-quality datasets,
 but as we see in this example they also decrease $Precision$ for other, better
@@ -840,6 +845,7 @@ one infraspecific epithet). Regular expressions do not support recursion --
 the more complex names are, the harder it becomes to parse them. For example
 the following names were not supported by GBIF name-parser:
 
+\vspace{0.5cm}
 \begin{verbatim}
     Crataegus chlorosarca subtaxon pubescens E.L.Wolf
     Erigeron peregrinus ssp.callianthemus var. eucallianthemus
@@ -847,6 +853,7 @@ the following names were not supported by GBIF name-parser:
     Echinocereus fasciculatus var. bonkerae × E. fasciculatus
       var. fasciculatus
 \end{verbatim}
+\vspace{0.5cm}
 
 We use PEG approach because it allows to nest parsing rules within each other,
 making it possible to create progressively more and more complex rules -- the
@@ -858,6 +865,7 @@ scientific names.
   \begin{center}
     \caption{Precision/Recall for processed by parsers 1000
     name-strings}\label{table:precision}
+    \resizebox{10cm}{!} {
     \begin{tabular}{|l|*{3}{l}|}
       \hline
                              & gnparser & gbif-parser & biodiversity \\
@@ -872,6 +880,7 @@ scientific names.
       \textit{Accuracy}      & 0.989    & 0.967       & 0.984        \\
       \hline
     \end{tabular}
+    }
   \end{center}
 \end{table}
 
@@ -879,6 +888,7 @@ scientific names.
   \begin{center}
     \caption{Precision for discarded by parsers names, out of 100 000
     name-strings}\label{table:unparsed}
+    \resizebox{10cm}{!} {
     \begin{tabular}{| l | *{3}{l} |}
       \hline
                               & gnparser & gbif-parser & biodiversity \\
@@ -889,6 +899,7 @@ scientific names.
       \textit{Precision}      & 0.998231 & 0.868761    & 0.9922481    \\
       \hline
     \end{tabular}
+  }
   \end{center}
 \end{table}
 
@@ -943,25 +954,28 @@ All components of a name are important, and need to be parsed and categorized.
 With gnparser we describe meaning of every word in the parsed name-string
 and present it in JSON format:
 
-\begin{verbatim}
-  {"name_string_id":"203213f3-99d1-5f5e-810a-4453c4d220cb", "parsed":true,
-  "quality":1, "parser_version":"0.2.0", "verbatim":"Carex scirpoidea Michx.
-  subsp. convoluta (Kük.) D.A. Dunlop", "normalized":"Carex scirpoidea Michx.
-  ssp. convoluta (Kük.) D. A. Dunlop", "canonical_name":{"value":"Carex
-  scirpoidea convoluta", "extended":"Carex scirpoidea ssp. convoluta"},
-  "hybrid":false, "surrogate":false, "virus":false,
-  "details":[{"genus":{"value":"Carex"},
-  "specific_epithet":{"value":"scirpoidea", "authorship":{"value":"Michx.",
-  "basionym_authorship":{"authors":["Michx."]}}},
-  "infraspecific_epithets":[{"value":"convoluta", "rank":"ssp.",
-  "authorship":{"value":"(Kük.) D. A. Dunlop",
-  "basionym_authorship":{"authors":["Kük."]},
-  "combination_authorship":{"authors":["D. A. Dunlop"]}}}]}],
-  "positions":[["genus",0,5], ["specific_epithet",6,16],
-  ["author_word",17,23], ["rank",24,30], ["infraspecific_epithet",31,40],
-  ["author_word",42,46], ["author_word",48,50], ["author_word",50,52],
-  ["author_word",53,59]]}
-\end{verbatim}
+
+\vspace{0.5cm}
+\begin{Verbatim}[fontsize=\small]
+{"name_string_id":"203213f3-99d1-5f5e-810a-4453c4d220cb", "parsed":true,
+"quality":1, "parser_version":"0.2.0", "verbatim":"Carex scirpoidea Michx.
+subsp. convoluta (Kük.) D.A. Dunlop", "normalized":"Carex scirpoidea Michx.
+ssp. convoluta (Kük.) D. A. Dunlop", "canonical_name":{"value":"Carex
+scirpoidea convoluta", "extended":"Carex scirpoidea ssp. convoluta"},
+"hybrid":false, "surrogate":false, "virus":false,
+"details":[{"genus":{"value":"Carex"},
+"specific_epithet":{"value":"scirpoidea", "authorship":{"value":"Michx.",
+"basionym_authorship":{"authors":["Michx."]}}},
+"infraspecific_epithets":[{"value":"convoluta", "rank":"ssp.",
+"authorship":{"value":"(Kük.) D. A. Dunlop",
+"basionym_authorship":{"authors":["Kük."]},
+"combination_authorship":{"authors":["D. A. Dunlop"]}}}]}],
+"positions":[["genus",0,5], ["specific_epithet",6,16],
+["author_word",17,23], ["rank",24,30], ["infraspecific_epithet",31,40],
+["author_word",42,46], ["author_word",48,50], ["author_word",50,52],
+["author_word",53,59]]}
+\end{Verbatim}
+\vspace{0.5cm}
 
 The output includes detailed meaning of every word in a name, indications if
 the name-string was parsed correctly, if it is a virus name, hybrid, or
@@ -1038,6 +1052,7 @@ Table~\ref{table:summary}
   \begin{center}
     \caption{Summary comparison of Scientific Name Parsers}
     \label{table:summary}
+    \resizebox{12.5cm}{!} {
     \begin{tabular}{|l|*{3}{l}|}
       \hline
                              & gnparser & gbif-parser & biodiversity \\
@@ -1055,6 +1070,7 @@ Table~\ref{table:summary}
       \textit{RESTful service}              & Yes      & Yes      & Yes     \\
       \hline
     \end{tabular}
+  }
   \end{center}
 \end{table}
 
