@@ -52,7 +52,22 @@ title = {{Flora of North America. Vol. 23, Magnoliophyta: Commelinidae (in part)
 year = {2002}
 }
 @article{VandenBerghe2015,
-abstract = {In the domain of biological classification there are several taxon name matching services that can search for a species scientific name in a large collection of taxonomic names. Many of these services are available online, and many others run on computers of individual scientists. While these systems may work very well, most suffer from the fact that the list of names used as a reference, and the criteria to decide on a match, are hard-coded in the engine that performs the name matching. In this paper we present BiOnym, a taxon name matching system that separates reference namelists, search criteria and matching engine. The user is offered a choice of several taxonomic reference lists, including the option to upload his/her own list onto the system. Furthermore, BiOnym is a flexible workflow, which embeds and combines techniques using lexical matching algorithms as well as expert knowledge. It is also an open platform allowing developers to contribute with new techniques. In this paper we demonstrate the benefits brought by this approach in terms of the efficiency and effectiveness of the information retrieval process with respect to other solutions.},
+abstract = {In the domain of biological classification there are several taxon
+name matching services that can search for a species scientific name in a
+large collection of taxonomic names. Many of these services are available
+online, and many others run on computers of individual scientists. While these
+systems may work very well, most suffer from the fact that the list of names
+used as a reference, and the criteria to decide on a match, are hard-coded in
+the engine that performs the name matching. In this paper we present BiOnym, a
+taxon name matching system that separates reference namelists, search criteria
+and matching engine. The user is offered a choice of several taxonomic
+reference lists, including the option to upload his/her own list onto the
+system. Furthermore, BiOnym is a flexible workflow, which embeds and combines
+techniques using lexical matching algorithms as well as expert knowledge. It
+is also an open platform allowing developers to contribute with new
+techniques. In this paper we demonstrate the benefits brought by this approach
+in terms of the efficiency and effectiveness of the information retrieval
+process with respect to other solutions.},
 author = {{Vanden Berghe}, Edward and Coro, Gianpaolo and Bailly, Nicolas and Fiorellato, Fabio and Aldemita, Caselyn and Ellenbroek, Anton and Pagano, Pasquale},
 doi = {10.1016/j.ecoinf.2015.05.004},
 file = {:home/dimus/dl/vanden berghe et al 2015.pdf:pdf},
@@ -66,7 +81,18 @@ volume = {28},
 year = {2015}
 }
 @article{LeaseM.2005,
-abstract = {We present a preliminary study of several parser adaptation techniques evaluated on the GENIA corpus of MEDLINE abstracts [1,2]. We begin by observing that the Penn Treebank (PTB) is lexically impoverished when measured on various genres of scientific and technical writing, and that this significantly impacts parse accuracy. To resolve this without requiring in-domain treebank data, we show how existing domain-specific lexical resources may be leveraged to augment PTB-training: part-of-speech tags, dictionary collocations, and named-entities. Using a state-of-the-art statistical parser [3] as our baseline, our lexically-adapted parser achieves a 14.2{\%} reduction in error. With oracle-knowledge of named-entities, this error reduction improves to 21.2{\%}. © Springer-Verlag Berlin Heidelberg 2005.},
+abstract = {We present a preliminary study of several parser adaptation
+techniques evaluated on the GENIA corpus of MEDLINE abstracts [1,2]. We begin
+by observing that the Penn Treebank (PTB) is lexically impoverished when
+measured on various genres of scientific and technical writing, and that this
+significantly impacts parse accuracy. To resolve this without requiring
+in-domain treebank data, we show how existing domain-specific lexical
+resources may be leveraged to augment PTB-training: part-of-speech tags,
+dictionary collocations, and named-entities. Using a state-of-the-art
+statistical parser [3] as our baseline, our lexically-adapted parser achieves
+a 14.2{\%} reduction in error. With oracle-knowledge of named-entities, this
+error reduction improves to 21.2{\%}. © Springer-Verlag Berlin Heidelberg
+2005.},
 author = {{Lease M.}, Charniak E},
 doi = {10.1007/11562214{\_}6},
 isbn = {3540291725; 9783540291725},
@@ -80,7 +106,23 @@ volume = {3651 LNAI},
 year = {2005}
 }
 @article{Ford2006,
-abstract = {Packrat parsing is a novel technique for implementing parsers in a lazy functional programming language. A packrat parser provides the power and flexibility of top-down parsing with backtracking and unlimited lookahead, but nevertheless guarantees linear parse time. Any language defined by an LL(k) or LR(k) grammar can be recognized by a packrat parser, in addition to many languages that conventional linear-time algorithms do not support. This additional power simplifies the handling of common syntactic idioms such as the widespread but troublesome longest-match rule, enables the use of sophisticated disambiguation strategies such as syntactic and semantic predicates, provides better grammar composition properties, and allows lexical analysis to be integrated seamlessly into parsing. Yet despite its power, packrat parsing shares the same simplicity and elegance as recursive descent parsing; in fact converting a backtracking recursive descent parser into a linear-time packrat parser often involves only a fairly straightforward structural change. This paper describes packrat parsing informally with emphasis on its use in practical applications, and explores its advantages and disadvantages with respect to the more conventional alternatives.},
+abstract = {Packrat parsing is a novel technique for implementing parsers in a
+lazy functional programming language. A packrat parser provides the power and
+flexibility of top-down parsing with backtracking and unlimited lookahead, but
+nevertheless guarantees linear parse time. Any language defined by an LL(k) or
+LR(k) grammar can be recognized by a packrat parser, in addition to many
+languages that conventional linear-time algorithms do not support. This
+additional power simplifies the handling of common syntactic idioms such as
+the widespread but troublesome longest-match rule, enables the use of
+sophisticated disambiguation strategies such as syntactic and semantic
+predicates, provides better grammar composition properties, and allows lexical
+analysis to be integrated seamlessly into parsing. Yet despite its power,
+packrat parsing shares the same simplicity and elegance as recursive descent
+parsing; in fact converting a backtracking recursive descent parser into a
+linear-time packrat parser often involves only a fairly straightforward
+structural change. This paper describes packrat parsing informally with
+emphasis on its use in practical applications, and explores its advantages and
+disadvantages with respect to the more conventional alternatives.},
 archivePrefix = {arXiv},
 arxivId = {cs/0603077},
 author = {Ford, Bryan},
@@ -97,7 +139,28 @@ url = {http://arxiv.org/abs/cs/0603077},
 year = {2006}
 }
 @article{Grimm2004,
-abstract = {A considerable number of research projects are exploring how to extend object-oriented programming languages such as Java with, for example, support for generics, multiple dispatch, or pattern matching. To keep up with these changes, language implementors need appropriate tools. In this context, easily extensible parser generators are especially important because parsing program sources is a necessary first step for any language processor, be it a compiler, syntax-highlighting editor, or API documentation generator. Unfortunately, context-free grammars and the corresponding LR or LL parsers, while well understood and widely used, are also unnecessarily hard to extend. To address this lack of appropriate tools, we introduce Rats!, a parser generator for Java that supports easily modifiable grammars and avoids the complexities associated with altering LR or LL grammars. Our work builds on recent research on packrat parsers, which are recursive descent parsers that perform backtracking but also memoize all intermediate results (hence their name), thus ensuring linear-time performance. Our work makes this parsing technique, which has been developed in the context of functional programming languages, practical for object-oriented languages. Furthermore, our parser generator supports simpler grammar specifications and more convenient error reporting, while also producing better performing parsers through aggressive optimizations. In this paper, we motivate the need for more easily extensible parsers, describe our parser generator and its optimizations in detail, and present the results of our experimental evaluation.},
+abstract = {A considerable number of research projects are exploring how to
+extend object-oriented programming languages such as Java with, for example,
+support for generics, multiple dispatch, or pattern matching. To keep up with
+these changes, language implementors need appropriate tools. In this context,
+easily extensible parser generators are especially important because parsing
+program sources is a necessary first step for any language processor, be it a
+compiler, syntax-highlighting editor, or API documentation generator.
+Unfortunately, context-free grammars and the corresponding LR or LL parsers,
+while well understood and widely used, are also unnecessarily hard to extend.
+To address this lack of appropriate tools, we introduce Rats!, a parser
+generator for Java that supports easily modifiable grammars and avoids the
+complexities associated with altering LR or LL grammars. Our work builds on
+recent research on packrat parsers, which are recursive descent parsers that
+perform backtracking but also memoize all intermediate results (hence their
+name), thus ensuring linear-time performance. Our work makes this parsing
+technique, which has been developed in the context of functional programming
+languages, practical for object-oriented languages. Furthermore, our parser
+generator supports simpler grammar specifications and more convenient error
+reporting, while also producing better performing parsers through aggressive
+optimizations. In this paper, we motivate the need for more easily
+extensible parsers, describe our parser generator and its optimizations in
+detail, and present the results of our experimental evaluation.},
 author = {Grimm, Robert},
 journal = {New York University Technical Report, Dept. of Computer Science, TR2004-854},
 keywords = {extensible programming languages,packrat parsers,parser generators,parsing expression grammars},
@@ -107,7 +170,37 @@ url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.82.675{\&}amp;re
 year = {2004}
 }
 @book{Grune2008,
-abstract = {Parsing, also referred to as syntax analysis, has been and continues to be an essential part of computer science and linguistics. Today, parsing techniques are also implemented in a number of other disciplines, including but not limited to, document preparation and conversion, typesetting chemical formulae, and chromosome recognition. This second edition presents new developments and discoveries that have been made in the field. Parsing techniques have grown considerably in importance, both in computational linguistics where such parsers are the only option, and computer science, where advanced compilers often use general CF parsers. Parsing techniques provide a solid basis for compiler construction and contribute to all existing software: enabling Web browsers to analyze HTML pages and PostScript printers to analyze PostScript. Some of the more advanced techniques are used in code generation in compilers and in data compression. In linguistics, the importance of formal grammars was recognized early on, but only recently have the corresponding parsing techniques been applied. Also their importance as general pattern recognizers is slowly being acknowledged. This text Parsing Techniques explores new developments, such as generalized deterministic parsing, linear-time substring parsing, parallel parsing, parsing as intersection, non-canonical methods, and non-Chomsky systems. To provide readers with low-threshold access to the full field of parsing techniques, this new edition uses a two-tiered structure. The basic ideas behind the dozen or so existing parsing techniques are explained in an intuitive and narrative style, and problems are presented at the conclusion of each chapter, allowing the reader to step outside the bounds of the covered material and explore parsing techniques at various levels. The reader is also provided with an extensive annotated bibliography as well as hints and partial solutions to a number of problems. In the bibliography, hundreds of realizations and improvements of parsing techniques are explained in a much terser, yet still informal, style, improving its readability and usability. The reader should have an understanding of algorithmic thinking, especially recursion; however, knowledge of any particular programming language is not required.},
+abstract = {Parsing, also referred to as syntax analysis, has been and
+continues to be an essential part of computer science and linguistics. Today,
+parsing techniques are also implemented in a number of other disciplines,
+including but not limited to, document preparation and conversion, typesetting
+chemical formulae, and chromosome recognition. This second edition presents
+new developments and discoveries that have been made in the field. Parsing
+techniques have grown considerably in importance, both in computational
+linguistics where such parsers are the only option, and computer science,
+where advanced compilers often use general CF parsers. Parsing techniques
+provide a solid basis for compiler construction and contribute to all existing
+software: enabling Web browsers to analyze HTML pages and PostScript printers
+to analyze PostScript. Some of the more advanced techniques are used in code
+generation in compilers and in data compression. In linguistics, the
+importance of formal grammars was recognized early on, but only recently have
+the corresponding parsing techniques been applied. Also their importance as
+general pattern recognizers is slowly being acknowledged. This text Parsing
+Techniques explores new developments, such as generalized deterministic
+parsing, linear-time substring parsing, parallel parsing, parsing as
+intersection, non-canonical methods, and non-Chomsky systems. To provide
+readers with low-threshold access to the full field of parsing techniques,
+this new edition uses a two-tiered structure. The basic ideas behind the dozen
+or so existing parsing techniques are explained in an intuitive and narrative
+style, and problems are presented at the conclusion of each chapter, allowing
+the reader to step outside the bounds of the covered material and explore
+parsing techniques at various levels. The reader is also provided with an
+extensive annotated bibliography as well as hints and partial solutions to a
+number of problems. In the bibliography, hundreds of realizations and
+improvements of parsing techniques are explained in a much terser, yet still
+informal, style, improving its readability and usability. The reader should
+have an understanding of algorithmic thinking, especially recursion; however,
+knowledge of any particular programming language is not required.},
 author = {Grune, Dick and Jacobs, Ceriel J H},
 booktitle = {Parsing Techniques: A Practical Guide},
 doi = {10.1007/978-0-387-68954-8},
@@ -117,7 +210,46 @@ title = {{Parsing techniques: A practical guide}},
 year = {2008}
 }
 @article{Penev2010,
-abstract = {The concept of semantic tagging and its potential for semantic enhancements to taxonomic papers is outlined and illustrated by four exemplar papers published in the present issue of ZooKeys. The four papers were created in different ways: (i) written in Microsoft Word and submitted as non-tagged manuscript (doi: 10.3897/zookeys.50.504); (ii) generated from Scratchpads and submitted as XML-tagged manuscripts (doi: 10.3897/zookeys.50.505 and doi: 10.3897/zookeys.50.506); (iii) generated from an author's database (doi: 10.3897/zookeys.50.485) and submitted as XML-tagged manuscript. XML tagging and semantic enhancements were implemented during the editorial process of ZooKeys using the Pensoft Mark Up Tool (PMT), specially designed for this purpose. The XML schema used was TaxPub, an extension to the Document Type Definitions (DTD) of the US National Library of Medicine Journal Archiving and Interchange Tag Suite (NLM). The following innovative methods of tagging, layout, publishing and disseminating the content were tested and implemented within the ZooKeys editorial workflow: (1) highly automated, fine-grained XML tagging based on TaxPub; (2) final XML output of the paper validated against the NLM DTD for archiving in PubMedCentral; (3) bibliographic metadata embedded in the PDF through XMP (Extensible Metadata Platform); (4) PDF uploaded after publication to the Biodiversity Heritage Library (BHL); (5) taxon treatments supplied through XML to Plazi; (6) semantically enhanced HTML version of the paper encompassing numerous internal and external links and linkouts, such as: (i) vizualisation of main tag elements within the text (e.g., taxon names, taxon treatments, localities, etc.); (ii) internal cross-linking between paper sections, citations, references, tables, and figures; (iii) mapping of localities listed in the whole paper or within separate taxon treatments; (v) taxon names autotagged, dynamically mapped and linked through the Pensoft Taxon Profile (PTP) to large international database services and indexers such as Global Biodiversity Information Facility (GBIF), National Center for Biotechnology Information (NCBI), Barcode of Life (BOLD), Encyclopedia of Life (EOL), ZooBank, Wikipedia, Wikispecies, Wikimedia, and others; (vi) GenBank accession numbers autotagged and linked to NCBI; (vii) external links of taxon names to references in PubMed, Google Scholar, Biodiversity Heritage Library and other sources. With the launching of the working example, ZooKeys becomes the first taxonomic journal to provide a complete XML-based editorial, publication and dissemination workflow implemented as a routine and cost-efficient practice. It is anticipated that XML-based workflow will also soon be implemented in botany through PhytoKeys, a forthcoming partner journal of ZooKeys. The semantic markup and enhancements are expected to greatly extend and accelerate the way taxonomic information is published, disseminated and used.},
+abstract = {The concept of semantic tagging and its potential for semantic
+enhancements to taxonomic papers is outlined and illustrated by four exemplar
+papers published in the present issue of ZooKeys. The four papers were created
+in different ways: (i) written in Microsoft Word and submitted as non-tagged
+manuscript (doi: 10.3897/zookeys.50.504); (ii) generated from Scratchpads and
+submitted as XML-tagged manuscripts (doi: 10.3897/zookeys.50.505 and doi:
+10.3897/zookeys.50.506); (iii) generated from an author's database (doi:
+10.3897/zookeys.50.485) and submitted as XML-tagged manuscript. XML tagging
+and semantic enhancements were implemented during the editorial process of
+ZooKeys using the Pensoft Mark Up Tool (PMT), specially designed for this
+purpose. The XML schema used was TaxPub, an extension to the Document Type
+Definitions (DTD) of the US National Library of Medicine Journal Archiving and
+Interchange Tag Suite (NLM). The following innovative methods of tagging,
+layout, publishing and disseminating the content were tested and implemented
+within the ZooKeys editorial workflow: (1) highly automated, fine-grained XML
+tagging based on TaxPub; (2) final XML output of the paper validated against
+the NLM DTD for archiving in PubMedCentral; (3) bibliographic metadata
+embedded in the PDF through XMP (Extensible Metadata Platform); (4) PDF
+uploaded after publication to the Biodiversity Heritage Library (BHL); (5)
+taxon treatments supplied through XML to Plazi; (6) semantically enhanced HTML
+version of the paper encompassing numerous internal and external links and
+linkouts, such as: (i) vizualisation of main tag elements within the text
+(e.g., taxon names, taxon treatments, localities, etc.); (ii) internal
+cross-linking between paper sections, citations, references, tables, and
+figures; (iii) mapping of localities listed in the whole paper or within
+separate taxon treatments; (v) taxon names autotagged, dynamically mapped and
+linked through the Pensoft Taxon Profile (PTP) to large international database
+services and indexers such as Global Biodiversity Information Facility (GBIF),
+National Center for Biotechnology Information (NCBI), Barcode of Life (BOLD),
+Encyclopedia of Life (EOL), ZooBank, Wikipedia, Wikispecies, Wikimedia, and
+others; (vi) GenBank accession numbers autotagged and linked to NCBI; (vii)
+external links of taxon names to references in PubMed, Google Scholar,
+Biodiversity Heritage Library and other sources. With the launching of the
+working example, ZooKeys becomes the first taxonomic journal to provide a
+complete XML-based editorial, publication and dissemination workflow
+implemented as a routine and cost-efficient practice. It is anticipated that
+XML-based workflow will also soon be implemented in botany through PhytoKeys,
+a forthcoming partner journal of ZooKeys. The semantic markup and enhancements
+are expected to greatly extend and accelerate the way taxonomic information is
+published, disseminated and used.},
 author = {Penev, Lyubomir and Agosti, Donat and Georgiev, Teodor and Catapano, Terry and Miller, Jeremy and Blagoderov, Vladimir and Roberts, David and Smith, Vincent S and Brake, Irina and Ryrcroft, Simon and Scott, Ben and Johnson, Norman F and Morris, Robert a and Sautter, Guido and Chavan, Vishwas and Robertson, Tim and Remsen, David and Stoev, Pavel and Parr, Cynthia and Knapp, Sandra and Kress, W John and Thompson, Chris F and Erwin, Terry},
 doi = {10.3897/zookeys.50.538},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Penev et al. - 2010 - Semantic tagging of and semantic enhancements to systematics papers ZooKeys working examples.pdf:pdf},
@@ -133,7 +265,24 @@ volume = {16},
 year = {2010}
 }
 @article{Mora2011,
-abstract = {The diversity of life is one of the most striking aspects of our planet; hence knowing how many species inhabit Earth is among the most fundamental questions in science. Yet the answer to this question remains enigmatic, as efforts to sample the world's biodiversity to date have been limited and thus have precluded direct quantification of global species richness, and because indirect estimates rely on assumptions that have proven highly controversial. Here we show that the higher taxonomic classification of species (i.e., the assignment of species to phylum, class, order, family, and genus) follows a consistent and predictable pattern from which the total number of species in a taxonomic group can be estimated. This approach was validated against well-known taxa, and when applied to all domains of life, it predicts ∼8.7 million (±1.3 million SE) eukaryotic species globally, of which ∼2.2 million (±0.18 million SE) are marine. In spite of 250 years of taxonomic classification and over 1.2 million species already catalogued in a central database, our results suggest that some 86{\%} of existing species on Earth and 91{\%} of species in the ocean still await description. Renewed interest in further exploration and taxonomy is required if this significant gap in our knowledge of life on Earth is to be closed.},
+abstract = {The diversity of life is one of the most striking aspects of our
+planet; hence knowing how many species inhabit Earth is among the most
+fundamental questions in science. Yet the answer to this question remains
+enigmatic, as efforts to sample the world's biodiversity to date have been
+limited and thus have precluded direct quantification of global species
+richness, and because indirect estimates rely on assumptions that have proven
+highly controversial. Here we show that the higher taxonomic classification of
+species (i.e., the assignment of species to phylum, class, order, family, and
+genus) follows a consistent and predictable pattern from which the total
+number of species in a taxonomic group can be estimated. This approach was
+validated against well-known taxa, and when applied to all domains of life, it
+predicts ∼8.7 million (±1.3 million SE) eukaryotic species globally, of which
+∼2.2 million (±0.18 million SE) are marine. In spite of 250 years of taxonomic
+classification and over 1.2 million species already catalogued in a central
+database, our results suggest that some 86{\%} of existing species on Earth
+and 91{\%} of species in the ocean still await description. Renewed interest
+in further exploration and taxonomy is required if this significant gap in our
+knowledge of life on Earth is to be closed.},
 author = {Mora, Camilo and Tittensor, Derek P. and Adl, Sina and Simpson, Alastair G B and Worm, Boris},
 doi = {10.1371/journal.pbio.1001127},
 isbn = {1545-7885 (Electronic)$\backslash$n1544-9173 (Linking)},
@@ -147,7 +296,12 @@ volume = {9},
 year = {2011}
 }
 @book{ICN,
-abstract = {This International Code of Nomenclature for algae, fungi, and plants (ICN) replaces the formerly called International Code of Botanical Nomenclature (ICBN). The new code (Melbourne Code) took effect on July 23rd, 2011, when it was ratified by the International Botanical Congress. - The title of the code was changed to show that it does not apply to plants only, but also to algae and fungi. Send Link to a Friend},
+abstract = {This International Code of Nomenclature for algae, fungi, and
+plants (ICN) replaces the formerly called International Code of Botanical
+Nomenclature (ICBN). The new code (Melbourne Code) took effect on July 23rd,
+2011, when it was ratified by the International Botanical Congress. - The
+title of the code was changed to show that it does not apply to plants only,
+but also to algae and fungi. Send Link to a Friend},
 author = {Mcneill, J and Barrie, F R and Buck, W R and Demoulin, V and Greuter, W and Hawksworth, D L and Herendeen, P S and Knapp, S and Marhold, K and Prado, J and {Prud Homme Van Reine}, W F and Smith, G F and Wiersema, J H and Turland, N J},
 booktitle = {Koeltz Scientific Books},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Mcneill et al. - 2012 - International Code of Nomenclature for algae, fungi, and plants (Melbourne Code). Regnum Vegetabile 154.pdf:pdf},
@@ -158,7 +312,18 @@ title = {{International Code of Nomenclature for algae, fungi, and plants (Melbo
 year = {2012}
 }
 @article{Linnaeus1767,
-abstract = {O Systema Naturae (de nome completo: Systema naturae per regna tria naturae, secundum classes, ordines, genera, species, cum characteribus differentiis, synonymis, locis) foi um livro escrito por Lineu, no qual o autor faz a delinea{\c{c}}{\~{a}}o das suas ideias para uma classifica{\c{c}}{\~{a}}o hier{\'{a}}rquica das esp{\'{e}}cies. Foi um livro publicado em latim. A primeira edi{\c{c}}{\~{a}}o foi de 1735. A primeira edi{\c{c}}{\~{a}}o continha apenas 10 p{\'{a}}ginas. Na sua 13ª edi{\c{c}}{\~{a}}o, em 1770, tinha j{\'{a}} 3000 p{\'{a}}ginas. A 10ª edi{\c{c}}{\~{a}}o do Systema Naturae de Linnaeus, 1758 {\'{e}} o trabalho que iniciou a aplica{\c{c}}{\~{a}}o geral da nomenclatura binomial zool{\'{o}}gica. Portanto, esta data {\'{e}} aceita como ponto de partida da nomeclatura zool{\'{o}}gica e da lei da prioridade.},
+abstract = {O Systema Naturae (de nome completo: Systema naturae per regna
+tria naturae, secundum classes, ordines, genera, species, cum characteribus
+differentiis, synonymis, locis) foi um livro escrito por Lineu, no qual o
+autor faz a delinea{\c{c}}{\~{a}}o das suas ideias para uma
+classifica{\c{c}}{\~{a}}o hier{\'{a}}rquica das esp{\'{e}}cies. Foi um livro
+publicado em latim. A primeira edi{\c{c}}{\~{a}}o foi de 1735. A primeira
+edi{\c{c}}{\~{a}}o continha apenas 10 p{\'{a}}ginas. Na sua 13ª
+edi{\c{c}}{\~{a}}o, em 1770, tinha j{\'{a}} 3000 p{\'{a}}ginas. A 10ª
+edi{\c{c}}{\~{a}}o do Systema Naturae de Linnaeus, 1758 {\'{e}} o trabalho que
+iniciou a aplica{\c{c}}{\~{a}}o geral da nomenclatura binomial
+zool{\'{o}}gica. Portanto, esta data {\'{e}} aceita como ponto de partida da
+nomeclatura zool{\'{o}}gica e da lei da prioridade.},
 author = {Linnaeus, C},
 doi = {10.5962/bhl.title.542},
 isbn = {0005671000},
@@ -172,7 +337,13 @@ volume = {12},
 year = {1767}
 }
 @book{Linnaeus1758,
-abstract = {Vitulina.4 . P. dentibus laniariis tectis. Syst. nat. 6. N. I. Phoca f. Vitulus marinus. Gesn. aqu. 702. Aldr. Pifc. 722. Fonft. Pisc. 44. Dodart. act. 191. t. 191. Raj. Quadr. 189. Habitat in mari Europaeo. Sial Dormiunt in lapide ex aqua eminente, pariunt in glacie , per quam adscendunt halitu , non descendunt. Mammas retrahunt duas abdominis ; inter Halecum catervos saginantur, a Laris provocatae exspuunt pisces. Anatome. E. N. C. d. I. a. 9. obs. 98 {\&} d. 3. a. 7. app.15.},
+abstract = {Vitulina.4 . P. dentibus laniariis tectis. Syst. nat. 6. N. I.
+Phoca f. Vitulus marinus. Gesn. aqu. 702. Aldr. Pifc. 722. Fonft. Pisc. 44.
+Dodart. act. 191. t. 191. Raj. Quadr. 189. Habitat in mari Europaeo. Sial
+Dormiunt in lapide ex aqua eminente, pariunt in glacie , per quam adscendunt
+halitu , non descendunt. Mammas retrahunt duas abdominis ; inter Halecum
+catervos saginantur, a Laris provocatae exspuunt pisces. Anatome. E. N. C. d.
+I. a. 9. obs. 98 {\&} d. 3. a. 7. app.15.},
 author = {Linnaeus, C},
 booktitle = {L. Salmii, Holmiae},
 pages = {824},
@@ -181,7 +352,10 @@ url = {http://scholar.google.com/scholar?hl=en{\&}btnG=Search{\&}q=intitle:syste
 year = {1758}
 }
 @book{Linne1753,
-abstract = {Updated version of the seminal taxonomic treatment of plants. "36. Polygonum perfoliatum. P. foliis triangularibus, caule aculeato, stipulis perfoliato-foliosis patentibus subrotundis. Burm. ind. 90. t. 31 f. 2." Keyywords: Taxonomy},
+abstract = {Updated version of the seminal taxonomic treatment of plants. "36.
+Polygonum perfoliatum. P. foliis triangularibus, caule aculeato, stipulis
+perfoliato-foliosis patentibus subrotundis. Burm. ind. 90. t. 31 f. 2."
+Keyywords: Taxonomy},
 author = {Linne, C Von},
 booktitle = {Search},
 pages = {583},
@@ -190,7 +364,30 @@ url = {http://books.google.com/books?hl=en{\&}lr={\&}id=jQ0AAAAAQAAJ{\&}oi=fnd{\
 year = {1753}
 }
 @article{Ratnasingham2013,
-abstract = {Because many animal species are undescribed, and because the identification of known species is often difficult, interim taxonomic nomenclature has often been used in biodiversity analysis. By assigning individuals to presumptive species, called operational taxonomic units (OTUs), these systems speed investigations into the patterning of biodiversity and enable studies that would otherwise be impossible. Although OTUs have conventionally been separated through their morphological divergence, DNA-based delineations are not only feasible, but have important advantages. OTU designation can be automated, data can be readily archived, and results can be easily compared among investigations. This study exploits these attributes to develop a persistent, species-level taxonomic registry for the animal kingdom based on the analysis of patterns of nucleotide variation in the barcode region of the cytochrome c oxidase I (COI) gene. It begins by examining the correspondence between groups of specimens identified to a species through prior taxonomic work and those inferred from the analysis of COI sequence variation using one new (RESL) and four established (ABGD, CROP, GMYC, jMOTU) algorithms. It subsequently describes the implementation, and structural attributes of the Barcode Index Number (BIN) system. Aside from a pragmatic role in biodiversity assessments, BINs will aid revisionary taxonomy by flagging possible cases of synonymy, and by collating geographical information, descriptive metadata, and images for specimens that are likely to belong to the same species, even if it is undescribed. More than 274,000 BIN web pages are now available, creating a biodiversity resource that is positioned for rapid growth.},
+abstract = {Because many animal species are undescribed, and because the
+identification of known species is often difficult, interim taxonomic
+nomenclature has often been used in biodiversity analysis. By assigning
+individuals to presumptive species, called operational taxonomic units (OTUs),
+these systems speed investigations into the patterning of biodiversity and
+enable studies that would otherwise be impossible. Although OTUs have
+conventionally been separated through their morphological divergence,
+DNA-based delineations are not only feasible, but have important advantages.
+OTU designation can be automated, data can be readily archived, and results
+can be easily compared among investigations. This study exploits these
+attributes to develop a persistent, species-level taxonomic registry for the
+animal kingdom based on the analysis of patterns of nucleotide variation in
+the barcode region of the cytochrome c oxidase I (COI) gene. It begins by
+examining the correspondence between groups of specimens identified to a
+species through prior taxonomic work and those inferred from the analysis of
+COI sequence variation using one new (RESL) and four established (ABGD, CROP,
+GMYC, jMOTU) algorithms. It subsequently describes the implementation, and
+structural attributes of the Barcode Index Number (BIN) system. Aside from a
+pragmatic role in biodiversity assessments, BINs will aid revisionary taxonomy
+by flagging possible cases of synonymy, and by collating geographical
+information, descriptive metadata, and images for specimens that are likely to
+belong to the same species, even if it is undescribed. More than 274,000 BIN
+web pages are now available, creating a biodiversity resource that is
+positioned for rapid growth.},
 author = {Ratnasingham, Sujeevan and Hebert, Paul D N},
 doi = {10.1371/journal.pone.0066213},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Ratnasingham, Hebert - 2013 - A DNA-based registry for all animal species the barcode index number (BIN) system.pdf:pdf},
@@ -208,7 +405,30 @@ volume = {8},
 year = {2013}
 }
 @article{Franz2009,
-abstract = {Taxonomic concepts (sensu Berendsohn) embody the underlying mean-  ings of scientific names as stated in a particular publication, thus offering a new way  to resolve semantic ambiguities that result from multiple revisions of a taxonomic  name. This paper presents a comprehensive and powerful language for representing  the relationships among taxonomic concepts. The language features terms and sym-  bols for concept relationships within a single taxonomic hierarchy, or between two  related but independently published hierarchies. Taxonomic concepts pertaining to a  single hierarchy are characterised by parent/child relationships, whereas those per-  taining to two independent hierarchies may have the following basic relationships:  congruence, inclusion (non-symmetrical, relative to the side of comparison), overlap,  and exclusion. The relationships are asserted by specialists who have the option to  add or subtract concepts on one or both sides of a relationship equation in order  to reconcile differences between non-congruent taxonomic perspectives. The terms  ‘and’, ‘or’ and ‘not’ are available, respectively, to connect multiple simultaneously  or alternatively valid relationship assessments, or to explicitly negate the validity  of a relationship. The language also permits the decomposition of a relationship  according to the intensional (property referencing) and ostensive (member pointing)  aspects of the compared taxonomic concepts. Adopting the concept relationship  language will facilitate a more precise documentation of similarities and differences  in multiple succeeding taxonomic perspectives, thereby preparing the stage for an  ontology-based integration of taxonomic and related biological information.  },
+abstract = {Taxonomic concepts (sensu Berendsohn) embody the underlying mean-
+ings of scientific names as stated in a particular publication, thus offering
+a new way  to resolve semantic ambiguities that result from multiple revisions
+of a taxonomic  name. This paper presents a comprehensive and powerful
+language for representing  the relationships among taxonomic concepts. The
+language features terms and sym-  bols for concept relationships within a
+single taxonomic hierarchy, or between two  related but independently
+published hierarchies. Taxonomic concepts pertaining to a  single hierarchy
+are characterised by parent/child relationships, whereas those per-  taining
+to two independent hierarchies may have the following basic relationships:
+congruence, inclusion (non-symmetrical, relative to the side of comparison),
+overlap,  and exclusion. The relationships are asserted by specialists who
+have the option to  add or subtract concepts on one or both sides of a
+relationship equation in order  to reconcile differences between non-congruent
+taxonomic perspectives. The terms  ‘and’, ‘or’ and ‘not’ are available,
+respectively, to connect multiple simultaneously  or alternatively valid
+relationship assessments, or to explicitly negate the validity  of a
+relationship. The language also permits the decomposition of a relationship
+according to the intensional (property referencing) and ostensive (member
+pointing)  aspects of the compared taxonomic concepts. Adopting the concept
+relationship  language will facilitate a more precise documentation of
+similarities and differences  in multiple succeeding taxonomic perspectives,
+thereby preparing the stage for an  ontology-based integration of taxonomic
+and related biological information.  },
 author = {Franz, N.M. and Peet, R.K.},
 doi = {10.1017/S147720000800282X},
 isbn = {1477-2000},
@@ -222,7 +442,39 @@ volume = {7},
 year = {2009}
 }
 @article{Samyn2012,
-abstract = {In an interesting contribution Joppa et al. (2011) revisit some aspects of the taxonomic impediment (Evenhuis 2007; http://www.cbd.int/gti/) and come to the conclusion that, contrary to the generally accepted idea, both the rates of species description and the number of taxonomists have increased exponentially since the 1950’s. Joppa et al. (2011) also note a marked decline in the number of species described per taxonomist which they attribute to the difficulty of finding new species in an ever declining ‘missing species pool’. Therefore, their results might be interpreted that today’s taxonomic workforce is sufficient to describe the remaining (shallow) ‘pool of missing species’. In this contribution, we question if this is indeed the case and propose a solution for speeding up taxonomic descriptions. We feel that Joppa et al. (2011) are overly enthusiastic, probably because their test cases represent a selection of the better-studied taxa (flowering plants, Conus snails, spiders, amphibians, birds and mammals). Contradicting the findings of Joppa et al. (2011) and using a much broader taxon sampling, which includes many poorly studied groups, Costello et al. (2011) observe that species description has roughly remained constant since the second World War, at least for terrestrial species. These results are congruent with other counts of species descriptions (Bacher 2012; Chapman 2009; May 2011; Zhang 2010; http://species.asu.edu/SOS). So it seems that the increasing rate of species description as reported by Joppa et al. (2011) is taxon specific rather than general. In stark contrast to the constant rate of species description is the rate with which species are discovered by using DNA sequence data. Exhaustive bio-inventory initiatives to map diversity of poorly explored areas around the world (e.g. http://laplaneterevisitee.org/; http://mooreabiocode.org) in combination with large-scale barcoding efforts (Hajibabei et al. 2007; Valentini et al., 2009) result in an explosion of species/sequences in repositories such as Genbank and Bold Systems that are not linked to known species. This growing number of what have been called ‘dark taxa’ by Page (http://iphylo.blogspot.com/2011/04/ dark-taxa-genbank-in-post-taxonomic.html), makes one question the use of proper taxonomic names at all. Indeed, it can be argued that a lot of biology does not per se require formally described taxon names. However, the value of scientific names exceeds the field of biology sensu stricto and matters},
+abstract = {In an interesting contribution Joppa et al. (2011) revisit some
+aspects of the taxonomic impediment (Evenhuis 2007; http://www.cbd.int/gti/)
+and come to the conclusion that, contrary to the generally accepted idea, both
+the rates of species description and the number of taxonomists have increased
+exponentially since the 1950’s. Joppa et al. (2011) also note a marked decline
+in the number of species described per taxonomist which they attribute to the
+difficulty of finding new species in an ever declining ‘missing species pool’.
+Therefore, their results might be interpreted that today’s taxonomic workforce
+is sufficient to describe the remaining (shallow) ‘pool of missing species’.
+In this contribution, we question if this is indeed the case and propose a
+solution for speeding up taxonomic descriptions. We feel that Joppa et al.
+(2011) are overly enthusiastic, probably because their test cases represent a
+selection of the better-studied taxa (flowering plants, Conus snails, spiders,
+amphibians, birds and mammals). Contradicting the findings of Joppa et al.
+(2011) and using a much broader taxon sampling, which includes many poorly
+studied groups, Costello et al. (2011) observe that species description has
+roughly remained constant since the second World War, at least for terrestrial
+species. These results are congruent with other counts of species descriptions
+(Bacher 2012; Chapman 2009; May 2011; Zhang 2010; http://species.asu.edu/SOS).
+So it seems that the increasing rate of species description as reported by
+Joppa et al. (2011) is taxon specific rather than general. In stark contrast
+to the constant rate of species description is the rate with which species are
+discovered by using DNA sequence data. Exhaustive bio-inventory initiatives to
+map diversity of poorly explored areas around the world (e.g.
+http://laplaneterevisitee.org/; http://mooreabiocode.org) in combination with
+large-scale barcoding efforts (Hajibabei et al. 2007; Valentini et al., 2009)
+result in an explosion of species/sequences in repositories such as Genbank
+and Bold Systems that are not linked to known species. This growing number of
+what have been called ‘dark taxa’ by Page (http://iphylo.blogspot.com/2011/04/
+dark-taxa-genbank-in-post-taxonomic.html), makes one question the use of
+proper taxonomic names at all. Indeed, it can be argued that a lot of biology
+does not per se require formally described taxon names. However, the value of
+scientific names exceeds the field of biology sensu stricto and matters},
 author = {Samyn, Yves and {De Clerck}, Olivier},
 doi = {10.5852/ejt.2012.10},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Samyn, De Clerck - 2012 - No Name, No Game.pdf:pdf},
@@ -235,7 +487,10 @@ volume = {0},
 year = {2012}
 }
 @article{Schindel2005,
-abstract = {Sir• The Consortium for the Barcode of Life (CBOL; see www. barcoding . si. edu) is an international initiative of natural history museums, herbaria, other biodiversity research organizations, governmental organizations and private companies which wish to promote  ...},
+abstract = {Sir• The Consortium for the Barcode of Life (CBOL; see www.
+barcoding . si. edu) is an international initiative of natural history
+museums, herbaria, other biodiversity research organizations, governmental
+organizations and private companies which wish to promote  ...},
 author = {Schindel, David E and Miller, Scott E},
 doi = {10.1038/435017b},
 isbn = {0028-0836},
@@ -249,7 +504,36 @@ volume = {435},
 year = {2005}
 }
 @misc{DeQueiroz1997,
-abstract = {During the post-Darwinian history of taxonomy, the Linnaean hierarchy has maintained its role as a means for representing hierarchical taxonomic relationships. During the same period, the principle of descent has taken on an increasingly important role as the basis for reformulated versions of fundamental taxonomic concepts and principles. Early in this history, the principle of descent provided an explanation for the existence of taxa and implied a nested, hierarchical structure for taxonomic relationships. Although an evolutionary explanation for taxa contradicted the Aristotelian context within which the Linnaean hierarchy was developed, the nested, hierarchical structure of taxonomic relationships implied by evolution was compatible with the practical use of the Linnaean hierarchy for conveying hierarchical relationships and seems to have reinforced this practice. Later changes associated with the development of taxon concepts based on the principle of descent led to changes in the interpretation of the Linnaean categories as well as certain modifications related to use of the Linnaean hierarchy in representing phylogenetic relationships. Although some authors questioned use of the Linnaean hierarchy in phylogenetic taxonomies, most continued to use it in one form or another. More recently, taxonomists have considered the relevance of the principle of descent to nomenclature. They have found fundamental inconsistencies between concepts of taxa based on that principle and methods currently used to define taxon names, which are based on the Linnaean hierarchy. Although these inconsistencies can be corrected without totally eliminating the Linnaean hierarchy, the necessary changes would greatly reduce the importance of that hierarchy, particularly in the area of nomenclature. Moreover, the earlier development of taxon concepts based on the principle of descent effectively proposed taxonomic categories of greater theoretical significance than those of the Linnaean hierarchy. The historical trend of granting increasing importance to the principle of descent has reduced the significance of the Linnaean hierarchy to the point where it may no longer be worth retaining.},
+abstract = {During the post-Darwinian history of taxonomy, the Linnaean
+hierarchy has maintained its role as a means for representing hierarchical
+taxonomic relationships. During the same period, the principle of descent has
+taken on an increasingly important role as the basis for reformulated versions
+of fundamental taxonomic concepts and principles. Early in this history, the
+principle of descent provided an explanation for the existence of taxa and
+implied a nested, hierarchical structure for taxonomic relationships. Although
+an evolutionary explanation for taxa contradicted the Aristotelian context
+within which the Linnaean hierarchy was developed, the nested, hierarchical
+structure of taxonomic relationships implied by evolution was compatible with
+the practical use of the Linnaean hierarchy for conveying hierarchical
+relationships and seems to have reinforced this practice. Later changes
+associated with the development of taxon concepts based on the principle of
+descent led to changes in the interpretation of the Linnaean categories as
+well as certain modifications related to use of the Linnaean hierarchy in
+representing phylogenetic relationships. Although some authors questioned use
+of the Linnaean hierarchy in phylogenetic taxonomies, most continued to use it
+in one form or another. More recently, taxonomists have considered the
+relevance of the principle of descent to nomenclature. They have found
+fundamental inconsistencies between concepts of taxa based on that principle
+and methods currently used to define taxon names, which are based on the
+Linnaean hierarchy. Although these inconsistencies can be corrected without
+totally eliminating the Linnaean hierarchy, the necessary changes would
+greatly reduce the importance of that hierarchy, particularly in the area of
+nomenclature. Moreover, the earlier development of taxon concepts based on the
+principle of descent effectively proposed taxonomic categories of greater
+theoretical significance than those of the Linnaean hierarchy. The historical
+trend of granting increasing importance to the principle of descent has
+reduced the significance of the Linnaean hierarchy to the point where it may
+no longer be worth retaining.},
 author = {de Queiroz, Kevin},
 booktitle = {Aliso},
 number = {2},
@@ -259,7 +543,39 @@ volume = {15},
 year = {1997}
 }
 @article{Schuh2003,
-abstract = {The Linnaean system of nomenclature has been used and adapted by biologists over a period of almost 250 years. Under the current system of codes, it is now applied to more than 2 million species of organisms. Inherent in the Linnaean system is the indication of hierarchical relationships. The Linnaean system has been justified primarily on the basis of stability. Stability can be assessed on at least two grounds: the absolute stability of names, irrespective of taxonomic concept; and the stability of names under changing concepts. Recent arguments have invoked conformity to phylogenetic methods as the primary basis for choice of nomenclatural systems, but even here stability of names as they relate to monophyletic groups is stated as the ultimate objective. The idea of absolute stability as the primary justification for nomenclatural methods was wrong from the start. The reasons are several. First, taxa are concepts, no matter the frequency of assertions to the contrary; as such, they are subject to change at all levels and always will be, with the consequence that to some degree the names we use to refer to them will also be subject to change. Second, even if the true nature of all taxa could be agreed upon, the goal would require that we discover them all and correctly recognize them for what they are. Much of biology is far from that goal at the species level and even further for supraspecific taxa. Nomenclature serves as a tool for biology. Absolute stability of taxonomic concepts-and nomenclature-would hinder scientific progress rather than promote it. It can been demonstrated that the scientific goals of systematists are far from achieved. Thus, the goal of absolute nomenclatural stability is illusory and misguided. The primary strength of the Linnaean system is its ability to portray hierarchical relationships; stability is secondary. No single system of nomenclature can ever possess all desirable attributes: i.e., convey information on hierarchical relationships, provide absolute stability in the names portraying those relationships, and provide simplicity and continuity in communicating the identities of the taxa and their relationships. Aside from myriad practical problems involved in its implementation, it must be concluded that "phylogenetic nomenclature" would not provide a more stable and effective system for communicating information on biological classifications than does the Linnaean system.},
+abstract = {The Linnaean system of nomenclature has been used and adapted by
+biologists over a period of almost 250 years. Under the current system of
+codes, it is now applied to more than 2 million species of organisms. Inherent
+in the Linnaean system is the indication of hierarchical relationships. The
+Linnaean system has been justified primarily on the basis of stability.
+Stability can be assessed on at least two grounds: the absolute stability of
+names, irrespective of taxonomic concept; and the stability of names under
+changing concepts. Recent arguments have invoked conformity to phylogenetic
+methods as the primary basis for choice of nomenclatural systems, but even
+here stability of names as they relate to monophyletic groups is stated as the
+ultimate objective. The idea of absolute stability as the primary
+justification for nomenclatural methods was wrong from the start. The reasons
+are several. First, taxa are concepts, no matter the frequency of assertions
+to the contrary; as such, they are subject to change at all levels and always
+will be, with the consequence that to some degree the names we use to refer to
+them will also be subject to change. Second, even if the true nature of all
+taxa could be agreed upon, the goal would require that we discover them all
+and correctly recognize them for what they are. Much of biology is far from
+that goal at the species level and even further for supraspecific taxa.
+Nomenclature serves as a tool for biology. Absolute stability of taxonomic
+concepts-and nomenclature-would hinder scientific progress rather than promote
+it. It can been demonstrated that the scientific goals of systematists are far
+from achieved. Thus, the goal of absolute nomenclatural stability is illusory
+and misguided. The primary strength of the Linnaean system is its ability to
+portray hierarchical relationships; stability is secondary. No single system
+of nomenclature can ever possess all desirable attributes: i.e., convey
+information on hierarchical relationships, provide absolute stability in the
+names portraying those relationships, and provide simplicity and continuity in
+communicating the identities of the taxa and their relationships. Aside from
+myriad practical problems involved in its implementation, it must be concluded
+that "phylogenetic nomenclature" would not provide a more stable and effective
+system for communicating information on biological classifications than does
+the Linnaean system.},
 author = {Schuh, Randall T},
 doi = {10.1663/0006-8101(2003)069[0059:TLSAIY]2.0.CO;2},
 isbn = {00068101},
@@ -274,7 +590,28 @@ volume = {69},
 year = {2003}
 }
 @incollection{Evenhuis2010,
-abstract = {The advent of relational databasing and data storage capacity, coupled with revolutionary advances in molecular sequencing technology and specimen imaging, have led to a taxonomic renaissance. Systema Naturae 250 - The Linnaean Ark maps the origins of this renaissance, beginning with Linnaeus, through his "apostles", via the great unsung hero Charles Davies Sherbon — arguably the father of biodiversity informatics — up to the present day with the Planetary Biodiversity Inventories and into the future with the Encyclopedia of Life and web-based taxonomy. The book provides scientific, historical, and cultural documentation of the evolution of taxonomy and the successful adaptation of the Linnaean nomenclature system to that evolution. It underscores the importance of taxonomic accuracy, not only for the classification of living organisms, but for a more complete understanding of the living world and its biodiversity. The book also examines the role of technologies such as DNA sequencing, specimen imaging, and electronic data storage.A celebration of 250 years of the scientific naming of animals, Systema Naturae 250 - The Linnaean Ark records and explores the history of zoological nomenclature and taxonomy, detailing current and future activity in these fields. Descriptive taxonomy has been in decline, despite the fact that the classification of organisms through taxonomic studies provides the foundation of our understanding of life forms. Packed with illustrations and tables, this book establishes a vision for the future of descriptive taxonomy and marks the beginning of a period of rapid growth of taxonomic knowledge.},
+abstract = {The advent of relational databasing and data storage capacity,
+coupled with revolutionary advances in molecular sequencing technology and
+specimen imaging, have led to a taxonomic renaissance. Systema Naturae 250 -
+The Linnaean Ark maps the origins of this renaissance, beginning with
+Linnaeus, through his "apostles", via the great unsung hero Charles Davies
+Sherbon — arguably the father of biodiversity informatics — up to the present
+day with the Planetary Biodiversity Inventories and into the future with the
+Encyclopedia of Life and web-based taxonomy. The book provides scientific,
+historical, and cultural documentation of the evolution of taxonomy and the
+successful adaptation of the Linnaean nomenclature system to that evolution.
+It underscores the importance of taxonomic accuracy, not only for the
+classification of living organisms, but for a more complete understanding of
+the living world and its biodiversity. The book also examines the role of
+technologies such as DNA sequencing, specimen imaging, and electronic data
+storage.A celebration of 250 years of the scientific naming of animals,
+Systema Naturae 250 - The Linnaean Ark records and explores the history of
+zoological nomenclature and taxonomy, detailing current and future activity in
+these fields. Descriptive taxonomy has been in decline, despite the fact that
+the classification of organisms through taxonomic studies provides the
+foundation of our understanding of life forms. Packed with illustrations and
+tables, this book establishes a vision for the future of descriptive taxonomy
+and marks the beginning of a period of rapid growth of taxonomic knowledge.},
 author = {Evenhuis, Neal L. and Pape, Thomas and Pont, Adrian C. and Thompson, F. Christian and Polaszek, Andrew and Group, Francis},
 booktitle = {Systema Naturae 250 The Linnaean Ark},
 chapter = {7},
@@ -285,7 +622,25 @@ title = {{Systema Naturae 250 The Linnaean Ark}},
 year = {2010}
 }
 @inproceedings{Ford2004,
-abstract = {For decades we have been using Chomsky's generative system of grammars, particularly context-free grammars (CFGs) and regular expressions (REs), to express the syntax of programming languages and protocols. The power of generative grammars to express ambiguity is crucial to their original purpose of modelling natural languages, but this very power makes it unnecessarily difficult both to express and to parse machine-oriented languages using CFGs. Parsing Expression Grammars (PEGs) provide an alternative, recognition-based formal foundation for describing machine-oriented syntax, which solves the ambiguity problem by not introducing ambiguity in the first place. Where CFGs express nondeterministic choice between alternatives, PEGs instead use prioritized choice. PEGs address frequently felt expressiveness limitations of CFGs and REs, simplifying syntax definitions and making it unnecessary to separate their lexical and hierarchical components. A linear-time parser can be built for any PEG, avoiding both the complexity and fickleness of LR parsers and the inefficiency of generalized CFG parsing. While PEGs provide a rich set of operators for constructing grammars, they are reducible to two minimal recognition schemas developed around 1970, TS/TDPL and gTS/GTDPL, which are here proven equivalent in effective recognition power.},
+abstract = {For decades we have been using Chomsky's generative system of
+grammars, particularly context-free grammars (CFGs) and regular expressions
+(REs), to express the syntax of programming languages and protocols. The power
+of generative grammars to express ambiguity is crucial to their original
+purpose of modelling natural languages, but this very power makes it
+unnecessarily difficult both to express and to parse machine-oriented
+languages using CFGs. Parsing Expression Grammars (PEGs) provide an
+alternative, recognition-based formal foundation for describing
+machine-oriented syntax, which solves the ambiguity problem by not introducing
+ambiguity in the first place. Where CFGs express nondeterministic choice
+between alternatives, PEGs instead use prioritized choice. PEGs address
+frequently felt expressiveness limitations of CFGs and REs, simplifying syntax
+definitions and making it unnecessary to separate their lexical and
+hierarchical components. A linear-time parser can be built for any PEG,
+avoiding both the complexity and fickleness of LR parsers and the inefficiency
+of generalized CFG parsing. While PEGs provide a rich set of operators for
+constructing grammars, they are reducible to two minimal recognition schemas
+developed around 1970, TS/TDPL and gTS/GTDPL, which are here proven equivalent
+in effective recognition power.},
 author = {Ford, Bryan},
 booktitle = {Proceedings of the 31st ACM SIGPLAN-SIGACT symposium on Principles of programming languages},
 keywords = {bnf,context-free grammars,grammars,gtdpl,lexical analysis,packrat parsing,parsing,parsing expression,regular expressions,scannerless,syntactic predicates,tdpl,unified grammars},
@@ -294,7 +649,34 @@ title = {{Parsing Expression Grammars: A Recognition-Based Syntactic Foundation}
 year = {2004}
 }
 @article{Akella2012,
-abstract = {BACKGROUND: A scientific name for an organism can be associated with almost all biological data. Name identification is an important step in many text mining tasks aiming to extract useful information from biological, biomedical and biodiversity text sources. A scientific name acts as an important metadata element to link biological information.$\backslash$n$\backslash$nRESULTS: We present NetiNeti (Name Extraction from Textual Information-Name Extraction for Taxonomic Indexing), a machine learning based approach for recognition of scientific names including the discovery of new species names from text that will also handle misspellings, OCR errors and other variations in names. The system generates candidate names using rules for scientific names and applies probabilistic machine learning methods to classify names based on structural features of candidate names and features derived from their contexts. NetiNeti can also disambiguate scientific names from other names using the contextual information. We evaluated NetiNeti on legacy biodiversity texts and biomedical literature (MEDLINE). NetiNeti performs better (precision = 98.9{\%} and recall = 70.5{\%}) compared to a popular dictionary based approach (precision = 97.5{\%} and recall = 54.3{\%}) on a 600-page biodiversity book that was manually marked by an annotator. On a small set of PubMed Central's full text articles annotated with scientific names, the precision and recall values are 98.5{\%} and 96.2{\%} respectively. NetiNeti found more than 190,000 unique binomial and trinomial names in more than 1,880,000 PubMed records when used on the full MEDLINE database. NetiNeti also successfully identifies almost all of the new species names mentioned within web pages.$\backslash$n$\backslash$nCONCLUSIONS: We present NetiNeti, a machine learning based approach for identification and discovery of scientific names. The system implementing the approach can be accessed at http://namefinding.ubio.org.},
+abstract = {BACKGROUND: A scientific name for an organism can be associated
+with almost all biological data. Name identification is an important step in
+many text mining tasks aiming to extract useful information from biological,
+biomedical and biodiversity text sources. A scientific name acts as an
+important metadata element to link biological
+information.$\backslash$n$\backslash$nRESULTS: We present NetiNeti (Name
+Extraction from Textual Information-Name Extraction for Taxonomic Indexing), a
+machine learning based approach for recognition of scientific names including
+the discovery of new species names from text that will also handle
+misspellings, OCR errors and other variations in names. The system generates
+candidate names using rules for scientific names and applies probabilistic
+machine learning methods to classify names based on structural features of
+candidate names and features derived from their contexts. NetiNeti can also
+disambiguate scientific names from other names using the contextual
+information. We evaluated NetiNeti on legacy biodiversity texts and biomedical
+literature (MEDLINE). NetiNeti performs better (precision = 98.9{\%} and
+recall = 70.5{\%}) compared to a popular dictionary based approach
+(precision = 97.5{\%} and recall = 54.3{\%}) on a 600-page biodiversity book
+that was manually marked by an annotator. On a small set of PubMed Central's
+full text articles annotated with scientific names, the precision and recall
+values are 98.5{\%} and 96.2{\%} respectively. NetiNeti found more than
+190,000 unique binomial and trinomial names in more than 1,880,000 PubMed
+records when used on the full MEDLINE database. NetiNeti also successfully
+identifies almost all of the new species names mentioned within web
+pages.$\backslash$n$\backslash$nCONCLUSIONS: We present NetiNeti, a machine
+learning based approach for identification and discovery of scientific names.
+The system implementing the approach can be accessed at
+http://namefinding.ubio.org.},
 author = {Akella, Lakshmi Manohar and Norton, Catherine N and Miller, Holly},
 doi = {10.1186/1471-2105-13-211},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Akella, Norton, Miller - 2012 - NetiNeti discovery of scientific names from text using machine learning methods.pdf:pdf},
@@ -311,7 +693,23 @@ volume = {13},
 year = {2012}
 }
 @article{Patterson2006,
-abstract = {Taxonomic indexing refers to a new array of taxonomically intelligent network services that use nomenclatural principles and elements of expert taxonomic knowledge to manage information about organisms. Taxonomic indexing was introduced to help manage the increasing amounts of digital information about biology. It has been designed to form a near basal layer in a layered cyberinfrastructure that deals with biological information. Taxonomic Indexing accommodates the special problems of using names of organisms to index biological material. It links alternative names for the same entity (reconciliation), and distinguishes between uses of the same name for different entities (disambiguation), and names are placed within an indefinite number of hierarchical schemes. In order to access all information on all organisms, Taxonomic indexing must be able to call on a registry of all names in all forms for all organisms. NameBank has been developed to meet that need. Taxonomic indexing is an area of informatics that overlaps with taxonomy, is dependent on the expert input of taxonomists, and reveals the relevance of the discipline to a wide audience.},
+abstract = {Taxonomic indexing refers to a new array of taxonomically
+intelligent network services that use nomenclatural principles and elements of
+expert taxonomic knowledge to manage information about organisms. Taxonomic
+indexing was introduced to help manage the increasing amounts of digital
+information about biology. It has been designed to form a near basal layer in
+a layered cyberinfrastructure that deals with biological information.
+Taxonomic Indexing accommodates the special problems of using names of
+organisms to index biological material. It links alternative names for the
+same entity (reconciliation), and distinguishes between uses of the same name
+for different entities (disambiguation), and names are placed within an
+indefinite number of hierarchical schemes. In order to access all
+information on all organisms, Taxonomic indexing must be able to call on a
+registry of all names in all forms for all organisms. NameBank has been
+developed to meet that need. Taxonomic indexing is an area of informatics
+that overlaps with taxonomy, is dependent on the expert input of
+taxonomists, and reveals the relevance of the discipline to a wide
+audience.},
 author = {Patterson, David J and Remsen, David and Marino, William a and Norton, Cathy},
 doi = {10.1080/10635150500541680},
 isbn = {1063-5157 (Print)},
@@ -325,7 +723,22 @@ volume = {55},
 year = {2006}
 }
 @article{Leary2007,
-abstract = {Web content syndication through standard formats such as RSS and ATOM has become an increasingly popular mechanism for publishers, news sources and blogs to disseminate regularly updated content. These standardized syndication formats deliver content directly to the subscriber, allowing them to locally aggregate content from a variety of sources instead of having to find the information on multiple websites. The uBioRSS application is a 'taxonomically intelligent' service customized for the biological sciences. It aggregates syndicated content from academic publishers and science news feeds, and then uses a taxonomic Named Entity Recognition algorithm to identify and index taxonomic names within those data streams. The resulting name index is cross-referenced to current global taxonomic datasets to provide context for browsing the publications by taxonomic group. This process, called taxonomic indexing, draws upon services developed specifically for biological sciences, collectively referred to as 'taxonomic intelligence'. Such value-added enhancements can provide biologists with accelerated and improved access to current biological content. AVAILABILITY: http://names.ubio.org/rss/},
+abstract = {Web content syndication through standard formats such as RSS and
+ATOM has become an increasingly popular mechanism for publishers, news sources
+and blogs to disseminate regularly updated content. These standardized
+syndication formats deliver content directly to the subscriber, allowing them
+to locally aggregate content from a variety of sources instead of having to
+find the information on multiple websites. The uBioRSS application is a
+'taxonomically intelligent' service customized for the biological sciences. It
+aggregates syndicated content from academic publishers and science news feeds,
+and then uses a taxonomic Named Entity Recognition algorithm to identify and
+index taxonomic names within those data streams. The resulting name index is
+cross-referenced to current global taxonomic datasets to provide context for
+browsing the publications by taxonomic group. This process, called taxonomic
+indexing, draws upon services developed specifically for biological sciences,
+collectively referred to as 'taxonomic intelligence'. Such value-added
+enhancements can provide biologists with accelerated and improved access to
+current biological content. AVAILABILITY: http://names.ubio.org/rss/},
 author = {Leary, Patrick R. and Remsen, David P. and Norton, Catherine N. and Patterson, David J. and Sarkar, Indra Neil},
 doi = {10.1093/bioinformatics/btm109},
 isbn = {1367-4811 (Linking)},
@@ -339,7 +752,22 @@ volume = {23},
 year = {2007}
 }
 @article{Road2012,
-abstract = {The International Commission on Zoological Nomenclature has voted in favour of a revised version of the amendment to the International Code of Zoological Nomenclature that was proposed in 2008. The purpose of the amendment is to expand and refine the methods of publication allowed by the Code, particularly in relation to electronic publication. The amendment establishes an Official Register of Zoological Nomenclature (with ZooBank as its online version), allows electronic publication after 2011 under certain conditions, and disallows publication on optical discs after 2012. The requirements for electronic publications are that the work be registered in ZooBank before it is published, that the work itself state the date of publication and contain evidence that registration has occurred, and that the ZooBank registration state both the name of an electronic archive intended to preserve the work and the ISSN or ISBN associated with the work. Registration of new scientific names and nomenclatural acts is not required. The Commission has confirmed that ZooBank is ready to handle the requirements of the amendment.},
+abstract = {The International Commission on Zoological Nomenclature has voted
+in favour of a revised version of the amendment to the International Code of
+Zoological Nomenclature that was proposed in 2008. The purpose of the
+amendment is to expand and refine the methods of publication allowed by the
+Code, particularly in relation to electronic publication. The amendment
+establishes an Official Register of Zoological Nomenclature (with ZooBank as
+its online version), allows electronic publication after 2011 under certain
+conditions, and disallows publication on optical discs after 2012. The
+requirements for electronic publications are that the work be registered in
+ZooBank before it is published, that the work itself state the date of
+publication and contain evidence that registration has occurred, and that the
+ZooBank registration state both the name of an electronic archive intended to
+preserve the work and the ISSN or ISBN associated with the work. Registration
+of new scientific names and nomenclatural acts is not required. The Commission
+has confirmed that ZooBank is ready to handle the requirements of the
+amendment.},
 author = {Road, Cromwell},
 doi = {10.3897/zookeys.219.3944},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Road - 2012 - Amendment of Articles 8,9, 10,21 and 78 of the International Code of Zoological Nomenclature to expand and refine methods.pdf:pdf},
@@ -354,7 +782,13 @@ volume = {219},
 year = {2012}
 }
 @article{Ereshefsky1994,
-abstract = {Most biologists use the Linnaean system for constructing classifications of the organic world. The Linnaean system, however, has lost its theoretical basis due to the shift in biology from creationist and essentialist tenets to evolutionary theory. As a result, the Linnaean system is both cumbersome and ontologically vacuous. This paper illustrates the problems facing the Linnaean system, and ends with a brief introduction to an alternative approach to biological classification.},
+abstract = {Most biologists use the Linnaean system for constructing
+classifications of the organic world. The Linnaean system, however, has lost
+its theoretical basis due to the shift in biology from creationist and
+essentialist tenets to evolutionary theory. As a result, the Linnaean system
+is both cumbersome and ontologically vacuous. This paper illustrates the
+problems facing the Linnaean system, and ends with a brief introduction to an
+alternative approach to biological classification.},
 author = {Ereshefsky, Marc},
 doi = {10.2307/188208},
 isbn = {0031-8248},
@@ -369,7 +803,45 @@ volume = {61},
 year = {1994}
 }
 @article{Pyle2003,
-abstract = {Taxonomic research, as a field of biological sciences, is fundamentally an exercise in information management. Modern computer technology offers the potential for both streamlining the taxo- nomic process, and increasing its accuracy. Effective use of computer technology to successfully manage taxonomic information is predicated upon the implementation of data models that accommodate the diverse forms of information important to taxonomic researchers. Although sophisticated data models have been developed to manage some information relevant to taxo- nomic research (e.g., natural history specimen information; descriptive data relating to morpho- logical and molecular characters of specimens), similarly robust models for managing information about taxonomic names and how they are applied to taxonomic concepts, though they exist, have not attained widespread use and adoption. Herein I describe portions of a relational data model developed to manage information relevant to taxonomic names and concepts. The core entities of the described portions of this model are Agents, References, and Assertions (along with their associated Protonyms). Agents (people and organizations) in this context refer primarily to taxonomic authorities. References are broadly defined as date-stamped information (usually, but not exclusively, in the form of a publication), as documented by the Agents who serve as the Reference authors. Assertions consist of basic elemental information about the treatment of taxonomic names by taxonomic authorities as documented in a particular Reference, and correspond to what many authors refer to as taxon “concepts”. Protonyms are a special subset (subtype) of Assertions, which constitute original descriptions of taxonomic names (serving to unite multiple assertions pertaining to the same taxonomic name), and include elements of botanical Protologues and Basionyms. I also illustrate how these core entities can serve as a foundation for taxonomic names and concepts as integrated with other datasets, such as biological specimens and observations (and, by extension, geographic distributions and character matrices). The broadest data content source used to populate and test the data model is derived from a systematic revision of the reef-fish family Pomacanthidae (marine angelfishes). Additional datasets used to test the imple- mentation of the data model include specimen data from the Department of Natural Sciences, Bishop Museum; nomenclatural data from The Catalog of Fishes; and nomenclatural and bio- geographic data from two published taxonomic catalogs (insects and terrestrial mollusks in Hawai‘i). An intuitive, feature-rich software application based on Microsoft Access® has also been devel- oped in conjunction with this data model, and will be the topic of a future article. 1},
+abstract = {Taxonomic research, as a field of biological sciences, is
+fundamentally an exercise in information management. Modern computer
+technology offers the potential for both streamlining the taxo- nomic process,
+and increasing its accuracy. Effective use of computer technology to
+successfully manage taxonomic information is predicated upon the
+implementation of data models that accommodate the diverse forms of
+information important to taxonomic researchers. Although sophisticated data
+models have been developed to manage some information relevant to taxo- nomic
+research (e.g., natural history specimen information; descriptive data
+relating to morpho- logical and molecular characters of specimens), similarly
+robust models for managing information about taxonomic names and how they are
+applied to taxonomic concepts, though they exist, have not attained widespread
+use and adoption. Herein I describe portions of a relational data model
+developed to manage information relevant to taxonomic names and concepts. The
+core entities of the described portions of this model are Agents, References,
+and Assertions (along with their associated Protonyms). Agents (people and
+organizations) in this context refer primarily to taxonomic authorities.
+References are broadly defined as date-stamped information (usually, but not
+exclusively, in the form of a publication), as documented by the Agents who
+serve as the Reference authors. Assertions consist of basic elemental
+information about the treatment of taxonomic names by taxonomic authorities as
+documented in a particular Reference, and correspond to what many authors
+refer to as taxon “concepts”. Protonyms are a special subset (subtype) of
+Assertions, which constitute original descriptions of taxonomic names (serving
+to unite multiple assertions pertaining to the same taxonomic name), and
+include elements of botanical Protologues and Basionyms. I also illustrate how
+these core entities can serve as a foundation for taxonomic names and concepts
+as integrated with other datasets, such as biological specimens and
+observations (and, by extension, geographic distributions and character
+matrices). The broadest data content source used to populate and test the data
+model is derived from a systematic revision of the reef-fish family
+Pomacanthidae (marine angelfishes). Additional datasets used to test the
+imple- mentation of the data model include specimen data from the Department
+of Natural Sciences, Bishop Museum; nomenclatural data from The Catalog of
+Fishes; and nomenclatural and bio- geographic data from two published
+taxonomic catalogs (insects and terrestrial mollusks in Hawai‘i). An
+intuitive, feature-rich software application based on Microsoft Access® has
+also been devel- oped in conjunction with this data model, and will be the
+topic of a future article. 1},
 author = {Pyle, Richard L.},
 journal = {PhyloInformatics},
 pages = {1--54},
@@ -379,7 +851,18 @@ volume = {1},
 year = {2003}
 }
 @article{Patterson2010,
-abstract = {Those who seek answers to big, broad questions about biology, especially questions emphasizing the organism (taxonomy, evolution and ecology), will soon benefit from an emerging names-based infrastructure. It will draw on the almost universal association of organism names with biological information to index and interconnect information distributed across the Internet. The result will be a virtual data commons, expanding as further data are shared, allowing biology to become more of a 'big science'. Informatics devices will exploit this 'big new biology', revitalizing comparative biology with a broad perspective to reveal previously inaccessible trends and discontinuities, so helping us to reveal unfamiliar biological truths. Here, we review the first components of this freely available, participatory and semantic Global Names Architecture. ?? 2010 Elsevier Ltd.},
+abstract = {Those who seek answers to big, broad questions about biology,
+especially questions emphasizing the organism (taxonomy, evolution and
+ecology), will soon benefit from an emerging names-based infrastructure. It
+will draw on the almost universal association of organism names with
+biological information to index and interconnect information distributed
+across the Internet. The result will be a virtual data commons, expanding as
+further data are shared, allowing biology to become more of a 'big science'.
+Informatics devices will exploit this 'big new biology', revitalizing
+comparative biology with a broad perspective to reveal previously inaccessible
+trends and discontinuities, so helping us to reveal unfamiliar biological
+truths. Here, we review the first components of this freely available,
+participatory and semantic Global Names Architecture. ?? 2010 Elsevier Ltd.},
 author = {Patterson, D. J. and Cooper, J. and Kirk, P. M. and Pyle, R. L. and Remsen, D. P.},
 doi = {10.1016/j.tree.2010.09.004},
 isbn = {0169-5347},
@@ -395,8 +878,38 @@ volume = {25},
 year = {2010}
 }
 @article{Boyle2013,
-abstract = {BACKGROUND: The digitization of biodiversity data is leading to the widespread application of taxon names that are superfluous, ambiguous or incorrect, resulting in mismatched records and inflated species numbers. The ultimate consequences of misspelled names and bad taxonomy are erroneous scientific conclusions and faulty policy decisions. The lack of tools for correcting this 'names problem' has become a fundamental obstacle to integrating disparate data sources and advancing the progress of biodiversity science.$\backslash$n$\backslash$nRESULTS: The TNRS, or Taxonomic Name Resolution Service, is an online application for automated and user-supervised standardization of plant scientific names. The TNRS builds upon and extends existing open-source applications for name parsing and fuzzy matching. Names are standardized against multiple reference taxonomies, including the Missouri Botanical Garden's Tropicos database. Capable of processing thousands of names in a single operation, the TNRS parses and corrects misspelled names and authorities, standardizes variant spellings, and converts nomenclatural synonyms to accepted names. Family names can be included to increase match accuracy and resolve many types of homonyms. Partial matching of higher taxa combined with extraction of annotations, accession numbers and morphospecies allows the TNRS to standardize taxonomy across a broad range of active and legacy datasets.$\backslash$n$\backslash$nCONCLUSIONS: We show how the TNRS can resolve many forms of taxonomic semantic heterogeneity, correct spelling errors and eliminate spurious names. As a result, the TNRS can aid the integration of disparate biological datasets. Although the TNRS was developed to aid in standardizing plant names, its underlying algorithms and design can be extended to all organisms and nomenclatural codes. The TNRS is accessible via a web interface at http://tnrs.iplantcollaborative.org/ and as a RESTful web service and application programming interface. Source code is available at https://github.com/iPlantCollaborativeOpenSource/TNRS/.},
-author = {Boyle, Brad and Hopkins, Nicole and Lu, Zhenyuan and {Raygoza Garay}, Juan Antonio and Mozzherin, Dmitry and Rees, Tony and Matasci, Naim and Narro, Martha L and Piel, William H and McKay, Sheldon J and Lowry, Sonya and Freeland, Chris and Peet, Robert K and Enquist, Brian J},
+abstract = {BACKGROUND: The digitization of biodiversity data is leading to
+the widespread application of taxon names that are superfluous, ambiguous or
+incorrect, resulting in mismatched records and inflated species numbers. The
+ultimate consequences of misspelled names and bad taxonomy are erroneous
+scientific conclusions and faulty policy decisions. The lack of tools for
+correcting this 'names problem' has become a fundamental obstacle to
+integrating disparate data sources and advancing the progress of biodiversity
+science.$\backslash$n$\backslash$nRESULTS: The TNRS, or Taxonomic Name
+Resolution Service, is an online application for automated and user-supervised
+standardization of plant scientific names. The TNRS builds upon and extends
+existing open-source applications for name parsing and fuzzy matching. Names
+are standardized against multiple reference taxonomies, including the Missouri
+Botanical Garden's Tropicos database. Capable of processing thousands of names
+in a single operation, the TNRS parses and corrects misspelled names and
+authorities, standardizes variant spellings, and converts nomenclatural
+synonyms to accepted names. Family names can be included to increase match
+accuracy and resolve many types of homonyms. Partial matching of higher taxa
+combined with extraction of annotations, accession numbers and morphospecies
+allows the TNRS to standardize taxonomy across a broad range of active and
+legacy datasets.$\backslash$n$\backslash$nCONCLUSIONS: We show how the TNRS
+can resolve many forms of taxonomic semantic heterogeneity, correct spelling
+errors and eliminate spurious names. As a result, the TNRS can aid the
+integration of disparate biological datasets. Although the TNRS was developed
+to aid in standardizing plant names, its underlying algorithms and design can
+be extended to all organisms and nomenclatural codes. The TNRS is accessible
+via a web interface at http://tnrs.iplantcollaborative.org/ and as a RESTful
+web service and application programming interface. Source code is available at
+https://github.com/iPlantCollaborativeOpenSource/TNRS/.},
+author = {Boyle, Brad and Hopkins, Nicole and Lu, Zhenyuan and {Raygoza
+Garay}, Juan Antonio and Mozzherin, Dmitry and Rees, Tony and Matasci, Naim
+and Narro, Martha L and Piel, William H and McKay, Sheldon J and Lowry, Sonya
+and Freeland, Chris and Peet, Robert K and Enquist, Brian J},
 doi = {10.1186/1471-2105-14-16},
 file = {:home/dimus/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Boyle et al. - 2013 - The taxonomic name resolution service an online tool for automated standardization of plant names.pdf:pdf},
 isbn = {1471-2105},
@@ -472,7 +985,17 @@ url = "http://biogems.info/"
   url          = {http://dx.doi.org/10.5281/zenodo.34848}
 }
 @article{Bengston1988,
-abstract = {Open nomenclature plays an important role in taxonomic decisions by palaeontologists, but usage and interpretation of the signs employed vary considerably. Prevailing fashion seems to favour aff. to indicate affinity of a potentially new, as yet undescribed species with a known species, whereas cf. and ? indicate uncertainty. Use of aff., cf., and? for different degrees of uncertainty, as recommended by some workers, leads to instability in interpretation. Abbreviated taxonomic expressions such as 'Trichiurus cf. lepturus' are un- ambiguous and are to be preferred to 'Trichiurus cf. T. lepturus'. Careful, judicious use of open nomenclature is to be encouraged and should be covered by the International Code of Zoological Nomenclature. A set of recommendations is given.},
+abstract = {Open nomenclature plays an important role in taxonomic decisions
+by palaeontologists, but usage and interpretation of the signs employed vary
+considerably. Prevailing fashion seems to favour aff. to indicate affinity of
+a potentially new, as yet undescribed species with a known species, whereas
+cf. and ? indicate uncertainty. Use of aff., cf., and? for different degrees
+of uncertainty, as recommended by some workers, leads to instability in
+interpretation. Abbreviated taxonomic expressions such as 'Trichiurus cf.
+lepturus' are un- ambiguous and are to be preferred to 'Trichiurus cf. T.
+lepturus'. Careful, judicious use of open nomenclature is to be encouraged and
+should be covered by the International Code of Zoological Nomenclature. A set
+of recommendations is given.},
 author = {Bengston, Peter},
 doi = {10.4039/Ent8431-1},
 isbn = {0031-0239},
