@@ -13,3 +13,6 @@ t
 *.rb
 *.md
 *100k*
+*.out
+*.synctex.gz
+*.tex.bak
