@@ -426,8 +426,8 @@ authorship is present in the middle of the name. The approach eventually
 proved to be limited.
 
 Next step was to model scientific names with regular language expressed by
-regular expression. Formally regular languages over an alphabet $\Sigma$ are
-defined recursively as follows:
+regular expression \cite{aho1992foundations}. Formally regular languages over 
+an alphabet $\Sigma$ are defined recursively as follows:
 
 \begin{itemize}
   \item The empty language $\emptyset$ is a regular language
@@ -462,14 +462,15 @@ defined to produce regular expressions:
 \end{itemize}
 
 The equivalence of regular expressions and finite automata is well-known
-Kleene's theorem. Since finite automata does not have memory, both languages
-are not regular: $ \{a^nb^n\,\vert\; n\ge 0\} $ and a language of arithmetic
-expressions. Approaches built on regular expressions (gbif) can't express
-theoretically and deal very hard practically with with recursively nested data
-structures (and complex scientific name strings are recursive by nature, as it
-is most obvious with hybrid formulae). Narrow information of parsing context
-make it hard to implement and maintain such concept as error recovery,
-detailed warnings and errors description.
+Kleene's theorem \cite{yu1997handbook}. For example, since finite automata
+does not have memory, both languages are not regular: $ \{a^nb^n\,\vert\; n\ge
+0\} $ and the language of arithmetic expressions. Approaches to names parsing
+built on regular expressions \cite{gbif} can't express theoretically and deal
+very hard practically with recursively nested data structures (and complex
+scientific name strings are recursive by nature, as it is most obvious with
+hybrid formulae). Narrow information of parsing context make it hard to
+implement and maintain such concept as error recovery, detailed warnings and
+errors description.
 
 Names can be quite complex (for example ``\textit{Brassica oleracea} L.
 \textit{subsp.  capitata} (L.) DC. \textit{convar. fruticosa} (Metzg.) Alef.
@@ -483,16 +484,16 @@ just because they are not simple enough. We need an approach that is able to
 deal with names of broader complexity.
 
 We looked for a grammar that can describe broader class of languages. We chose
-PEG. PEG is similar to CFG with one difference: the choice operator selects
-the first match in PEG, while it is ambiguous in CFG. We chose PEG for reasons
-as follows:
+PEG \cite{Ford2004}. PEG is similar to CFG with one difference: the choice
+operator selects the first match in PEG, while it is ambiguous in CFG. We
+chose PEG for reasons as follows:
 
 \begin{itemize}
   \item scientific names are formalized enough to be closer to strict
   algebraic description rather that natural language. Particularly,
-  ambiguities in scientific names parts (???: forma, subspecies in
-  parentheses) are rare. When it becomes critical, we still have options to
-  deal with it:
+  ambiguities in scientific names parts (TODO:  add examples of forma,
+  subspecies in parentheses) are rare. When it becomes critical, we still have
+  options to deal with it:
     \begin{itemize}
       \item encapsulate ambiguity in parsing structures
       \item in view of fact that PEG syntax is very similar to CFG, modify
@@ -504,14 +505,13 @@ as follows:
   \item existance of embedded domain specific language to compose parser
 \end{itemize}
 
-In 2008 created a specialized parsing library ``\textit{biodiversity}''
-\cite{biodiversity} written in Ruby and based on PEG \cite{Ford2004}. We used
-an excellent TreeTop Ruby library
-\cite{treetop} as an underlying PEG implementation. As expected, PEG is well
-suited for recursive texts with formally defined grammars. Linnaean taxonomy
-is essentially a tree-based classification. Scientific names follow rules of
-nomenclatural codes, and therefore order and capitalization of elements in
-scientific names are well structured.
+In 2008 we created a specialized parsing library ``\textit{biodiversity}''
+\cite{biodiversity} written in Ruby and based on PEG. We used an excellent
+TreeTop Ruby library \cite{treetop} as an underlying PEG implementation. As
+expected, PEG is well suited for recursive texts with formally defined
+grammars. Linnaean taxonomy is essentially a tree-based classification.
+Scientific names follow rules of nomenclatural codes, and therefore order and
+capitalization of elements in scientific names are well structured.
 
 We found that PEG approach allows us to solve all these complexity gracefully.
 Also PEG gave us enough flexibility to incorporate edge cases and common
@@ -530,8 +530,8 @@ breaking scientific names into semantic elements.
 
 \textit{biodiversity} faced performance and scalability issues inherited from
 Ruby design. Ruby is one of the best languages for rapid prototyping. The
-drawback is that it is a interpreted dynamic language with originally single-
-threaded runtime in virtual machine. We needed to move forward to an
+drawback is that it is a interpreted dynamic language with originally
+single-threaded runtime in virtual machine. We needed to move forward to an
 environment with properties as follows:
 
 \begin{itemize}
@@ -549,17 +549,15 @@ environment with properties as follows:
 \end{itemize}
 
 In 2015 we decided to use everything we learned, and found technologies to
-fulfil requirements: Java virtual machine and Scala programming language, and
-parboiled2 library (Scala parser combinators library has known performance and
+fulfil requirements: Java virtual machine and Scala programming language
+\cite{odersky2004overview}, and parboiled2 library \cite{parboiled2} (Scala
+parser combinators \cite{moors2008parser} library has known performance and
 memory issues. We chose parboiled2 library instead).
 
-Functional programming features of Scala language (\href{http://infoscience.ep
-fl.ch/record/52656/files/ScalaOverview.pdf}{Scala}) allows to avoid using of
+Functional programming features of Scala language allow to avoid using of
 external grammar generators, and write a grammar directly in Scala using
-higher-order combinators. parboiled2  has grammar rule DSL
-(\href{https://github.com/sirthias/parboiled2/#the-rule-dsl}{link}) that is
-macro-translated (\href{http://dl.acm.org/citation.cfm?id=2489840}{link}) to
-performant code.
+higher-order combinators. parboiled2 has grammar rule DSL that is macro-
+translated \cite{Burmako:2013:SML:2489837.2489840} to performant code.
 
 We write ``\textit{gnparser}'' -- completely new parser in Scala to achieve
 significant boost in speed, scalability and portability of the library. In
@@ -574,60 +572,60 @@ Scala versions: 2.10.3+ and 2.11.x.
 Projects consists of four parts:
 
 \begin{itemize}
-  \item $parser$ contains core routines for parsing input string
-  \item $examples$ contains usage samples for some popular programming
-  languages: Java, Scala, Python, Ruby, R
-  \item $runner$ contains code required to run $parser$ from a command line
-  as a standalone tool or to run it as a TCP/IP server
-  \item $web$ contains a web app and a RESTful interface to $parser$
+  \item ``\textit{parser}'' contains core routines for parsing input string
+  \item ``\textit{examples}'' contains usage samples for some popular
+  programming languages: Java, Scala, Python, Ruby, R
+  \item ``\textit{runner}'' contains code required to run ``\textit{parser}''
+  from a command line as a standalone tool or to run it as a TCP/IP server
+  \item ``\textit{web}'' contains a web application and a RESTful interface to
+  ``\textit{parser}''
 \end{itemize}
 
-All subprojects but $web$ can be run in JVM 1.6. $web$ requires JVM 1.8.
+All subprojects but ``\textit{web}'' can be run in JVM 1.6. ``\textit{web}''
+requires JVM 1.8.
 
 parboiled2 is open sourced that allowed us to extend it to needs of
-``\textit{gnparser}'' [??? link to extensions].
+``\textit{gnparser}'' [TODO: link to extensions].
 
 \subsection*{parser}
 
-$parser$ contains all the guts for successful parsing of a scientific name:
-parsing grammar, AST for a scientific name, warnings and errors facilities,
-formatters (normalizer, canonizer, JSON renderer). Typical usage is as
-external library to provide parsing facilities: language interoperability,
-command line tool [link to below], web/socket-servers [link to below], etc.
+``\textit{parser}'' contains all the guts for successful parsing of a
+scientific name: parsing grammar, AST for a scientific name, warnings and
+errors facilities, formatters (normalizer, canonizer, JSON
+\cite{bray2014javascript} renderer). Typical usage is as external library to
+provide parsing facilities: language interoperability, command line tool,
+web/socket-servers, etc.
 
-$gnparser$ accepts $String$ as input, and returns a $Result$. $Result$ then
-can be formatted to JSON that contains useful information as follows:
+``\textit{gnparser}'' accepts $String$ as input, and returns a $Result$.
+$Result$ then can be formatted to JSON that contains useful information as
+follows:
 
 \begin{itemize}
   \item $details$ contains JSON-representation of a parsed scientific name
   \item $quality\_warnings$ describe potential problems (level and
-  description) of provided name [??? doc]
+  description) of provided name [TODO: documentation]
   \item $quality$ contains overall quality level
   \item $positions$ explain name parts with column number
 \end{itemize}
 
-Documentation of output fields is available at [\href{https://github.co
-m/GlobalNamesArchitecture/gnparser/blob/master/JSON_FIELDS.md}{link}]. JSON
-schema can be found at [??? link].
-
-- bottlenecks optimizations in parser
-
-- Figure with output example and short explanation
+JSON schema can be found online \cite{gnparser_json}.
 
 \subsection*{runner}
 
-$runner$ depends on $parser$. It provides functionality of command line tool
-and socket server. Core part is the launch script $gnparse$ (both for
-Linux/Mac and Windows) that creates JVM instance and run $parser$ on multiple
-threads against the input provided via socket or file.
+``\textit{runner}'' depends on ``\textit{parser}''. It provides functionality
+of command line tool and socket server. Core part is the launch script
+``\textit{gnparse}'' (both for Linux/Mac and Windows) that creates JVM
+instance and run ``\textit{parser}'' on multiple threads against the input
+provided via socket or file.
 
 Usage documentation is available at README file [??? link].
 
 \subsection*{web}
 
-$web$ is a Play Framework application [??? link]. It depends on $parser$
-library. $web$ allows to interact with $parser$ via HTTP protocol. It aimed
-both with simple HTML Figure~\ref{figure:webgui} and REST API interface.
+``\textit{web}'' is a Play Framework application \cite{wampler2011scala}. It
+depends on ``\textit{parser}'' library. ``\textit{web}'' allows to interact
+with ``\textit{parser}'' via HTTP protocol. It aimed both with simple HTML
+Figure~\ref{figure:webgui} and REST API interface.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -647,23 +645,22 @@ Usage documentation is available at README file [??? link].
 ``\textit{gnparser}'' is available for launch in three bundles:
 
 \begin{itemize}
-  \item Maven artifact -- live at Maven central [??? link to Maven].
-  Physically it is a relatively small jar file without external dependencies,
-  and a supplementary information about those dependencies. The artifact is
-  usually used to be referenced by build system (Maven, Gradle, SBT, etc.) as
-  follows. Build system then responsible for correct references resolution.
-  \item zip-archived ``fat jar'' -- live at project repository [??? link to
-  github]. The jar contains ``\textit{gnparser}'' compiled files along with
-  all necessary dependencies to launch it within JVM. zip-achive is also
-  bundled with launch script (for Windows and Linux) that can run command line
-  interface to ``\textit{gnparser}''.
-  \item Docker file -- live at docker hub [??? link]. Docker provides an
-  additional layer of abstraction and automation of operating-system-level
-  virtualization on Linux. It can be thought as lightweight virtualization
-  technology within same Linux OS process. When it is setup properly,
-  everything -- starting from JVM and ending with Scala and SBT -- can be run
-  with simple commands: pull Docker image from Hub, and then run socket/web
-  server on desired port.
+  \item Maven artifact lives at Maven central. Physically it is a relatively
+  small jar file without external dependencies, and a supplementary
+  information about those dependencies. The artifact is usually used to be
+  referenced by build system (Maven, Gradle, SBT, etc.) as follows. Build
+  system then responsible for correct references resolution.
+  \item zip-archived ``fat jar'' lives at project repository. The jar contains
+  ``\textit{gnparser}'' compiled files along with all necessary dependencies
+  to launch it within JVM. zip-archive is also bundled with launch script (for
+  Windows and Linux) that can run command line interface to
+  ``\textit{gnparser}''.
+  \item Docker file lives at Docker hub. Docker provides an additional layer
+  of abstraction and automation of operating-system-level virtualization on
+  Linux. It can be thought as lightweight virtualization technology within
+  same Linux OS process. When it is setup properly, everything -- starting
+  from JVM and ending with Scala and SBT -- can be run with simple commands:
+  pull Docker image from Hub, and then run socket/web server on desired port.
 \end{itemize}
 
 \subsection*{Testing Methods}
@@ -1189,6 +1186,7 @@ TODO: submit test files
 The authors declare that they have no competing interests.
 
 AST -- Abstract Syntax Tree
+DSL -- Domain Specific Language
 
 \section*{Author's Contributions}
 
