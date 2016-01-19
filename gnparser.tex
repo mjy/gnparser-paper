@@ -419,15 +419,15 @@ strings from a collection.
 \subsection*{Prior Art}
 
 Until recently the problem of scientific name parsing had been addressed by
-home-grown scripts by manual splitting of a name into its canonical form and
-the authorship part. Manual approach of splitting names into 2 parts is
-expensive, slow, inflexible and cannot elegantly deal with name-strings where
-authorship is present in the middle of the name. The approach eventually
-proved to be limited.
+manual splitting of names into canonical form and the authorship parts and
+by using home-grown regular expression-based scripts. Manual approach of
+splitting names into 2 parts is expensive, slow, inflexible and cannot
+elegantly deal with name-strings where authorship is present in the middle of
+the name.
 
-Next step was to model scientific names with regular language expressed by
-regular expression \cite{aho1992foundations}. Formally regular languages over 
-an alphabet $\Sigma$ are defined recursively as follows:
+Another popular approach is to parse scientific names using regular language
+implemented as regular expression \cite{aho1992foundations}. Formally regular
+languages over an alphabet $\Sigma$ are defined recursively as follows:
 
 \begin{itemize}
   \item The empty language $\emptyset$ is a regular language
@@ -474,7 +474,7 @@ errors description.
 
 Names can be quite complex (for example ``\textit{Brassica oleracea} L.
 \textit{subsp.  capitata} (L.) DC. \textit{convar. fruticosa} (Metzg.) Alef.
-$\times$ \textit{B. oleracea} L.  \textit{subsp. capitata} (L.) \textit{var.
+$\times$ \textit{B. oleracea} L. \textit{subsp. capitata} (L.) \textit{var.
 costata} DC.'')  and include authorship for every mentioned taxon, include or
 omit infraspecific ranks, original and combination authors etc. Authorship
 itself is quite complex and can include original authors who described a name,
