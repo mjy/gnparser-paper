@@ -520,19 +520,20 @@ noticeable popularity. At the time of writing it had been downloaded more than
 150,000 times \cite{bdiv_downloads}, it is used by many taxon name resolution
 projects (for example by Canadian Register of Marine Species (CARMS)
 \cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of Marine Species
-(WoRMS) \cite{worms}.  According to BioRuby statistics \textit{biodiversity}
-parser is the most popular bio-library in Ruby language \cite{biogems}.
+(WoRMS) \cite{worms}.  According to BioRuby statistics \textit{biodiversity},
+at the time of writing, parser had been the most popular bio-library in Ruby
+language \cite{biogems}.
 
 We consider \textit{biodiversity} parser library to be a working prototype --
 a playground which allowed us to identify parsing problems and implement
 solutions for them. In the process we found that PEG is very well suited for
 breaking scientific names into semantic elements.
 
-\textit{biodiversity} faced performance and scalability issues inherited from
-Ruby design. Ruby is one of the best languages for rapid prototyping. The
-drawback is that it is a interpreted dynamic language with originally
-single-threaded runtime in virtual machine. We needed to move forward to an
-environment with properties as follows:
+The parser \textit{biodiversity} faced performance and scalability issues
+inherited from Ruby design. Ruby is one of the best languages for rapid
+prototyping. The drawback is that it is an interpreted dynamic language with
+originally single-threaded runtime in virtual machine. We needed to move
+forward to an environment with properties as follows:
 
 \begin{itemize}
     \item technology maturity
@@ -548,18 +549,20 @@ environment with properties as follows:
     language
 \end{itemize}
 
-In 2015 we decided to use everything we learned, and found technologies to
-fulfil requirements: Java virtual machine and Scala programming language
-\cite{odersky2004overview}, and parboiled2 library \cite{parboiled2} (Scala
-parser combinators \cite{moors2008parser} library has known performance and
-memory issues. We chose parboiled2 library instead).
+While many of the properties are true for Ruby as well, others are lacking in
+the language. In 2015 we decided to use everything we learned from
+\textit{biodiversity}, and found technologies to fulfil all requirements: Java
+virtual machine, Scala programming language \cite{odersky2004overview}, and
+parboiled2 library \cite{parboiled2} (Scala parser combinators
+\cite{moors2008parser} library has known performance and memory issues. We
+chose parboiled2 library instead).
 
 Functional programming features of Scala language allow to avoid using of
 external grammar generators, and write a grammar directly in Scala using
 higher-order combinators. parboiled2 has grammar rule DSL that is macro-
 translated \cite{Burmako:2013:SML:2489837.2489840} to performant code.
 
-We write ``\textit{gnparser}'' -- completely new parser in Scala to achieve
+We wrote ``\textit{gnparser}'' -- a completely new parser in Scala to achieve
 significant boost in speed, scalability and portability of the library. In
 this manuscript we describe features, performance and discuss future
 enhancements of this new parser.
@@ -574,7 +577,7 @@ Projects consists of four parts:
 \begin{itemize}
   \item ``\textit{parser}'' contains core routines for parsing input string
   \item ``\textit{examples}'' contains usage samples for some popular
-  programming languages: Java, Scala, Python, Ruby, R
+  programming languages: Java, Scala, Python, Ruby and R
   \item ``\textit{runner}'' contains code required to run ``\textit{parser}''
   from a command line as a standalone tool or to run it as a TCP/IP server
   \item ``\textit{web}'' contains a web application and a RESTful interface to
@@ -585,27 +588,28 @@ All subprojects but ``\textit{web}'' can be run in JVM 1.6. ``\textit{web}''
 requires JVM 1.8.
 
 parboiled2 is open sourced that allowed us to extend it to needs of
-``\textit{gnparser}'' [TODO: link to extensions].
+``\textit{gnparser}''.
 
 \subsection*{parser}
 
-``\textit{parser}'' contains all the guts for successful parsing of a
-scientific name: parsing grammar, AST for a scientific name, warnings and
-errors facilities, formatters (normalizer, canonizer, JSON
-\cite{bray2014javascript} renderer). Typical usage is as external library to
-provide parsing facilities: language interoperability, command line tool,
-web/socket-servers, etc.
+``\textit{parser}'' contains components for successful parsing of a scientific
+name: parsing grammar, abstract synthax tree (AST) composed of a scientific
+name components, warnings and errors facilities, formatters (normalizer,
+canonizer, JSON \cite{bray2014javascript} renderer). Typical usage is as an
+external library to provide parsing facilities to other parts: language
+interoperability, command line tool, REST and socket servers, etc.
 
 ``\textit{gnparser}'' accepts $String$ as input, and returns a $Result$.
-$Result$ then can be formatted to JSON that contains useful information as
-follows:
+$Result$ then can be converted to JSON containing the following useful
+information:
 
 \begin{itemize}
   \item $details$ contains JSON-representation of a parsed scientific name
-  \item $quality\_warnings$ describe potential problems (level and
-  description) of provided name [TODO: documentation]
-  \item $quality$ contains overall quality level
-  \item $positions$ explain name parts with column number
+  \item $quality\_warnings$ describes potential problems if names are not
+    well-formed
+  \item $quality$ depicts a quality level of a parsed name
+  \item $positions$ maps positions of every word in a parsed name with
+    the semantic meaning of the word
 \end{itemize}
 
 JSON schema can be found online \cite{gnparser_json}.
@@ -613,9 +617,9 @@ JSON schema can be found online \cite{gnparser_json}.
 \subsection*{runner}
 
 ``\textit{runner}'' depends on ``\textit{parser}''. It provides functionality
-of command line tool and socket server. Core part is the launch script
-``\textit{gnparse}'' (both for Linux/Mac and Windows) that creates JVM
-instance and run ``\textit{parser}'' on multiple threads against the input
+of a command line tool and a socket server. Core part is the launch script
+``\textit{gnparse}'' (for Linux/Mac and Windows) that creates JVM
+instance and runs ``\textit{parser}'' on multiple threads against the input
 provided via socket or file.
 
 Usage documentation is available at README file [??? link].
@@ -1187,6 +1191,7 @@ The authors declare that they have no competing interests.
 
 AST -- Abstract Syntax Tree
 DSL -- Domain Specific Language
+JSON -- JavaScript Object Noatation
 
 \section*{Author's Contributions}
 
