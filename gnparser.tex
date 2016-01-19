@@ -502,10 +502,10 @@ PEG \cite{Ford2004}. PEG are defined recursively:
 And sugared expressions:
 
 \begin{itemize}
-    \item $[a_1-a_n]$, denoting a class of characters. E.g. 
-    $[0-9]$. It desugars to prioritized choice: $a_1 \vert a_2 \vert \ldots 
+    \item $[a_1-a_n]$, denoting a class of characters. E.g.
+    $[0-9]$. It desugars to prioritized choice: $a_1 \vert a_2 \vert \ldots
     \vert a_n$
-    \item $e+$, one-or-more eagerly matches first time and then until first 
+    \item $e+$, one-or-more eagerly matches first time and then until first
     fail. It desugars to $e e*$
 \end{itemize}
 
