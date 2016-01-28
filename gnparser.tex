@@ -426,51 +426,50 @@ elegantly deal with name-strings where authorship is present in the middle of
 the name.
 
 Another popular approach is to parse scientific names using regular language
-implemented as regular expression \cite{aho1992foundations}. Formally regular
-languages over an alphabet $\Sigma$ are defined recursively as follows:
+implemented as regular expression \cite{aho1992foundations}. Informally, regular
+expression is a pattern that describes a certain amount of text. Primitives are:
 
 \begin{itemize}
-  \item The empty language $\emptyset$ is a regular language
-  \item For each $a \in \Sigma$ ($a$ belongs to $\Sigma$), the singleton
-  language $\{a\}$ is a regular language
-  \item If A and B are regular languages, then $A \cup B$ (union), $A \cdot B$
-  (concatenation), and $A*$ (Kleene star) are regular languages
-  \item No other languages over $\Sigma$ are regular
-\end{itemize}
-
-A way to describe regular language is by regular expressions. Formally regular
-expression is defined as follows:
-
-\begin{itemize}
-  \item (empty set) $\emptyset$ denoting the set $\emptyset$
-  \item (empty string) $\epsilon$ denoting the set containing only the
+  \item empty string $\epsilon$ denoting a text only the
   ``empty'' string, which has no characters at all
-  \item (literal character) $a \in \Sigma$ denoting the set containing only the
-  character $a$
+  \item literal character denoting a text containing only one any character
 \end{itemize}
 
-Given regular expressions $R$ and $S$, the following operations over them are
-defined to produce regular expressions:
+And primitives of regular expressions composition. Given regular expressions
+$R$ and $S$, the following operations over them are defined to produce regular
+expressions:
 
 \begin{itemize}
-  \item (concatenation) $RS$ denotes the set of strings that can be obtained
+  \item concatenation: $RS$ denotes the set of strings that can be obtained
   by concatenating a string in $R$ and a string in $S$
-  \item (alternation) $R \vert S$ denotes the set union of sets described by
+  \item alternation: $R \vert S$ denotes the set union of sets described by
   $R$ and $S$.
-  \item (Kleene star) $R*$ denotes the smallest superset of set described by
-  $R$ that contains $\varepsilon$ and is closed under string concatenation.
+  \item Kleene star: $R*$ denotes the smallest superset of set described by
+  $R$ that contains $\varepsilon$, $R$, $RR$, etc.
 \end{itemize}
 
-The equivalence of regular expressions and finite automata is well-known
-Kleene's theorem \cite{yu1997handbook}. For example, since finite automata
-does not have memory, both languages are not regular: $ \{a^nb^n\,\vert\; n\ge
-0\} $ and the language of arithmetic expressions. Approaches to names parsing
-built on regular expressions \cite{gbif} can't express theoretically and deal
-very hard practically with recursively nested data structures (and complex
-scientific name strings are recursive by nature, as it is most obvious with
-hybrid formulae). Narrow information of parsing context make it hard to
-implement and maintain such concept as error recovery, detailed warnings and
-errors description.
+Examples of regular languages and corresponding string sets:
+
+\begin{itemize}
+    \item TODO: Fill me
+\end{itemize}
+
+Regular expressions are quite limited in expressive power. For example, it is
+proven mathematical fact that both languages (despite of simplicity) are not
+regular: $\{a^nb^n\,\vert\; n\ge 0\} $ and the language of arithmetic
+expressions \footnote{Since the equivalence of regular expressions and finite
+automata according to Kleene's theorem \cite{yu1997handbook}, finite automata
+does not have memory. In other words, informally and intuitively, regular
+expressions do not have facilities to recursively refer parts of its own while
+parsing.}. That makes approaches to names parsing built on regular expressions
+\cite{gbif} impossible to express theoretically and deal very hard practically
+with recursively nested data structures (and complex scientific name strings
+are recursive by nature, as it is most obvious with hybrid formulae).
+Moreover, narrow information of parsing context make it hard to implement and
+maintain such concept as error recovery, detailed warnings and errors
+description \footnote{Most of regular expression software tools are ``black 
+boxes'' -- they allow a little interference with parsing process. For example, a
+developer can't call a procedure when parsing event happened.}.
 
 Names can be quite complex (for example ``\textit{Brassica oleracea} L.
 \textit{subsp.  capitata} (L.) DC. \textit{convar. fruticosa} (Metzg.) Alef.
