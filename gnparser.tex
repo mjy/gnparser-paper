@@ -420,7 +420,7 @@ strings from a collection.
 
 Until recently the problem of scientific name parsing had been addressed by
 manual splitting of names into canonical form and the authorship parts and
-by using home-grown regular expression-based scripts. Manual approach of
+by using home-grown scripts based on regular expressions. Manual approach of
 splitting names into 2 parts is expensive, slow, inflexible and cannot
 elegantly deal with name-strings where authorship is present in the middle of
 the name.
@@ -467,7 +467,7 @@ with recursively nested data structures (and complex scientific name strings
 are recursive by nature, as it is most obvious with hybrid formulae).
 Moreover, narrow information of parsing context make it hard to implement and
 maintain such concept as error recovery, detailed warnings and errors
-description \footnote{Most of regular expression software tools are ``black 
+description \footnote{Most of regular expression software tools are ``black
 boxes'' -- they allow a little interference with parsing process. For example, a
 developer can't call a procedure when parsing event happened.}.
 
