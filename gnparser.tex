@@ -485,25 +485,66 @@ just because they are not simple enough. We need an approach that is able to
 deal with names of broader complexity.
 
 We looked for a grammar that can describe broader class of languages. We chose
-PEG \cite{Ford2004}. PEG is similar to CFG with one difference: the choice
-operator selects the first match in PEG, while it is ambiguous in CFG. We
-chose PEG for reasons as follows:
+PEG \cite{Ford2004}. PEG are defined recursively:
+
+\begin{enumerate}
+    \item $\varepsilon$, the empty string
+    \item $'\ '$, denoting a literal string. E.g. $'abc'$
+    \item $.$, denoting any character
+    \item $e$, grammar rule
+    \item $e1\ e2$, a sequence of defined expressions. Sequence is matched if
+    both expressions are matched
+    \item $e1\ /\ e2$, prioritized choice (so called ``FirstOf''). If $e1$ is
+    matched then FirstOf; otherwise it is result of match of $e2$
+    \item $e*$, zero-or-more eagerly matches until first fail
+    \item $!e$, not-predicate matches if $e$ is failed to match
+\end{enumerate}
+
+And sugared expressions:
+
+\begin{itemize}
+    \item $[a_1-a_n]$, denoting a class of characters. E.g. 
+    $[0-9]$. It desugars to prioritized choice: $a_1 \vert a_2 \vert \ldots 
+    \vert a_n$
+    \item $e+$, one-or-more eagerly matches first time and then until first 
+    fail. It desugars to $e e*$
+\end{itemize}
+
+For example, PEG that recognizes strings: $'a', 'b', 'ac', 'ab', 'acc', 'abb',
+\ldots$:
+
+\begin{lstlisting}[frame=single]
+Expr <- ('a' / 'b') Cs
+Cs   <- 'c'*
+\end{lstlisting}
+
+PEG that recognizes mathematical formulas with four prioritized basic
+operations to non-negative integers:
+
+\begin{lstlisting}[frame=single]
+Expr    <- Sum
+Sum     <- Product (('+' / '-') Product)*
+Product <- Value (('*' / '/') Value)*
+Value   <- Digit+ / '(' Expr ')'
+Digit   <- [0-9]
+\end{lstlisting}
+
+We chose PEG for reasons as follows:
 
 \begin{itemize}
   \item scientific names are formalized enough to be closer to strict
   algebraic description rather that natural language. Particularly,
-  ambiguities in scientific names parts (TODO:  add examples of forma,
-  subspecies in parentheses) are rare. When it becomes critical, we still have
+  ambiguities in scientific names parts are rare (TODO:  add examples of forma,
+  subspecies in parentheses). When it becomes critical, we still have
   options to deal with it:
     \begin{itemize}
       \item encapsulate ambiguity in parsing structures
-      \item in view of fact that PEG syntax is very similar to CFG, modify
-      semantics of PEG parser
+      \item modify semantics of PEG parser to ambiguous matching
     \end{itemize}
   \item parser is relatively easy to compose and program
   \item typical length of scientific name string is short enough to deal with
   possibly bad computational complexity and memory consumption
-  \item existance of embedded domain specific language to compose parser
+  \item existence of embedded domain specific language to compose parser
 \end{itemize}
 
 In 2008 we created a specialized parsing library ``\textit{biodiversity}''
