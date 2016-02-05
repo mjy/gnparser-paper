@@ -209,7 +209,6 @@
 
 \begin{abstract} % abstract
   \parttitle{Background}
-
   Modern biology is unthinkable without names based on Linnaean nomenclature.
   Names of organisms are pervasive, they are metadata which allows to
   communicate information in biodiversity, ecology, molecular biology, medicine
@@ -222,9 +221,7 @@
   elements, allowing to compare them by their \textit{canonical form}
   (\textit{Aedes thurmanae} for both examples) and other included into names
   information.
-
   \parttitle{Results}
-
   We introduce Global Names Parser (\textit{gnparser}) -- a tool based on
   a Parsing Expression Grammar algorithm. The parser is able to deal with the
   most complex scientific name-strings. It finds semantic meaning for all
@@ -235,16 +232,13 @@
   name-strings. Measured throughput was 21.4 million names/hour per CPU (73.4
   million names/hour per 4 CPUs).  The \textit{gnparser} library is compatible
   with Scala, Java, R, Jython, and JRuby. The parser can be used as a command
-  line application, socket server, webb-app or RESTful http-service.
-
+  line application, socket server, web-app or RESTful http-service.
   \parttitle{Conclusions}
-
   Global Names Parser (\textit{gnparser}) is a high precision tool for
   biodiversity informatics. It is released under Open Source MIT license. We
   believe that with popularisation of this project very expensive and
   error-prone manual parsing will not be needed anymore for the vast majority
   of situations.
-
 \end{abstract}
 
 
@@ -301,37 +295,27 @@
 \section*{Conventions}
 
 Throughout the paper we distinguish between two terms -- ``name'' and
-``name-string''. Term ``name'' varies in its meaning for different
-nomenclatural codes. According to botanical code of nomenclature \cite{ICN}
-\textit{Pinus silvestris} is considered to be a single name. According to
-zoological code \cite{ICZN} \textit{Parus major} is considered to be a
-combination of two names -- \textit{Parus} and \textit{major}. In the paper we
-use the term ``name'' in ``botanical'' sense unless stated otherwise.
-
-The ``name-string'' term represents a sequence of characters (letters, numbers,
-punctuation, spaces, symbols) used to represent a name. Both \textit{Pinus
-silvestris} and \textit{Parus major} correspond to one name-string each.
-
-A name can be expressed by many name-strings, some are well-formed and code
-compliant, and others are not (for example see Table~\ref{table:carex} ). There
-are millions of scientific names and billions of possible legitimate
-name-strings.
+``name-string''. Term ``name-strings'' represents a sequence of characters
+(letters, numbers, punctuation, spaces, symbols). Term ``name'' is an entity
+which points to a taxon. A name can be expressed by many name-strings, some are
+well-formed and code compliant, and others are not (for example see
+Table~\ref{table:carex}).  There are millions of scientific names and billions
+of possible legitimate name-strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
-code of nomenclature (Zoological \cite{ICZN}, Botanical \cite{ICN},
-Bacteria \cite{ICNB}, Viruses \cite{ICTV}, Cultivated plants \cite{ICNCP},
-Phylocode \cite{ICPN}). Codes of nomenclature determine rules for composing
-scientific names from infraspecific to family level. Other levels comply with
-community practices.
+code of nomenclature: Zoological (ICZN) \cite{ICZN}, Botanical (ICN)
+\cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, Cultivated
+plants (ICNCP) \cite{ICNCP}, Phylocode (ICPN) \cite{ICPN}.
 
 \section*{Background}
 
 The names of organisms are invaluable in the world of big biodiversity data
-because they can be used as near universal metadata to index, organize and
+because they can be used as near universal metadata to index, organize, and
 interconnect distributed information \cite{Patterson2010}. Nevertheless, use of
-names for informatics purposes presents an array of problems. As we demonstrate
-further many of these problems can be solved by parsing, or deducing the
-semantic meaning of words occurred in the name-strings.
+names for informatics purposes presents an array of problems . As we
+demonstrate below, some of these problems can be solved by parsing, that is to
+algorithmically deduce the semantic meaning of the words (or elements) within
+the name-strings.
 
 \begin{table}[!htb]
   \begin{center}
@@ -376,129 +360,123 @@ semantic meaning of words occurred in the name-strings.
   \end{center}
 \end{table}
 
-Due to intrinsic diversity of name-strings (Table~\ref{table:carex}) an exact
-string matching is not powerful enough to link distributed big data via
-scientific names. This problem can be addressed by promoting a rigid standard
-restricting each name to a single name-string, or through
-\textit{reconciliation}. The former strategy would require a costly
-international coordination, would not eliminate future human mistakes, it
-cannot be applied to older documents, does not allow for multiple points of
-view, nor for changes in taxonomic perspective.
+Due to intrinsic diversity of name-strings (Table~\ref{table:carex}), exact
+string matching was able only to link about 10\% of entries in major data
+environments \cite{Patterson:inpress-a}. This is insufficient to achieve the
+vision of a ``Big New Biology'' interconnected via scientific names. This
+problem can be addressed in part by promoting obligatory standard names such
+that authors, editors and publishers take responsibility for representing a
+scientific name in the same way. The alternative is to apply reconciliation in
+which an infrastructure maps alternative names for the same taxon together.
+The former strategy would require a costly international coordination, would
+not eliminate future human mistakes, it cannot be applied to older documents,
+does not allow for multiple points of view, nor for changes in taxonomic
+perspective. That is, even the use of standard names requires reconciliation,
+and reconciliation can benefit from standardization by resolving variant names
+to the recommended standard names.
 
-The reconciliation process involves folding of all known name-strings into
-lexical groups. This requires that we collate all variant spellings of names.
-Parsing is crucial for creating lexical groups of name-strings: it allows to
-find the most common denominator of spelling variants -- a canonical form
-(\textit{Carex scirpoidea convoluta} in case of Table~\ref{table:carex}) and
-extract other important for reconciliation  information (infraspecific ranks,
-original and combination authorities etc.). Lexical groups would then require
-another level of folding into reconciliation groups where homotypic and
-heterotypic synonyms are placed together. This process requires an accurate
-database of nomenclatural events (for example Global Names Usage Bank
-\cite{Pyle2003}).
+The reconciliation process involves linking all known name-strings into
+reconciliation groups. Membership include lexical variants of any relevant
+name-strings, synonyms, surrogates, common names, and identifiers.  The
+assembly of lexical groups (various presentations of the same name or other
+identifier) requires that all variant spellings of names are collated. Parsing
+can automate the task of creating lexical groups for scientific names:. Parsing
+finds the most common denominator of spelling variants – a canonical form
+(\textit{Carex scirpoidea convoluta} in case of Table~\ref{table:carex}). It
+identifies other important for reconciliation information (infraspecific ranks,
+original and combination authorities etc.), and manages annotations and other
+intrusions into the name-string. Lexical groups then require another level of
+folding into reconciliation groups where homotypic and heterotypic synonyms are
+placed together. This process benefits from access to accurates database of
+nomenclatural events (such as International Plant Name Index, Index Fungorum,
+and ZooBank and the Global Names Usage Bank \cite{Pyle2003}).
 
-Reconciliation uses the most stable component of a name-string -- its canonical
-form. Such approach brings us to another problem -- the same canonical form may
-be used for more than one taxon or concept in case of homonyms, chresonyms, or
-ranks of infraspecies. Analysis of ranks and the authors found by a
-parser in name-strings helps to separate homonyms and similar names from each
-other.
+Reconciliation uses the most stable component of a name-string – a canonical
+form. Such approach brings us to another problem – the same canonical form may
+be used for more than one taxon or concept \cite{Remsen2016} homonyms, chresonyms,
+or ranks of infraspecies. Analysis of ranks and the authors found by a parser
+helps to separate homonyms chresonyms and other  similar names from each other,
+while an infrastructure to manage concepts is unlikely in the forseeable future
+\cite{Patterson:inpress-a}.
 
-The next challenge is to replace outdated names with ones that are endorsed by
-taxonomic authorities -- this is a process referred to as \textit{resolution}.
-Resolution requires an up to date high quality taxonomic and nomenclatural
-service (for example catalogue of Life \cite{col}) to map a reconciled
-name-string to the currently used name/names. A reconciliation of name-strings
-used by a taxonomic authority with name-strings supplied by user makes parsing
-a very important step at this stage as well.
+After reconciliation, the final step is to provide an option to replace outdated
+or incorrect names with ones that are endorsed by one or more taxonomic
+authorities. This is referred to as resolution. Resolution requires up to date
+high quality ``Taxonomic Authority Files'' \cite{VandenBerghe2015}, such as
+endorsed checklists (e.g. \cite{Zermoglio2016}), taxonomic sources (e.g.
+\cite{Boyle2013}) and taxonomic compilations  (e.g Catalogue of Life
+\cite{col}). Ideally such sources should be underpinned by nomenclatural
+services provided through nomenclatural registries, and should make their
+content available through services.  This will allow automated updating of
+texts that are on-line so that organisms are represented by currently used
+names. A reconciliation of name-strings used by a taxonomic authority with
+name-strings supplied by user makes parsing a very important step at this stage
+as well.
 
-A significant number of biodiversity informatics projects (Encyclopedia of Life
-\cite{eol}, Global Biodiversity Informatics Facility \cite{gbif}, Catalogue of
-Life \cite{col}, World Register of Marine Species \cite{worms}, iDigBio
-\cite{idigbio}, VertNet \cite{vertnet} etc.) aggregate information from many
-different sources.  Resulting name-strings are inconsistent in their format.
-Parsed names can be normalized to the same style. Some name-strings are not
-properly formed, other contain annotations which are not part of the name.
-There are also “surrogate names” -- they depict organisms which were not fully
-identified and mapped to a formally described taxon, instead they were
-associated with a name-string that narrows down identification choices to some
-higher clade. Parser helps to recognize such names and mark them as surrogate
-name-strings.
+Increasingly, large biodiversity informatics projects (Encyclopedia of Life
+\cite{eol}, Global Biodiversity Informatics Facility \cite{gbif}, Atlas of
+Living Australia \cite{ala}, Barcode of Life \cite{bold}, iDigBio
+\cite{idigbio}, VertNet \cite{vertnet} etc.) dynamically aggregate information
+from many different sources. The name-strings in the the distributed sources
+are inconsistent in their format, impeding data integration. Impediments also
+result from name-strings that are not properly formed, or contain annotations
+which are not part of the name, or are ``surrogate names'' – in that they are
+not code compliant names that depict organisms which were not fully identified
+and mapped to a formally described taxon. When parsed, many such name-strings
+can be normalized to the same style or can be labelled as not being scientific
+names, and therefore need special attention.  If a name-string cannot be
+ingested by a high quality parser, the string is almost certainly not a
+well-formed scientific name.Common names are much less useful in
+interconnecting distributed information \cite{Patterson:inpress-a}.
 
-After collecting parsed data from a large name-string repository a researcher
-can use the data as a basis for statistical analysis, or for practical
-purposes. For example parsed data can be used to introduce faceted search by
-authors name, year of publication, species epithet etc. If a name-string cannot
-be ingested by a high quality parser, the string is almost certainly not a
-well-formed scientific name. As a result parser can weed out problematic
-name-strings from a collection.
+Parsing not only reduces variation, segregates non scientific names, but can
+open up new types of analysis.  Some of the semantic elements can be used for
+faceted searches by author name, year of publication, species epithet, and so
+on; allow taxonomic aggregation of sources that refer to the same or different
+members of the same clade, or look for patterns of associations among taxa.
 
 \subsection*{Prior Art}
 
 Until recently the problem of scientific name parsing had been addressed by
-manual splitting of names into canonical form and the authorship parts and
+manual splitting of names into canonical form and the authorship part and
 by using home-grown scripts based on regular expressions.
 
 Manual approach of splitting names into 2 parts is expensive, slow, inflexible
 and cannot elegantly deal with name-strings where authorship is present in the
-middle of the name.
+middle of the name. The manual approach was never competitive for large scale
+initiatives.
 
 Another popular approach is to parse scientific names using regular language
-implemented as regular expression \cite{aho1992foundations}. Informally, regular
-expression is a pattern that describes a certain amount of text. Primitives are:
+implemented as regular expression \cite{aho1992foundations}. Regular
+expression is a text string that describes a search pattern [REF]. For example
+a regular expression ``[A-Z][a-z]\{2\}'' corresponds to a capitalized word
+from 3 letters like ``Zoo''.
 
-\begin{itemize}
-  \item empty string $\epsilon$ denoting a text only the
-  ``empty'' string, which has no characters at all
-  \item literal character denoting a text containing only one any character
-\end{itemize}
-
-And primitives of regular expressions composition. Given regular expressions
-$R$ and $S$, the following operations over them are defined to produce regular
-expressions:
-
-\begin{itemize}
-  \item concatenation: $RS$ denotes the set of strings that can be obtained
-  by concatenating a string in $R$ and a string in $S$
-  \item alternation: $R \vert S$ denotes the set union of sets described by
-  $R$ and $S$.
-  \item Kleene star: $R*$ denotes the smallest superset of set described by
-  $R$ that contains $\varepsilon$, $R$, $RR$, etc.
-\end{itemize}
-
-Examples of regular languages and corresponding string sets:
-
-\begin{itemize}
-    \item TODO: Fill me
-\end{itemize}
-
-Regular expressions are quite limited in expressive power. For example, it is
-proven mathematical fact that both languages (despite of simplicity) are not
-regular: $\{a^nb^n\,\vert\; n\ge 0\} $ and the language of arithmetic
-expressions \footnote{Since the equivalence of regular expressions and finite
-automata according to Kleene's theorem \cite{yu1997handbook}, finite automata
-does not have memory. In other words, informally and intuitively, regular
+Regular expressions are quite limited in expressive power. For example regular
 expressions do not have facilities to recursively refer parts of its own while
-parsing.}. That makes approaches to names parsing built on regular expressions
-\cite{gbif} impossible to express theoretically and deal very hard practically
-with recursively nested data structures (and complex scientific name-strings
-are recursive by nature, as it is most obvious with hybrid formulae).
-Moreover, narrow information of parsing context make it hard to implement and
-maintain such concept as error recovery, detailed warnings and errors
-description \footnote{Most of regular expression software tools are ``black
-boxes'' -- they allow a little interference with parsing process. For example, a
-developer can't call a procedure when parsing event happened.}.
+parsing \cite{yu1997handbook}. That makes approaches to scientific names
+parsing built on regular expressions impossible to express theoretically. As a
+result it becomes very hard to deal with recursively nested data structures.
+The most obvious example such recursiveness in name parsing are hybrid
+formulae.
+
+Moreover, limited information of parsing context makes it hard to
+implement and maintain such concept as error recovery, detailed warnings and
+errors description -- most of regular expression software tools are ``black
+boxes''. They allow very little interference with parsing process. For example,
+a developer can't call a procedure during a parsing event.
 
 Names can be quite complex (for example ``\textit{Brassica oleracea} L.
 \textit{subsp.  capitata} (L.) DC. \textit{convar. fruticosa} (Metzg.) Alef.
 $\times$ \textit{B. oleracea} L. \textit{subsp. capitata} (L.) \textit{var.
-costata} DC.'')  and include authorship for every mentioned taxon, include or
-omit infraspecific ranks, original and combination authors etc. Authorship
-itself is quite complex and can include original authors who described a name,
-authors of a new combination, or authors who made a name, but did not publish
-it. We obviously do not want to exclude names from biodiversity informatics
-just because they are not simple enough. We need an approach that is able to
-deal with names of broader complexity.
+costata} DC.''). They may or may not include authorship for every mentioned
+taxon, include or omit infraspecific ranks, original and combination authors,
+etc. Authorship itself may be  quite complex because authorship can include
+original authors who described a name, authors of a new combinations, or
+authors who introduced a name but someone else published it. We  need an
+approach that is better able to deal with names of broader complexity than can
+be achieved through a regular expression approach.
+
 
 We looked for a grammar that can describe broader class of languages. We chose
 PEG \cite{Ford2004}. PEG are defined recursively:
@@ -575,7 +553,7 @@ We found that PEG approach allows us to solve all these complexity gracefully.
 Also PEG gave us enough flexibility to incorporate edge cases and common
 mistakes in formation of names. The library \textit{biodiversity} enjoyed
 noticeable popularity. At the time of writing it had been downloaded more than
-150,000 times \cite{bdiv_downloads}, it is used by many taxon name resolution
+150,000 times \cite{bdiv-downloads}, it is used by many taxon name resolution
 projects (for example by Canadian Register of Marine Species (CARMS)
 \cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of Marine Species
 (WoRMS) \cite{worms}.  According to BioRuby statistics \textit{biodiversity},
@@ -670,7 +648,7 @@ information:
     the semantic meaning of the word
 \end{itemize}
 
-JSON schema can be found online \cite{gnparser_json}.
+JSON schema can be found online \cite{gnparser-json}.
 
 \subsection*{runner}
 
@@ -966,7 +944,8 @@ found that $Accuracy$ of GBIF \textit{name-parser} was negatively affected by
 not dealing with hybrid formulae and infrasubspecific names (names with more
 then one infraspecific epithet). Regular expressions do not support
 recursion -- the more complex names are, the harder it becomes to parse them.
-For example the following names were not supported by GBIF name-parser:
+For example the following names were not supported by GBIF
+\textit{name-parser}:
 
 \vspace{0.5cm}
 \begin{verbatim}
