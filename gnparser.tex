@@ -136,10 +136,12 @@
    email={mozzheri@illinois.edu}
 ]{\inits{DYM}\fnm{Dmitry Y.} \snm{Mozzherin}}
 \author[                  % id's of addresses, e.g. {aff1,aff2}
+   addressref={aff2},
    noteref={n1},% id's of article notes, if any
    email={alexander@myltsev.com}   % email address
 ]{\inits{AAM}\fnm{Alexander A.} \snm{Myltsev}}
 \author[
+   addressref={aff3},
    email={dpatterson.mbl@gmail.com}
 ]{\inits{DJP}\fnm{David J.} \snm{Patterson}}
 
@@ -164,10 +166,16 @@
 \address[id=aff2]{%                    % unique id
   \orgname{IP Myltsev},                % university, etc
   \street{Kaslinskaya St.},            %
-  \city{Chelyabinks},                  % city
+  \city{Chelyabinsk},                  % city
   \state{},
   \postcode{454084},
-  \cny{RU}                             % country
+  \cny{Russia}                             % country
+}
+
+\address[id=aff3]{%                    % unique id
+  \orgname{University of Sydney},                % university, etc
+  \city{Sydney},                  % city
+  \cny{Australia}                             % country
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1231,10 +1239,6 @@ TODO: submit test files
 \section*{Competing Interests}
 
 The authors declare that they have no competing interests.
-
-AST -- Abstract Syntax Tree
-DSL -- Domain Specific Language
-JSON -- JavaScript Object Noatation
 
 \section*{Author's Contributions}
 
