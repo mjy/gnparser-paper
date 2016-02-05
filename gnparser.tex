@@ -154,7 +154,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\address[id=aff1]{%                    % unique id
+\address[id=aff1]{                     % unique id
   \orgname{University of Illinois},    % university, etc
   \street{1816 South Oak St.},         %
   \city{Champaign},                    % city
@@ -163,19 +163,19 @@
   \cny{US}                             % country
 }
 
-\address[id=aff2]{%                    % unique id
+\address[id=aff2]{                     % unique id
   \orgname{IP Myltsev},                % university, etc
   \street{Kaslinskaya St.},            %
   \city{Chelyabinsk},                  % city
   \state{},
   \postcode{454084},
-  \cny{Russia}                             % country
+  \cny{Russia}                         % country
 }
 
-\address[id=aff3]{%                    % unique id
-  \orgname{University of Sydney},                % university, etc
-  \city{Sydney},                  % city
-  \cny{Australia}                             % country
+\address[id=aff3]{                     % unique id
+  \orgname{University of Sydney},      % university, etc
+  \city{Sydney},                       % city
+  \cny{Australia}                      % country
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -209,21 +209,25 @@
 
 \begin{abstract} % abstract
   \parttitle{Background}
+
   Modern biology is unthinkable without names based on Linnaean nomenclature.
   Names of organisms are pervasive, they are metadata which allows to
   communicate information in biodiversity, ecology, molecular biology, medicine
   and many other fields. However indexing and organizing such information via
-  scientific names is challenging for several reasons. As an example -- names
-  exist in a variety of alternative forms like ``\textit{Aedes (Cancraedes)
-  thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'', therefore a
-  simple string comparison often fails to connect information via names due to
-  these variations. Parsing would break names into semantic elements, allowing
-  to compare them by their \textit{canonical form} (\textit{Aedes thurmanae}
-  for both examples) and other included into names information.
+  scientific names is challenging for several reasons. As an example --
+  scientific names exist in a variety of alternative forms like ``\textit{Aedes
+  (Cancraedes) thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'',
+  therefore a simple string comparison often fails to connect information via
+  names due to these variations. Parsing would break names into semantic
+  elements, allowing to compare them by their \textit{canonical form}
+  (\textit{Aedes thurmanae} for both examples) and other included into names
+  information.
+
   \parttitle{Results}
+
   We introduce Global Names Parser (\textit{gnparser}) -- a tool based on
-  Parsing Expression Grammar algorithm. The parser is able to deal with the
-  most complex scientific name strings. It finds semantic meaning for all
+  a Parsing Expression Grammar algorithm. The parser is able to deal with the
+  most complex scientific name-strings. It finds semantic meaning for all
   words within a scientific name (like ranks, years of publication, names of
   authors etc.). Global Names Parser is written in Scala, a Java Virtual
   Machine language. It performs with $\approx99\%$ accuracy, returns meaning
@@ -232,12 +236,15 @@
   million names/hour per 4 CPUs).  The \textit{gnparser} library is compatible
   with Scala, Java, R, Jython, and JRuby. The parser can be used as a command
   line application, socket server, webb-app or RESTful http-service.
+
   \parttitle{Conclusions}
+
   Global Names Parser (\textit{gnparser}) is a high precision tool for
   biodiversity informatics. It is released under Open Source MIT license. We
   believe that with popularisation of this project very expensive and
   error-prone manual parsing will not be needed anymore for the vast majority
   of situations.
+
 \end{abstract}
 
 
@@ -307,8 +314,8 @@ silvestris} and \textit{Parus major} correspond to one name-string each.
 
 A name can be expressed by many name-strings, some are well-formed and code
 compliant, and others are not (for example see Table~\ref{table:carex} ). There
-are millions of scientific names and billions of possible legitimate name
-strings.
+are millions of scientific names and billions of possible legitimate
+name-strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
 code of nomenclature (Zoological \cite{ICZN}, Botanical \cite{ICN},
@@ -410,11 +417,11 @@ A significant number of biodiversity informatics projects (Encyclopedia of Life
 Life \cite{col}, World Register of Marine Species \cite{worms}, iDigBio
 \cite{idigbio}, VertNet \cite{vertnet} etc.) aggregate information from many
 different sources.  Resulting name-strings are inconsistent in their format.
-Parsed names can be normalized to the same style. Some name strings are not
+Parsed names can be normalized to the same style. Some name-strings are not
 properly formed, other contain annotations which are not part of the name.
 There are also “surrogate names” -- they depict organisms which were not fully
 identified and mapped to a formally described taxon, instead they were
-associated with a name string that narrows down identification choices to some
+associated with a name-string that narrows down identification choices to some
 higher clade. Parser helps to recognize such names and mark them as surrogate
 name-strings.
 
@@ -423,8 +430,8 @@ can use the data as a basis for statistical analysis, or for practical
 purposes. For example parsed data can be used to introduce faceted search by
 authors name, year of publication, species epithet etc. If a name-string cannot
 be ingested by a high quality parser, the string is almost certainly not a
-well-formed scientific name. As a result parser can weed out problematic name
-strings from a collection.
+well-formed scientific name. As a result parser can weed out problematic
+name-strings from a collection.
 
 \subsection*{Prior Art}
 
@@ -474,7 +481,7 @@ does not have memory. In other words, informally and intuitively, regular
 expressions do not have facilities to recursively refer parts of its own while
 parsing.}. That makes approaches to names parsing built on regular expressions
 \cite{gbif} impossible to express theoretically and deal very hard practically
-with recursively nested data structures (and complex scientific name strings
+with recursively nested data structures (and complex scientific name-strings
 are recursive by nature, as it is most obvious with hybrid formulae).
 Moreover, narrow information of parsing context make it hard to implement and
 maintain such concept as error recovery, detailed warnings and errors
@@ -551,7 +558,7 @@ We chose PEG for reasons as follows:
       \item modify semantics of PEG parser to ambiguous matching
     \end{itemize}
   \item parser is relatively easy to compose and program
-  \item typical length of scientific name string is short enough to deal with
+  \item typical length of scientific name-string is short enough to deal with
   possibly bad computational complexity and memory consumption
   \item existence of embedded domain specific language to compose parser
 \end{itemize}
@@ -728,9 +735,9 @@ names.
 
 We compared performance of gnparser with 2 other projects -- Biodiversity
 parser\cite{biodiversity} (also developed by Global Names), and GBIF
-name-parser\cite{gbifNameParser}. Another project we considered was YASMEEN
-parser from iMarine\cite{VandenBerghe2015}, however we found that with our
-dataset it generated dramatically more mistakes than other parsers
+\textit{name-parser} \cite{gbifNameParser}. Another project we considered was
+YASMEEN parser from iMarine\cite{VandenBerghe2015}, however we found that with
+our dataset it generated dramatically more mistakes than other parsers
 ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and we decided to exclude it
 from the tests.
 
@@ -741,8 +748,8 @@ of 1,000,000 random name-strings from GNI.
 
 To study effects of parallel execution on throughput we used
 \textit{ParallelParser} class from Biodiversity parser and \textit{gnparse}
-command line interface for gnparser. For GBIF name-parser we created a thin
-wrapper with multi-threaded capabilities\cite{gbifparser}.
+command line interface for gnparser. For GBIF \textit{name-parser} we created a
+thin wrapper with multi-threaded capabilities\cite{gbifparser}.
 
 For determining $Precision$, $Recall$ and $Accuracy$ of parsed names the
 dataset size was 1000 name-strings. To estimate quality for all parsers we
@@ -860,8 +867,8 @@ requirements
 
 High quality parsing is probably the most important out of the 5 requirements.
 We tested gnparser together with 2 other parsing projects. To our knowledge
-these three represent state of the art for parsing biological scientific
-names. GBIF name-parser uses regular expressions approach, while gnparser and
+these three represent state of the art for parsing biological scientific names.
+GBIF \textit{name-parser} uses regular expressions approach, while gnparser and
 biodiversity parser use PEG approach. Results for our quality measurements are
 shown in Table~\ref{table:precision}.
 
@@ -912,11 +919,11 @@ next version of gnparser as well. Quality of parsing rules is constantly
 improving, in our estimation gnparser can reach $> 99.5\% Accuracy$
 without diminishing $Recall$.
 
-During incorporation of new rules to increase $Recall$ it is important to
-judge if there is a risk of bringing down $Precision$ by introducing new false
-positives.  For example GBIF name-parser allows genus of a name-string to
-start with a lowercase character. As a result the strings below were parsed as
-scientific names, while other parsers ignored them:
+During incorporation of new rules to increase $Recall$ it is important to judge
+if there is a risk of bringing down $Precision$ by introducing new false
+positives.  For example GBIF \textit{name-parser} allows genus of a name-string
+to start with a lowercase character. As a result the strings below were parsed
+as scientific names, while other parsers ignored them:
 
 
 \vspace{0.5cm}
@@ -955,11 +962,11 @@ complications become unsurmantable.
 
 If we want to truly connect biological data using scientific names, no names
 should be left behind, no matter how complex they are. During out testing we
-found that $Accuracy$ of GBIF name-parser was negatively affected by not
-dealing with hybrid formulae and infrasubspecific names (names with more then
-one infraspecific epithet). Regular expressions do not support recursion --
-the more complex names are, the harder it becomes to parse them. For example
-the following names were not supported by GBIF name-parser:
+found that $Accuracy$ of GBIF \textit{name-parser} was negatively affected by
+not dealing with hybrid formulae and infrasubspecific names (names with more
+then one infraspecific epithet). Regular expressions do not support
+recursion -- the more complex names are, the harder it becomes to parse them.
+For example the following names were not supported by GBIF name-parser:
 
 \vspace{0.5cm}
 \begin{verbatim}
@@ -1201,10 +1208,10 @@ introduced names.
 
 \section*{Conclusions}
 
-We introduced \textit{gnparser}, a tool for dissecting scientific name strings
-into meaningful parts. Parsing of name strings is necessary component for their
+We introduced \textit{gnparser}, a tool for dissecting scientific name-strings
+into meaningful parts. Parsing of name-strings is necessary component for their
 matching, finding them in texts, sharing them in standardised forms,
-extracting, comparing and analysing metadata ``hidden'' in the name strings.
+extracting, comparing and analysing metadata ``hidden'' in the name-strings.
 The gnparser tool is released under MIT Open Source license, contains command
 line executable, socket, web, and REST services, and is optimized for use as a
 library in languages like Scala, Java, R, Jyphon, JRuby.
