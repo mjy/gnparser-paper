@@ -70,7 +70,7 @@
 \PassOptionsToClass{twoside}{article}
 \PassOptionsToPackage{fleqn}{amsmath}
 \PassOptionsToPackage{sort&compress,numbers}{natbib}
-\PassOptionsToPackage{colorlinks,citecolor=blue,urlcolor=blue,linkcolor=blue,pagecolor=blue}{hyperref}
+\PassOptionsToPackage{colorlinks,citecolor=blue,urlcolor=blue,linkcolor=blue}{hyperref}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions*
