@@ -7,6 +7,11 @@
 %%It must be present to enable the BMC Submission system to
 %%recognise this template!!
 
+
+% Paddy Comment: this sucks!!!!
+% \comment{PADDY  comment in text} 
+% Paddy guide characters that need special backslash \% \$ \# \_ \{ \}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                     %%
 %%  LaTeX template for BioMed Central  %%
@@ -268,7 +273,7 @@
 
 \end{abstractbox}
 %
-%\end{fmbox}% uncomment this for twcolumn layout
+%\end{fmbox}% uncomment this for twocolumn layout
 
 \end{frontmatter}
 
@@ -299,16 +304,20 @@
 
 Throughout the paper we distinguish between two terms -- ``name'' and
 ``name-string''. Term ``name-strings'' represents a sequence of characters
-(letters, numbers, punctuation, spaces, symbols). Term ``name'' is an entity
-which points to a taxon. A name can be expressed by many name-strings, some are
-well-formed and code compliant, and others are not (for example see
-Table~\ref{table:carex}).  There are millions of scientific names and billions
+(letters, numbers, punctuation, spaces, symbols). Term ``name'' is an label
+which points to a taxon. Some zoologists  regard a binomen, such as \textit{Homo sapiens} 
+as a single name, whereas others regard it as comprised of two names.  
+In this paper we adopt the former convention, partly because it is consistent 
+with practices with plants and other organisms. We refer to the individual parts within
+a name or name-string as ``elements''. A name can be expressed by many name-strings, some are
+well-formed and code compliant (for example see
+Table~\ref{table:carex}), and others are not.  There are millions of scientific names and likely to be billions
 of possible legitimate name-strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
 code of nomenclature: Zoological (ICZN) \cite{ICZN}, Botanical (ICN)
-\cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, Cultivated
-plants (ICNCP) \cite{ICNCP}, Phylocode (ICPN) \cite{ICPN}.
+\cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, and Cultivated
+plants (ICNCP) \cite{ICNCP}.
 
 \section*{Background}
 
@@ -795,7 +804,7 @@ names.
 We processed 100,000 name-strings by each parser, and found that about 1000 of
 them had been discarded as not-parseable. $Precision$ in this case showed
 percentage of correctly discarded names.  We do not know $Recall$, as it was
-not feasible to manualy find it for 100,000 names. To get a glimpse on names
+not feasible to manually find it for 100,000 names. To get a glimpse on names
 which had to be discarded, but were parsed instead we analysed intersections
 and differences of the results between the three parsers.
 
@@ -814,6 +823,7 @@ various databases and be limited to databases where names are parsed by humans
 or to exact string matching. Moreover, the advent of high quality parsers
 eliminates the need for humans to perform this very expensive, tedious and
 error-prone task.
+
 
 2. \textbf{Global Scope}. Parser should be able to support all types of
 scientific names, including the most complex ones -- hybrid formulae,
