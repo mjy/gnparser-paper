@@ -54,24 +54,15 @@
 \usepackage[utf8x]{inputenc} %unicode support
 \usepackage{graphicx}
 \usepackage{tikz}
-%\usepackage{doi}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{bera}
 \usepackage{multirow}
 \usepackage{fancyvrb}
+\usepackage{soul}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
-\newcommand{\comment}[2]{\hspace{0in}#2}
-\lstdefinelanguage{json}{
-    basicstyle=\normalfont\ttfamily,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frame=lines,
-    backgroundcolor=\color{white},
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                             %%
@@ -96,6 +87,15 @@
 
 %%% Put your definitions there:
 \startlocaldefs
+  \newcommand{\comment}[2]{\hspace{0in}#2}
+  \lstdefinelanguage{json}{
+      basicstyle=\normalfont\ttfamily,
+      numbersep=8pt,
+      showstringspaces=false,
+      breaklines=true,
+      frame=lines,
+      backgroundcolor=\color{white},
+  }
 \endlocaldefs
 
 
@@ -364,7 +364,7 @@ the name-strings.
 \end{table}
 
 Due to intrinsic diversity of name-strings (Table~\ref{table:carex}), exact
-string matching was able only to link about 10\% of entries in major data
+string matching was able only to link less than 15\% of entries in major data
 environments \cite{Patterson:inpress-a}. This is insufficient to achieve the
 vision of a ``Big New Biology'' interconnected via scientific names. This
 problem can be addressed in part by promoting obligatory standard names such
@@ -437,6 +437,50 @@ open up new types of analysis.  Some of the semantic elements can be used for
 faceted searches by author name, year of publication, species epithet, and so
 on; allow taxonomic aggregation of sources that refer to the same or different
 members of the same clade, or look for patterns of associations among taxa.
+
+We believe a scientific name parser needs to correspond
+to the following requirements to be up to the task:
+
+\begin{enumerate}
+
+  \item \textbf{High Quality.} A parser should be able to break names into their
+    semantic elements to the same quality that can be achieved by a  trained
+    nomenclaturalist or better. Success with this goal overcomes the problems
+    with the form of names in various databases so that we are not limited to
+    the use of databases where names are parsed by humans or to exact string
+    matching. High quality parsers eliminate the need for humans to perform
+    this very expensive, tedious and error-prone task.
+
+  \item \textbf{Global Scope.} A parser should be able to parse all types of
+    scientific names, including the most complex name-strings -- hybrid
+    formulae, multi-infraspecific names, names with multilevel authorships etc.
+    Without such scope, the matching of the same name in different sources is
+    incomplete and valuable information attached to scientific names is hidden
+    from researchers.
+
+  \item \textbf{Parsing Completeness.} All information included into a
+    name-string is important, not only the canonical form. Authorship, year,
+    rank information allows to distinguish homonyms, similar names, synonyms,
+    spelling mistakes, chresonyms from each other, narrowing the search down to
+    relevant information. From other side it allows people who manage large
+    collections of names to weed out mistakes and increase quality of their
+    databases.
+
+  \item \textbf{Speed.} For the purposes of the Global Names Architecture a
+    parser needs to be fast and effective to offer real time services to any
+    user. High throughput of parsing becomes very important with federated data
+    environments, increased speed with which people will receive requested
+    information improves user satisfaction, and it reduced the costs of
+    dependent projects in both hardware and software development.
+
+  \item \textbf{Accessibility.} Our commitment to open source is most effective
+    when the tools are available to the widest possible audience. A parser
+    needs good documentation, the ability to work as a library, act as a
+    command line tool, as a tool with graphical interface, and to run as socket
+    and RESTful services.
+
+\end{enumerate}
+
 
 \subsection*{Prior Art}
 
@@ -756,80 +800,53 @@ names.
 We processed 100,000 name-strings by each parser, and found that about 1000 of
 them had been discarded as not-parseable. $Precision$ in this case showed
 percentage of correctly discarded names.  We do not know $Recall$, as it was
-not feasible to manualy find it for 100,000 names. To get a glimpse on names
+not feasible to manually find it for 100,000 names. To get a glimpse on names
 which had to be discarded, but were parsed instead we analysed intersections
 and differences of the results between the three parsers.
 
 \section*{Results and Discussion}
 
-The goal of Global Names Architecture is creation of an infrastructure for
-biology which uses scientific names to connect and inter-exchange biological
-data in the most complete, accurate and painless way. Parsing is the first
-step to this goal. We believe a scientific name parser needs to correspond to
-the following requirements to be up to the task:
+We discuss \textit{gnparser}, GBIF \textit{name-pasrser} and
+\textit{biodiversity} parser from the point of the 5 requirements mentioned
+earlier in the Background section:
 
-1. \textbf{High Quality}. A parser should be able to break names into their
-semantic elements on a level of a trained nomenclator or better. When we are
-able to reach this goal we become independent on how names are stored in
-various databases and be limited to databases where names are parsed by humans
-or to exact string matching. Moreover, the advent of high quality parsers
-eliminates the need for humans to perform this very expensive, tedious and
-error-prone task.
+\begin{enumerate}
+  \item High Quality Parsing
+  \item Global Scope
+  \item Parsing Completeness
+  \item Speed
+  \item Accessibility
+\end{enumerate}
 
-2. \textbf{Global Scope}. Parser should be able to support all types of
-scientific names, including the most complex ones -- hybrid formulae,
-multi-infraspecific names, names with multilevel authorships etc. Without
-parsing, the ability to find the same name in different sources is severely
-diminished and valuable information attached to scientific names is hidden
-from researchers.
-
-3. \textbf{Parsing Completeness}. All information included into a name is
-important, not only canonical form. Authorship, year, rank information allows
-to distinguish homonyms, similar names, synonyms, spelling mistakes,
-chresonyms from each other, narrowing the search down to relevant information.
-From other side it allows people who manage large collections of names to weed
-out mistakes and increase quality of their databases.
-
-4. \textbf{Speed}. For Global Names Architecture purposes a parser needs to be
-fast and effective to satisfy needs of users everywhere on the globe.  High
-throughput of parsing becomes very important: on one side it increases speed
-with which people will receive requested information, on another side it
-directly influences the cost of required hardware, as well as the cost of
-hardware upgrades.
-
-5. \textbf{Accessibility}. Open source approach shines the most when it covers
-the widest possible audience. A parser needs good documentation, ability to
-work as a library, command line tool, tool with graphical interface, run as
-socket and RESTful service.
-
-Further we are going to talk about gnparser from the point of these 5
-requirements
-
-\subsection*{High quality parsing}
+\subsection*{High Quality Parsing}
 
 High quality parsing is probably the most important out of the 5 requirements.
-We tested gnparser together with 2 other parsing projects. To our knowledge
-these three represent state of the art for parsing biological scientific names.
-GBIF \textit{name-parser} uses regular expressions approach, while gnparser and
-biodiversity parser use PEG approach. Results for our quality measurements are
-shown in Table~\ref{table:precision}.
+We tested \textit{gnparser} together with 2 other parsing projects. To our
+knowledge these three represent state of the art for parsing biological
+scientific names. GBIF \textit{name-parser} uses regular expressions approach,
+while \textit{gnparser} and \textit{biodiversity} parser use PEG approach.
+Results for our quality measurements are shown in Table~\ref{table:precision}.
 
 When data contain large proportion of true negatives ($\text{tn}$) $Accuracy$
-is not a good measure, as it would favor algorithms which distinquish negative
-results, rather than finding positive ones. However in our case datasets had
-only $\approx1\%$ of non-scientific names, true negatives were rare and had
-very little influence on results. $Recal$ for all parsers was very high, which
-means false negatives had insignificant influence on results as well. Taking
-this in account we think $Accuracy$ is the best measure for our tests and
-is sufficient to compare quality for all cases.
+is not a good measure, as it would favor algorithms which distinguish negative
+results, rather than finding positive ones. However by manual checking we
+found that our datasets had only $\approx1\%$ of non-scientific names, true
+negatives were rare and had very little influence on results. $Recall$ for all
+parsers was very high, which means false negatives had an insignificant
+influence on results as well. We hold that $Accuracy$ is the best measure for
+our tests and is sufficient to compare quality for all cases.
 
 Altogether we find that all 3 parsers performed very well with $Accuracy$
-higher than $95\%$. Both gnparser and biodiversity parser were approaching
-99\% mark. Moreover, most of the false positives came from names with
-mistakes. For example, out of 11 false positives for gnparser only 2 were
-well-formed names:
+values higher than $95\%$. Both \textit{gnparser} and \textit{biodiversity}
+parser were approaching 99\% mark\st{, that is production
+quality}\marginpar{Dima: \\removed it to avoid explanation what we consider
+production quality, as others might have different ideas}. Moreover, most of
+the false positives came from name-strings with mistakes. For example for 1000
+name-string data set, out of 11 false positives for \textit{gnparser} only 2
+(the upper two) were well-formed names:
 
 \vspace{0.5cm}
+
 \begin{verbatim}
     Eucalyptus subser. Regulares Brooker
     Jacquemontia spiciflora (Choisy) Hall. fil.
@@ -844,12 +861,13 @@ well-formed names:
     Myosorex muricauda (Miller, 1900).
     Papillaria amblyacis (M<81>ll.Hal.) A.Jaeger
 \end{verbatim}
+
 \vspace{0.5cm}
 
 As it is seen from the name-strings above we do expect parsers to deal with
-mistakes, annotations, and unicode characters miscodings. To alert users
-about them gnparser has a unique feature of generating warnings for each found
-problem in a name-string.
+mistakes, annotations, and Unicode characters miscodings. To alert users,
+\textit{gnparser} generates warnings for each found problem in a name-string.
+The other parsers do not have this feature.
 
 When parsers reach $\approx80\%$ $Accuracy$ they hit a "long tail" of problems
 where each particular case of wrong parsing is rare, and every new manual test
@@ -861,14 +879,25 @@ next version of gnparser as well. Quality of parsing rules is constantly
 improving, in our estimation gnparser can reach $> 99.5\% Accuracy$
 without diminishing $Recall$.
 
-During incorporation of new rules to increase $Recall$ it is important to judge
-if there is a risk of bringing down $Precision$ by introducing new false
-positives.  For example GBIF \textit{name-parser} allows genus of a name-string
-to start with a lowercase character. As a result the strings below were parsed
-as scientific names, while other parsers ignored them:
+When parsers reach $\approx80\%$ $Accuracy$, they hit a "long tail" of problems
+where each particular type of problem  is rare, yet every new manual test
+against 1,000-10,000 name-strings reveals new issues.  Examples of these
+challenges are given elsewhere \cite{Patterson:inpress-a}. For all three
+parsers, developers performed a meticulous task of adding one rare case after
+another to the list of problems and finding ways to incorporate solutions. That
+is, parsers need to be subject to continuous improvement. The problems found
+during preparation of this paper are being addressed in the next version of
+\textit{gnparser} as well. As the parsing rules improve, we believe that
+\textit{gnparser} can reach $>99.5\%$ Accuracy without diminishing $Recall$.
 
+As we incorporate new rules to increase $Recall$, we have to consider the risks
+of reducing $Precision$ by introducing new false positives. For example GBIF
+\textit{name-parser} allows the genus element of a name-string to start with a
+lowercase character. As a result the name-strings below were parsed as if they
+were scientific names, while other parsers ignored them:
 
 \vspace{0.5cm}
+
 \begin{verbatim}
     acid mine drainage metagenome
     agricultural soil bacterium CRS5639T18-1
@@ -883,22 +912,25 @@ as scientific names, while other parsers ignored them:
     barley rhizosphere bacterium JJ-220
     bovine rumen bacterium niuO17
 \end{verbatim}
+
 \vspace{0.5cm}
 
-Solutions like these might increase $Recall$ for certain low-quality datasets,
-but as we see in this example they also decrease $Precision$ for other, better
-quality datasets. When dealing with "dirty" datasets with very predictable
-problems (like lowercase genus) we recommend to write a preparser script which
-"normalizes" known problems and then use a high quality parser.
+Solutions like these might increase $Recall$ with certain low-quality datasets,
+but they also may decrease $Precision$ with other datasets. When dealing with
+"dirty" datasets containing predictable problems, we find the best solution is
+to include a ``preparser'' script which ``normalizes'' known problems and then
+apply a high quality parser to the result.  As an example, a recent study of
+name-strings in DRYAD revealed a large number of instances where elements of
+scientific names had been concatenated but with an interpolated character such
+as `\_’ (e.g. ``Homo\_sapiens'' and ``Pinoyscincus\_jagori\_grandis'')
 
 Our testing also revealed differences between regular expressions and PEG
-approaches. Our results show that both can achieve high quality results for
-finding canonical forms, but regular expressions approach is less suitable for
-more complex name-strings. The reason for this is recursive nature of
-scientific names.  It is relatively easy to parse simpler structured
-name-strings with regular expressions, but for more involved name-strings
-complications arise from the recursive nature of names. At some point these
-complications become unsurmantable.
+approaches. Both can achieve high quality results with canonical forms, but the
+regular expressions approach is less suitable for more complex name-strings.
+The reason for this is the recursive nature of scientific names.  It is
+relatively straightforward to parse ``simple'' name-strings with regular
+expressions, but the recursive nature of some names-strings present greater
+problems that at some point become unsurmountable.
 
 \subsection*{Global Scope}
 
