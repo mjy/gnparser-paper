@@ -450,21 +450,22 @@ middle of the name. The manual approach was never competitive for large scale
 initiatives.
 
 Another popular approach is to parse scientific names using regular language
-implemented as regular expression \cite{aho1992foundations}. Regular
-expression is a text string that describes a search pattern [REF]. For example
-a regular expression ``[A-Z][a-z]\{2\}'' corresponds to a capitalized word
-from 3 letters like ``Zoo''.
+implemented as regular expression (RE) \cite{aho1992foundations}. Regular
+expression is a sequence of characters that describes a search pattern [REF].
+For example a regular expression ``[A-Z][a-z]\{2\}'' corresponds to a
+capitalized word from 3 letters like ``Zoo''.
 
-Regular expressions are quite limited in expressive power. For example regular
-expressions do not have facilities to recursively refer parts of its own while
-parsing \cite{yu1997handbook}. That makes approaches to scientific names
-parsing built on regular expressions impossible to express theoretically. As a
-result it becomes very hard to deal with recursively nested data structures.
-The most obvious example such recursiveness in name parsing are hybrid
-formulae.
+Regular expression is a popular and powerful string matching tool, however
+it does have well understood limits. For example regular expressions do not
+have facilities to recursively refer parts of its own while parsing
+\cite{yu1997handbook}. As a result it becomes very hard to deal with
+recursively nested data structures.  Scientific names often have recursive
+elements, most obvious example are hybrid formulae.  That makes approaches to
+scientific names parsing built on regular expressions impossible to express
+theoretically.
 
 Moreover, limited information of parsing context makes it hard to
-implement and maintain such concept as error recovery, detailed warnings and
+implement and maintain such concepts as error recovery, detailed warnings and
 errors description -- most of regular expression software tools are ``black
 boxes''. They allow very little interference with parsing process. For example,
 a developer can't call a procedure during a parsing event.
@@ -480,10 +481,10 @@ authors who introduced a name but someone else published it. We  need an
 approach that is able to deal with names of broader complexity than can
 be achieved through a regular expression approach.
 
-We chose Parsing Expression Grammer (PEG) \cite{Ford2004} for
-\textit{gnparser}. PEG is an alternative to regular expression method for
-describing a synthax of scientific names. We think PEG suites our goals better
-for the following reasons:
+We chose Parsing Expression Grammar (PEG) \cite{Ford2004} as an underlying
+technology. PEG is an alternative to regular expression method for describing a
+synthax of scientific names. We think PEG suites our goals better for the
+following reasons:
 
 \begin{itemize}
   \item PEG is well suited for texts with recursive synthax.
@@ -504,31 +505,32 @@ In 2008 we created a specialized parsing library ``\textit{biodiversity}''
 \cite{biodiversity} written in Ruby and based on PEG. We used an excellent
 TreeTop Ruby library \cite{treetop} as an underlying PEG implementation.
 
-We found that PEG approach allowed us to gracefully deal with complex
-scientific naems. Also PEG gave us enough flexibility to incorporate edge cases
-and common mistakes in formation of names. The library \textit{biodiversity}
-enjoyed noticeable popularity. At a time of writing it had been downloaded more
-than 150,000 times \cite{bdiv-downloads}, it is used by many taxon name
-resolution projects (for example by Encyclopedia of Life \cite{eol}, Canadian
-Register of Marine Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant},
-World Registry of Marine Species (WoRMS) \cite{worms}.  According to BioRuby
-statistics \textit{biodiversity}, at the time of writing, parser had been the
-most popular bio-library in Ruby language \cite{biogems}.
+We found that PEG approach allowed us to deal with complex scientific names
+gracefully. Also PEG gave us enough flexibility to incorporate edge cases and
+common mistakes detection during the parsing process. The library
+\textit{biodiversity} enjoyed noticeable popularity. At a time of writing it
+had been downloaded more than 150,000 times \cite{bdiv-downloads}, it is used
+by many taxon name resolution projects (for example by Encyclopedia of Life
+\cite{eol}, Canadian Register of Marine Species (CARMS) \cite{carms}, the
+iPlant TNRS \cite{iplant}, World Registry of Marine Species (WoRMS)
+\cite{worms}.  According to BioRuby statistics \textit{biodiversity}, at the
+time of writing, parser had been the most popular bio-library in Ruby language
+\cite{biogems}.
 
-We consider \textit{biodiversity} parser library to be a working prototype --
-a playground which allowed us to identify parsing problems and implement
-solutions for them. In the process we found that PEG is very well suited for
-breaking scientific names into semantic elements.
+We consider \textit{biodiversity} parser library to be a working prototype -- a
+playground which allowed us to identify parsing problems and implement
+solutions for them. We also found that PEG is very well suited for scientific
+names parsing.
 
 The parser \textit{biodiversity} faced performance and scalability issues
 inherited from Ruby design. Ruby is one of the best languages for rapid
 prototyping. The drawback is that it is an interpreted dynamic language with
 originally single-threaded runtime in virtual machine. We needed to move
-forward to an environment with properties as follows:
+forward to an environment with the following properties:
 
 \begin{itemize}
-    \item technology maturity
-    \item multi-threaded in mind, high performance and scalability
+    \item mature technology
+    \item multi-threaded, with high performance and scalability
     \item active community with open-source friendly culture
     \item a wide range of libraries: utilities, web frameworks, etc.
     \item mature development environment: IDEs, testings frameworks,
@@ -544,26 +546,27 @@ While many of the properties are true for Ruby as well, others are lacking in
 the language. In 2015 we decided to use everything we learned from
 \textit{biodiversity}, and found technologies to fulfil all requirements: Java
 virtual machine, Scala programming language \cite{odersky2004overview}, and
-parboiled2 library \cite{parboiled2} (Scala parser combinators
-\cite{moors2008parser} library has known performance and memory issues. We
-chose parboiled2 library instead).
+\textit{parboiled2} library \cite{parboiled2}. There is an alternative to
+\textit{parboiled2} -- the Scala parser combinators library
+\cite{moors2008parser}. However the library has known performance and memory
+issues so \textit{parboiled2} was a natural choice.
 
-Functional programming features of Scala language allow to avoid using of
-external grammar generators, and write a grammar directly in Scala using
-higher-order combinators. parboiled2 has grammar rule DSL that is macro-
-translated \cite{Burmako:2013:SML:2489837.2489840} to performant code.
+Functional programming features of Scala language allow to avoid use of
+external grammar generators, allowing to write a grammar directly in Scala
+using higher-order combinators. \textit{Parboiled2} has a grammar rule domain
+specific language that is macro-translated
+\cite{Burmako:2013:SML:2489837.2489840} to a high performance code.
 
-We wrote ``\textit{gnparser}'' -- a completely new parser in Scala to achieve
-significant boost in speed, scalability and portability of the library. In
-this manuscript we describe features, performance and discuss future
-enhancements of this new parser.
+Using Scala and \textit{parboiled2} we wrote \textit{gnparser} -- a
+completely new parser -- and achieved significant boost in speed, scalability
+and portability of the library. In this manuscript we describe features,
+performance and discuss future enhancements of this new parser.
 
 \section*{Implementation}
 
-``\textit{gnparser}'' is entirely written in Scala. It supports two major
-Scala versions: 2.10.3+ and 2.11.x.
-
-Projects consists of four parts:
+The \textit{gnparser} project is entirely written in Scala. It supports two
+major Scala versions: 2.10.3+ and 2.11.x. The code is organized into four
+subprojects:
 
 \begin{itemize}
   \item ``\textit{parser}'' contains core routines for parsing input string
@@ -575,15 +578,16 @@ Projects consists of four parts:
   ``\textit{parser}''
 \end{itemize}
 
-All subprojects but ``\textit{web}'' can be run in JVM 1.6. ``\textit{web}''
+All subprojects but ``\textit{web}'' can run in JVM 1.6. ``\textit{web}''
 requires JVM 1.8.
 
-parboiled2 is open sourced that allowed us to extend it to needs of
-``\textit{gnparser}''.
+\textit{Parboiled2} is an Open Source project, which allowed us to extend
+\comment{dima: would be good to add a few sentences to describe the extensions}
+it to the needs of \textit{gnparser}.
 
 \subsection*{parser}
 
-``\textit{parser}'' contains components for successful parsing of a scientific
+\textit{parser} contains components for successful parsing of a scientific
 name: parsing grammar, abstract synthax tree (AST) composed of a scientific
 name components, warnings and errors facilities, formatters (normalizer,
 canonizer, JSON \cite{bray2014javascript} renderer). Typical usage is as an
@@ -1173,6 +1177,7 @@ TODO: submit test files
   \item[GBIF] -- Global Biological Informatics Facility
   \item[GNA] -- Global Names Architecture
   \item[JSON] -- JavaScript Object Notation
+  \item[JVM] -- Java Virtual Machine
   \item[PEG] -- Parsing Expression Grammar
   \item[REST] -- Representational State Transfer
 \end{description}
