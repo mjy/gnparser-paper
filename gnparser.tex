@@ -587,7 +587,7 @@ it to the needs of \textit{gnparser}.
 
 \subsection*{parser}
 
-\textit{parser} contains components for successful parsing of a scientific
+``\textit{parser}'' contains components for successful parsing of a scientific
 name: parsing grammar, abstract synthax tree (AST) composed of a scientific
 name components, warnings and errors facilities, formatters (normalizer,
 canonizer, JSON \cite{bray2014javascript} renderer). Typical usage is as an
@@ -603,8 +603,8 @@ information:
   \item $quality\_warnings$ describes potential problems if names are not
     well-formed
   \item $quality$ depicts a quality level of a parsed name
-  \item $positions$ maps positions of every word in a parsed name with
-    the semantic meaning of the word
+  \item $positions$ maps positions of every word in a parsed name to
+    a semantic meaning of the word
 \end{itemize}
 
 JSON schema can be found online \cite{gnparser-json}.
@@ -616,8 +616,6 @@ of a command line tool and a socket server. Core part is the launch script
 ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates JVM
 instance and runs ``\textit{parser}'' on multiple threads against the input
 provided via socket or file.
-
-Usage documentation is available at README file [??? link].
 
 \subsection*{web}
 
@@ -644,22 +642,26 @@ Usage documentation is available at README file [??? link].
 ``\textit{gnparser}'' is available for launch in three bundles:
 
 \begin{itemize}
-  \item Maven artifact lives at Maven central. Physically it is a relatively
-  small jar file without external dependencies, and a supplementary
-  information about those dependencies. The artifact is usually used to be
-  referenced by build system (Maven, Gradle, SBT, etc.) as follows. Build
-  system then responsible for correct references resolution.
-  \item zip-archived ``fat jar'' lives at project repository. The jar contains
-  ``\textit{gnparser}'' compiled files along with all necessary dependencies
-  to launch it within JVM. zip-archive is also bundled with launch script (for
-  Windows and Linux) that can run command line interface to
-  ``\textit{gnparser}''.
-  \item Docker file lives at Docker hub. Docker provides an additional layer
-  of abstraction and automation of operating-system-level virtualization on
-  Linux. It can be thought as lightweight virtualization technology within
-  same Linux OS process. When it is setup properly, everything -- starting
-  from JVM and ending with Scala and SBT -- can be run with simple commands:
-  pull Docker image from Hub, and then run socket/web server on desired port.
+  \item An \textit{parser} artifact is provided via Maven central. Physically
+    it is a relatively small jar file without external dependencies. The
+    artifact can be referenced by a build system (Maven, Gradle, SBT, etc.) in
+    another projects. Build system then provides resolution of required
+    dependencies.
+
+  \item Zip-archived ``fat jar'' is located at the project's GitHub repository.
+    The jar contains ``\textit{gnparser}'' compiled files along with all
+    necessary dependencies to launch it within JVM. The archive is also bundled
+    with a launch script (for Windows, OS X and Linux) that can run command
+    line interface to ``\textit{gnparser}''.
+
+  \item The project's docker container is located at Docker hub. Docker
+    provides an additional layer of abstraction and automation of
+    operating-system-level virtualization on Linux. It can be thought as
+    lightweight virtualization technology within same Linux OS process. When it
+    is setup properly, everything -- starting from JVM and ending with Scala
+    and SBT -- can be run with simple commands: pull Docker image from Hub, and
+    then run socket or web server on a desired port.
+
 \end{itemize}
 
 \subsection*{Testing Methods}
@@ -668,7 +670,35 @@ Data for our tests were randomly chosen from 24 million name-strings of the
 Global Names Index. These resulting datasets consisted of strings acquired
 from a variety of data sources and were a mixture of well-formed names, names
 with formatting and spelling mistakes, and non-name strings misrepresented as
-names.
+names. The following parameters were used during the testing:
+
+$Precision$ a percentage of names parsed correctly out of all detected names
+and is calculated as
+
+\[Precision = \dfrac{\text{tp}}{(\text{tp} + \text{fp})}\]
+
+$Recall$ a percentage of correctly detected names out of all names and is
+calculated as
+
+\[Recall = \dfrac{\text{tp}}{(\text{tp} + \text{fn})}\]
+
+$F1-measure$ is a balanced harmonic mean (where $Precision$ and $Recall$ have
+the same weight). When both $Precision$ and $Recall$ vary, $F1-measure$ allows
+to compare results nevertheless. It is calculated as
+
+\[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
+
+$Accuracy$ is a percentage of correct results out of all results. It is
+calculated as
+
+\[Accuracy = \dfrac{\text{tp} + \text{tn}}
+  {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
+
+Validity of names was not taken into account, as it is out of scope of
+parsers' functionality. For example in case of a name-string \textbf{"Example
+name Word var.  something Capitalized Words, 1900"}, canonical form
+\textbf{"Example name something"} and terminal authorship \textbf{"Capitalized
+Words, 1900"} would be considered a true positive.
 
 We compared performance of gnparser with 2 other projects -- Biodiversity
 parser\cite{biodiversity} (also developed by Global Names), and GBIF
@@ -715,31 +745,6 @@ quadripunctata Breuning"} (low case subgenus), \textbf{"Campylium gollanii C.
 M?ller ex Vohra 1970 [1972]"} (miscoded UTF-8 symbol and additional year in
 square brackets), \textbf{"Myosorex muricauda (Miller, 1900)."} (period after
 authorship).
-
-$Precision$ is a percentage of names parsed correctly and is calculated as
-
-\[Precision = \dfrac{\text{tp}}{(\text{tp} + \text{fp})}\]
-
-$Recall$ is a percentage of names detected and is calculated as
-
-\[Recall = \dfrac{\text{tp}}{(\text{tp} + \text{fn})}\]
-
-$F1-measure$ is a balanced harmonic mean (where $Precision$ and $Recall$ have
-the same weight). When both $Precision$ and $Recall$ vary, $F1-measure$ allows
-to compare results nevertheless. It is calculated as
-
-\[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
-
-$Accuracy$ is a percentage of correct results. It is calculated as
-
-\[Accuracy = \dfrac{\text{tp} + \text{tn}}
-  {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
-
-Validity of names was not taken into account, as it is out of scope of
-parsers' functionality. For example in case of a name-string \textbf{"Example
-name Word var.  something Capitalized Words, 1900"}, canonical form
-\textbf{"Example name something"} and terminal authorship \textbf{"Capitalized
-Words, 1900"} would be considered a true positive.
 
 It is important for parser to accurately distinguish between strings of
 scientific names, names of viruses, surrogate names, and non-names. To find
