@@ -209,36 +209,39 @@
 
 \begin{abstract} % abstract
   \parttitle{Background}
-  Modern biology is unthinkable without names based on Linnaean nomenclature.
-  Names of organisms are pervasive, they are metadata which allows to
-  communicate information in biodiversity, ecology, molecular biology, medicine
-  and many other fields. However indexing and organizing such information via
-  scientific names is challenging for several reasons. As an example --
-  scientific names exist in a variety of alternative forms like ``\textit{Aedes
-  (Cancraedes) thurmanae}'' and ``\textit{Aedes thurmanae} Mattingly, 1958'',
-  therefore a simple string comparison often fails to connect information via
-  names due to these variations. Parsing would break names into semantic
-  elements, allowing to compare them by their \textit{canonical form}
-  (\textit{Aedes thurmanae} for both examples) and other included into names
-  information.
+  Modern biology would be unworkable without names based on Linnaean
+  nomenclature. Names of organisms are pervasive in documents, databases, and
+  collections. They are metadata which allow us to communicate information in
+  biodiversity, ecology, molecular biology, medicine and many other fields.
+  However, indexing and organizing such information via scientific names is
+  challenging for several reasons. Names for the same species may exist in a
+  variety of alternative forms (name-strings) such as \textit{Aedes
+  (Cancraedes) thurmanae} and \textit{Aedes thurmanae} Mattingly, 1958.  Simple
+  string comparisons fail to connect much of the information associated with
+  names because of these variations. Parsing offers a means of improving
+  interconnectability. Parsing breaks names into semantic elements, reducing
+  variation, and allowing matching on key parts of the name-string that make up
+  a canonical form (``\textit{Aedes thurmanae}'' in the case of the examples
+  above).
   \parttitle{Results}
-  We introduce Global Names Parser (\textit{gnparser}) -- a tool based on
-  a Parsing Expression Grammar algorithm. The parser is able to deal with the
-  most complex scientific name-strings. It finds semantic meaning for all
-  words within a scientific name (like ranks, years of publication, names of
-  authors etc.). Global Names Parser is written in Scala, a Java Virtual
-  Machine language. It performs with $\approx99\%$ accuracy, returns meaning
-  of every parsed word in a name, able to deal with most complex scientific
-  name-strings. Measured throughput was 21.4 million names/hour per CPU (73.4
-  million names/hour per 4 CPUs).  The \textit{gnparser} library is compatible
+  We introduce Global Names Parser (\textit{gnparser}), a tool based on the
+  Parsing Expression Grammar algorithm. The parser deals with straightforward
+  and complex scientific name-strings for organisms. It assigns semantic
+  meaning to all elements within a scientific name-string (such as ranks, years
+  of publication, names of authors, annotations, etc.). Global Names Parser is
+  written in Scala, a Java Virtual Machine language. It performs with $\approx
+  99\%$ accuracy. It manages 21.4 million name-strings/hour per CPU (73.4
+  million names/hour per 4 CPUs). The \textit{gnparser} library is compatible
   with Scala, Java, R, Jython, and JRuby. The parser can be used as a command
-  line application, socket server, web-app or RESTful http-service.
+  line application, socket server, webb-app or RESTful http-service. It is
+  released under an Open Source MIT license.
   \parttitle{Conclusions}
-  Global Names Parser (\textit{gnparser}) is a high precision tool for
-  biodiversity informatics. It is released under Open Source MIT license. We
-  believe that with popularisation of this project very expensive and
-  error-prone manual parsing will not be needed anymore for the vast majority
-  of situations.
+  Global Names Parser (\textit{gnparser}) is a fast, high precision tool
+  relevant to biodiversity informatics. It can replace expensive and
+  error-prone manual parsing and standardization of scientific names in many
+  situations.  Parsing has been shown to dramatically increase the
+  interoperability of distributed biological information by improving the
+  matches among variant forms of the same name-strings.
 \end{abstract}
 
 
