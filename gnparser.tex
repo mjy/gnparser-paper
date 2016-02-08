@@ -7,11 +7,6 @@
 %%It must be present to enable the BMC Submission system to
 %%recognise this template!!
 
-
-% Paddy Comment: this sucks!!!!
-% \comment{PADDY  comment in text} 
-% Paddy guide characters that need special backslash \% \$ \# \_ \{ \}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                     %%
 %%  LaTeX template for BioMed Central  %%
@@ -230,16 +225,16 @@
   above).
   \parttitle{Results}
   We introduce Global Names Parser (\textit{gnparser}), a tool based on the
-  Parsing Expression Grammar algorithm. The parser deals with straightforward
-  and complex scientific name-strings for organisms. It assigns semantic
-  meaning to all elements within a scientific name-string (such as ranks, years
-  of publication, names of authors, annotations, etc.). Global Names Parser is
-  written in Scala, a Java Virtual Machine language. It performs with $\approx
-  99\%$ accuracy. It manages 21.4 million name-strings/hour per CPU (73.4
-  million names/hour per 4 CPUs). The \textit{gnparser} library is compatible
-  with Scala, Java, R, Jython, and JRuby. The parser can be used as a command
-  line application, socket server, webb-app or RESTful http-service. It is
-  released under an Open Source MIT license.
+  Parsing Expression Grammar algorithm. The parser deals well with scientific
+  name-strings of any complexity. It assigns semantic meaning to all elements
+  within a scientific name-string (such as ranks, years of publication, names
+  of authors, annotations, etc.). Global Names Parser is written in Scala, a
+  Java Virtual Machine language. It performs with $\approx 99\%$ accuracy and
+  processes 21.4 million name-strings/hour per CPU (73.4 million names/hour per
+  4 CPUs). The \textit{gnparser} library is compatible with Scala, Java, R,
+  Jython, and JRuby. The parser can be used as a command line application,
+  socket server, web-app or RESTful http-service. It is released under an Open
+  Source MIT license.
   \parttitle{Conclusions}
   Global Names Parser (\textit{gnparser}) is a fast, high precision tool
   relevant to biodiversity informatics. It can replace expensive and
@@ -273,7 +268,7 @@
 
 \end{abstractbox}
 %
-%\end{fmbox}% uncomment this for twocolumn layout
+%\end{fmbox}% uncomment this for twcolumn layout
 
 \end{frontmatter}
 
@@ -304,20 +299,16 @@
 
 Throughout the paper we distinguish between two terms -- ``name'' and
 ``name-string''. Term ``name-strings'' represents a sequence of characters
-(letters, numbers, punctuation, spaces, symbols). Term ``name'' is an label
-which points to a taxon. Some zoologists  regard a binomen, such as \textit{Homo sapiens} 
-as a single name, whereas others regard it as comprised of two names.  
-In this paper we adopt the former convention, partly because it is consistent 
-with practices with plants and other organisms. We refer to the individual parts within
-a name or name-string as ``elements''. A name can be expressed by many name-strings, some are
-well-formed and code compliant (for example see
-Table~\ref{table:carex}), and others are not.  There are millions of scientific names and likely to be billions
+(letters, numbers, punctuation, spaces, symbols). Term ``name'' is an entity
+which points to a taxon. A name can be expressed by many name-strings, some are
+well-formed and code compliant, and others are not (for example see
+Table~\ref{table:carex}).  There are millions of scientific names and billions
 of possible legitimate name-strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
 code of nomenclature: Zoological (ICZN) \cite{ICZN}, Botanical (ICN)
-\cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, and Cultivated
-plants (ICNCP) \cite{ICNCP}.
+\cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, Cultivated
+plants (ICNCP) \cite{ICNCP}, Phylocode (ICPN) \cite{ICPN}.
 
 \section*{Background}
 
@@ -486,91 +477,43 @@ taxon, include or omit infraspecific ranks, original and combination authors,
 etc. Authorship itself may be  quite complex because authorship can include
 original authors who described a name, authors of a new combinations, or
 authors who introduced a name but someone else published it. We  need an
-approach that is better able to deal with names of broader complexity than can
+approach that is able to deal with names of broader complexity than can
 be achieved through a regular expression approach.
 
-
-We looked for a grammar that can describe broader class of languages. We chose
-PEG \cite{Ford2004}. PEG are defined recursively:
-
-\begin{enumerate}
-    \item $\varepsilon$, the empty string
-    \item $'\ '$, denoting a literal string. E.g. $'abc'$
-    \item $.$, denoting any character
-    \item $e$, grammar rule
-    \item $e1\ e2$, a sequence of defined expressions. Sequence is matched if
-    both expressions are matched
-    \item $e1\ /\ e2$, prioritized choice (so called ``FirstOf''). If $e1$ is
-    matched then FirstOf; otherwise it is result of match of $e2$
-    \item $e*$, zero-or-more eagerly matches until first fail
-    \item $!e$, not-predicate matches if $e$ is failed to match
-\end{enumerate}
-
-And sugared expressions:
+We chose Parsing Expression Grammer (PEG) \cite{Ford2004} for
+\textit{gnparser}. PEG is an alternative to regular expression method for
+describing a synthax of scientific names. We think PEG suites our goals better
+for the following reasons:
 
 \begin{itemize}
-    \item $[a_1-a_n]$, denoting a class of characters. E.g.
-    $[0-9]$. It desugars to prioritized choice: $a_1 \vert a_2 \vert \ldots
-    \vert a_n$
-    \item $e+$, one-or-more eagerly matches first time and then until first
-    fail. It desugars to $e e*$
-\end{itemize}
-
-For example, PEG that recognizes strings: $'a', 'b', 'ac', 'ab', 'acc', 'abb',
-\ldots$:
-
-\begin{lstlisting}[frame=single]
-Expr <- ('a' / 'b') Cs
-Cs   <- 'c'*
-\end{lstlisting}
-
-PEG that recognizes mathematical formulas with four prioritized basic
-operations to non-negative integers:
-
-\begin{lstlisting}[frame=single]
-Expr    <- Sum
-Sum     <- Product (('+' / '-') Product)*
-Product <- Value (('*' / '/') Value)*
-Value   <- Digit+ / '(' Expr ')'
-Digit   <- [0-9]
-\end{lstlisting}
-
-We chose PEG for reasons as follows:
-
-\begin{itemize}
-  \item scientific names are formalized enough to be closer to strict
-  algebraic description rather that natural language. Particularly,
-  ambiguities in scientific names parts are rare (TODO:  add examples of forma,
-  subspecies in parentheses). When it becomes critical, we still have
-  options to deal with it:
-    \begin{itemize}
-      \item encapsulate ambiguity in parsing structures
-      \item modify semantics of PEG parser to ambiguous matching
-    \end{itemize}
-  \item parser is relatively easy to compose and program
-  \item typical length of scientific name-string is short enough to deal with
+  \item PEG is well suited for texts with recursive synthax.
+  \item scientific names' synthax is formalized enough to be closer to strict
+  algebraic description rather than to a natural language. Inconsistencies and
+  ambiguities in scientific names are relatively rare due to adherence to
+  nomenclatural codes.
+  \item typical scientific name-string is short enough to deal with
   possibly bad computational complexity and memory consumption
-  \item existence of embedded domain specific language to compose parser
+  \item programming a parser is easier than with regular
+    expressions because PEG allows to compose parsing rules in a cleaar domain
+    specific language
+  \item Such domain specific language allows great flexibility for logic within
+    the rules, for example for reporting errors in name-strings.
 \end{itemize}
 
 In 2008 we created a specialized parsing library ``\textit{biodiversity}''
 \cite{biodiversity} written in Ruby and based on PEG. We used an excellent
-TreeTop Ruby library \cite{treetop} as an underlying PEG implementation. As
-expected, PEG is well suited for recursive texts with formally defined
-grammars. Linnaean taxonomy is essentially a tree-based classification.
-Scientific names follow rules of nomenclatural codes, and therefore order and
-capitalization of elements in scientific names are well structured.
+TreeTop Ruby library \cite{treetop} as an underlying PEG implementation.
 
-We found that PEG approach allows us to solve all these complexity gracefully.
-Also PEG gave us enough flexibility to incorporate edge cases and common
-mistakes in formation of names. The library \textit{biodiversity} enjoyed
-noticeable popularity. At the time of writing it had been downloaded more than
-150,000 times \cite{bdiv-downloads}, it is used by many taxon name resolution
-projects (for example by Canadian Register of Marine Species (CARMS)
-\cite{carms}, the iPlant TNRS \cite{iplant}, World Registry of Marine Species
-(WoRMS) \cite{worms}.  According to BioRuby statistics \textit{biodiversity},
-at the time of writing, parser had been the most popular bio-library in Ruby
-language \cite{biogems}.
+We found that PEG approach allowed us to gracefully deal with complex
+scientific naems. Also PEG gave us enough flexibility to incorporate edge cases
+and common mistakes in formation of names. The library \textit{biodiversity}
+enjoyed noticeable popularity. At a time of writing it had been downloaded more
+than 150,000 times \cite{bdiv-downloads}, it is used by many taxon name
+resolution projects (for example by Encyclopedia of Life \cite{eol}, Canadian
+Register of Marine Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant},
+World Registry of Marine Species (WoRMS) \cite{worms}.  According to BioRuby
+statistics \textit{biodiversity}, at the time of writing, parser had been the
+most popular bio-library in Ruby language \cite{biogems}.
 
 We consider \textit{biodiversity} parser library to be a working prototype --
 a playground which allowed us to identify parsing problems and implement
@@ -804,7 +747,7 @@ names.
 We processed 100,000 name-strings by each parser, and found that about 1000 of
 them had been discarded as not-parseable. $Precision$ in this case showed
 percentage of correctly discarded names.  We do not know $Recall$, as it was
-not feasible to manually find it for 100,000 names. To get a glimpse on names
+not feasible to manualy find it for 100,000 names. To get a glimpse on names
 which had to be discarded, but were parsed instead we analysed intersections
 and differences of the results between the three parsers.
 
@@ -823,7 +766,6 @@ various databases and be limited to databases where names are parsed by humans
 or to exact string matching. Moreover, the advent of high quality parsers
 eliminates the need for humans to perform this very expensive, tedious and
 error-prone task.
-
 
 2. \textbf{Global Scope}. Parser should be able to support all types of
 scientific names, including the most complex ones -- hybrid formulae,
