@@ -907,12 +907,13 @@ were scientific names, while other parsers ignored them:
 
 Solutions like these might increase $Recall$ with certain low-quality datasets,
 but they also may decrease $Precision$ with other datasets. When dealing with
-"dirty" datasets containing predictable problems, we find the best solution is
+``dirty'' datasets containing predictable problems, we find the best solution is
 to include a ``preparser'' script which ``normalizes'' known problems and then
 apply a high quality parser to the result.  As an example, a recent study of
 name-strings in DRYAD revealed a large number of instances where elements of
-scientific names had been concatenated but with an interpolated character such
+scientific names had been concatenated with an interpolated character such
 as `\_’ (e.g. ``Homo\_sapiens'' and ``Pinoyscincus\_jagori\_grandis'')
+\cite{Patterson:inpress-a}.
 
 Our testing also revealed differences between regular expressions and PEG
 approaches. Both can achieve high quality results with canonical forms, but the
@@ -924,16 +925,17 @@ problems that at some point become unsurmountable.
 
 \subsection*{Global Scope}
 
-If we want to truly connect biological data using scientific names, no names
-should be left behind, no matter how complex they are. During out testing we
-found that $Accuracy$ of GBIF \textit{name-parser} was negatively affected by
-not dealing with hybrid formulae and infrasubspecific names (names with more
-then one infraspecific epithet). Regular expressions do not support
+If we want to truly connect biological data using scientific names, no
+name-strings should be left behind, no matter how complex they are. During our
+testing we found that $Accuracy$ of GBIF \textit{name-parser} was negatively
+affected by not dealing with hybrid formulae and infrasubspecific names (names
+with more then one infraspecific epithet). Regular expressions do not support
 recursion -- the more complex names are, the harder it becomes to parse them.
 For example the following names were not supported by GBIF
 \textit{name-parser}:
 
 \vspace{0.5cm}
+
 \begin{verbatim}
     Crataegus chlorosarca subtaxon pubescens E.L.Wolf
     Erigeron peregrinus ssp.callianthemus var. eucallianthemus
@@ -941,12 +943,13 @@ For example the following names were not supported by GBIF
     Echinocereus fasciculatus var. bonkerae × E. fasciculatus
       var. fasciculatus
 \end{verbatim}
+
 \vspace{0.5cm}
 
-We use PEG approach because it allows to nest parsing rules within each other,
-making it possible to create progressively more and more complex rules -- the
-first rule just defines what space is, the last rule defines hybrid formulas.
-Such support for recursion allows gnparser to handle full spectrum of
+We use PEG approach because it supports nesting parsing rules within each
+other, and creating progressively more and more complex rules -- the first rule
+just defines what space is, the last rule defines hybrid formulas.  Such
+support for recursion allows \textit{gnparser} to handle full spectrum of
 scientific names.
 
 \begin{table}[htb]
