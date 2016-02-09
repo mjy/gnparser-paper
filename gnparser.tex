@@ -45,7 +45,7 @@
 
 %\documentclass[twocolumn]{bmcart}
 % uncomment this for twocolumn layout and comment line below
-\documentclass{bmcart}
+\documentclass[singleside]{bmcart}
 
 %%% Load packages
 %\usepackage{amsthm,amsmath}
@@ -60,6 +60,7 @@
 \usepackage{multirow}
 \usepackage{fancyvrb}
 \usepackage{soul}
+\usepackage{etoolbox}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -79,11 +80,8 @@
 %%                                             %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %\def\includegraphic{}
 %\def\includegraphics{}
-
-
 
 %%% Put your definitions there:
 \startlocaldefs
@@ -96,6 +94,10 @@
       frame=lines,
       backgroundcolor=\color{white},
   }
+  \makeatletter
+  \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+  \makeatother
+  \reversemarginpar
 \endlocaldefs
 
 
@@ -1100,17 +1102,27 @@ gets results faster with a faster parser. Secondly if parser is 10 times
 faster it means the cost of hardware to run it can be 10 times cheaper for the
 same amount of work to be done.
 
-For example, it took us 40 days to find and index names in Biodiversity
-Heritage Library. Just parsing step alone took more than a day. When someone
-finds a problem with name resolution in BHL, is not feasible to fix it at the
-moment, as it would take 40 days of reindexing whole BHL corpus of data. Our
-goal is to do this job in 1 day, so when our algorithms improve we can
-regularly completely rebuild the BHL scientific name index.
+In those areas of performance discussed so far, there is little difference
+between \textit{biodiversity} parser and \textit{gnparser}. There is, however,
+a dramatic difference in their parsing speed and ability to scale. Speed is
+important for three reasons:
 
-One of the main reasons of rewriting parser from scratch was a necessity to
-increase throughput of parsing. Resolution of names is a very common problem
-and to solve it well we need to work on removing existing bottlenecks -- one
-of the obvious ones is parsing.
+\begin{enumerate}
+
+  \item users get response with a faster parser;
+
+  \item 20 times faster parser means the cost of hardware to run it can be
+    20 times cheaper for the same amount of work done
+
+  \item it enables faster upgrade of parsed data in large datasets. Work that
+    before took 20 hours now can be done in 1 hour.
+
+\end{enumerate}
+
+One of the main reasons to rewrite the parser software from scratch is to
+address existing bottlenecks within services. Parsing is key to other services
+such as reconciliation and resolution, such that improving the parser will
+increase user satisfaction elsewhere.
 
 Results on the speed performance are given in Figure~\ref{figure:throughput}.
 From 1 to 4 CPU threads gnparser and gbif parser showed similar throughput,
@@ -1120,23 +1132,29 @@ parallel threads it was 1.22 times faster than gnparser. Both gnparser and
 GBIF parser had been significantly faster than biodiversity, and scaled better
 as well.
 
-When gnparser runs on 4 CPU threads it performs 8 times faster than
-biodiversity parser. It means we need to spend 8 times less on the hardware
-using gnparser, and performance-wise we are eliminating a bottleneck of the
-parsing step.
+Results on the speed performance are given in Figure~\ref{figure:throughput}.
+With 1 to 4 CPU threads, gnparser and gbif parser had a similar throughput,
+while biodiversity parser was 5 times slower on one thread and  8 times slower
+on 4 threads. The GBIF parser scaled better beyond 4 processors and for 12
+parallel threads it was 1.22 times faster than gnparser. Both gnparser and GBIF
+parser had been significantly faster than biodiversity, and scaled better.
+
+It is important to remember that \textit{gnparser} has significant amount of
+additional functionality missing in GBIF \textit{name-parser}. It justifies for
+us some loss in scalability after increasing number of threads beyond 4.
 
 \subsection*{Accessibility}
 
 Under accessibility we mean ability of a code to be used by the widest
 audience possible. For Open Source projects accessibility is very important,
-as the more people use a software the lower is the cost of its creation.
+as the more people use a software more cost-effective it is.
 
-We designed gnparser with accessibility in mind from the start.  Scala
-language allows to use gnparser as a library in Scala, Java, Python, JRuby, R,
-JavaScript and a great variety of languages based on Java Virtual Machine. If
-a user wants to use it in some other language they can connect to the parser
-via socket server interface. There is also a command line tool, web interface,
-and RESTful API available.
+We designed \textit{gnparser} with accessibility in mind from the start. Scala
+language allows the use of \textit{gnparser} as a library in Scala, Java,
+Python, JRuby, R, JavaScript and a great variety of other languages based on
+Java Virtual Machine. If a user wants to use it in some other language s/he can
+connect to the parser via a socket server interface. There is also a command
+line tool, a web interface, and a RESTful API.
 
 We pay close attention to documentation, trying to keep it detailed, clear and
 up to date. We have an extensive test suite which describes parser's behavior
@@ -1145,7 +1163,9 @@ format.
 
 All this creates larger potential audience for the parser, and will help many
 researches and programmers to deal with the complex problem in biodiversity
-informatics.
+informatics.\marginpar{Paddy:\\Perhaps list some teams who uses
+  parser.\\Dima:\\Noone uses gnparser yet, except us. We talk about use of
+biodiversity parser in Background}
 
 The summary of results and discussion is depicted in
 Table~\ref{table:summary}
@@ -1176,21 +1196,17 @@ Table~\ref{table:summary}
   \end{center}
 \end{table}
 
-\subsection*{Future plans}
-
-In the following years we will continue to work on parser and improve its
-accuracy and speed. We are planning to build high quality/throughput name
-resolution and name finding services, where gnparser will play a key role.
-It might be interesting to explore using parsers as a programmatic version
-of existing nomenclatural codes and make an automatic quality check for newly
-introduced names.
-
 \section*{Conclusions}
 
-We introduced \textit{gnparser}, a tool for dissecting scientific name-strings
-into meaningful parts. Parsing of name-strings is necessary component for their
-matching, finding them in texts, sharing them in standardised forms,
-extracting, comparing and analysing metadata ``hidden'' in the name-strings.
+In this paper we introduced \textit{gnparser} as a tool for dissecting
+scientific name-strings into meaningful elements. Parsing of name-strings is
+necessary component for canonicalization of names. In turn, canonicalization
+has been demonstrated to be the most effective component of name matching. It
+is also an aid to finding names in sources, and sharing them in standardised
+forms. Parsing further allows us to extract, compare and analyse metadata
+``hidden'' in the name-strings, such as the taxonomists or dates associated
+with descriptions.
+
 The gnparser tool is released under MIT Open Source license, contains command
 line executable, socket, web, and REST services, and is optimized for use as a
 library in languages like Scala, Java, R, Jyphon, JRuby.
