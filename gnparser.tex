@@ -1021,32 +1021,42 @@ scientific names.
 
 \subsection*{Parsing Completness}
 
-By far extraction of canonical form is the most useful and the most practiced
-parsing technique. However it is not enough, because canonical form does not
-determine a name completely. In the example from Table~\ref{table:carex}
-\textbf{Carex scirpoidea convoluta} is a canonical form for \textbf{Carex
-scirpoidea var. convoluta Kükenthal} and \textbf{Carex scirpoidea ssp.
-convoluta (Kük.) Dunlop}. In the first case name string describes a variety
-\textbf{convoluta} of \textbf{Carex scirpoidea} species described by
-\textbf{Kükenthal}. In the second case \textbf{Dunlop} recategorized \textbf
-{convoluta} as subspecies of \textbf{Carex scirpoidea}. We would not be able
-to distinguish between these two different names without seeing a rank of a
-name and the corresponding authorship. Furthermore it was important to see in
-the second example that \textbf{(Kük.)} was original author and
-\textbf{Dunlop} was the author of the new combination.
+The extraction of the canonical form from name-strings representing scientific
+names is the most useful and the most practiced parsing technique. However it
+is not enough, because the canonical form does not determine a name completely.
+
+In the example from Table~\ref{table:carex} \textbf{Carex scirpoidea convoluta}
+is a canonical form for \textbf{Carex scirpoidea var. convoluta Kükenthal} and
+\textbf{Carex scirpoidea ssp. convoluta (Kük.) Dunlop.} In the first case, the
+unparsed name-string refers to a variety \textbf{convoluta} of \textbf{Carex
+scirpoidea} species described by \textbf{Kükenthal}. In the second,
+\textbf{Dunlop} recategorized \textbf{convoluta} as subspecies of \textbf{Carex
+scirpoidea}. We would not be able to distinguish between these two different
+names without seeing the rank of the name and the corresponding authorship.
+Furthermore it was important to see in the second example that \textbf{(Kük.)}
+was original author and \textbf{Dunlop} was the author of the new combination.
 
 After the match by canonical form is done, ranks, authors, and "types" of
-authorship allow to distinguish similar names from each other.
-Name-string \textbf{Carex scirpoidea Michx. var. convoluta Kükenth.} gives
-additional clue that we talk about \textbf{Carex scirpoidea} species described
-by \textbf{Michx}
+authorship allow users to distinguish similar or identical canonical names from
+each other. The name-string \textbf{Carex scirpoidea Michx. var. convoluta
+Kükenth.} adds new information, that the \textbf{Carex scirpoidea} species was
+described by \textbf{Michx}.
 
-All components of a name are important, and need to be parsed and categorized.
-With gnparser we describe meaning of every word in the parsed name-string
-and present it in JSON format:
+Another area in which parsers with limited abilities can create problems is
+with negated names \cite{Patterson:inpress-a}. In these cases a name-string
+that includes some annotation or marks to indicate that the name-string does
+not refer to the taxon with the scientific name that is included in the
+name-string. Examples include \textbf{Gambierodiscus aff toxicus}, or
+\textbf{Russula xerampelina-like sp}.\marginpar{Dima:\\I saw paleonthologists
+call such examples `open nomenclature' for example in Peter Bengston 1988 paper
+'Open nomenclature'}
 
+All components of a name may be important, and need to be parsed and
+categorized. With gnparser we describe meaning of every word in the parsed
+name-string and present it in JSON format:
 
 \vspace{0.5cm}
+
 \begin{Verbatim}[fontsize=\small]
 {"name_string_id":"203213f3-99d1-5f5e-810a-4453c4d220cb", "parsed":true,
 "quality":1, "parser_version":"0.2.0", "verbatim":"Carex scirpoidea Michx.
@@ -1066,19 +1076,20 @@ scirpoidea convoluta", "extended":"Carex scirpoidea ssp. convoluta"},
 ["author_word",42,46], ["author_word",48,50], ["author_word",50,52],
 ["author_word",53,59]]}
 \end{Verbatim}
+
 \vspace{0.5cm}
 
-The output includes detailed meaning of every word in a name, indications if
-the name-string was parsed correctly, if it is a virus name, hybrid, or
-surrogate. Surrogates are names pointing to a higher clade and ending with
-some accession string like \textbf{Coleoptera sp. BOLD:AAV0432}. The output
-also includes position of each word in the name-string with attached meaning
-of the word.
+The output includes the detailed meaning of every element in a name-string,
+indications if the name-string was parsed correctly, if it is a virus name,
+hybrid, or surrogate. Surrogates are name-strings that are alternatives to
+names, such as acronyms, and may or may not include part of a scientific or
+colloquial name (e.g. \textbf{Coleoptera sp. BOLD:AAV0432}). The output also
+includes a statement of the position of each element in the name-string
+together with the meaning of the element.
 
-Last but not least JSON output contains UUID version 5 calculated from the
-verbatim name-string. This UUID is guaranteed to be the same for the same
-name-string, allowing to globally connect information and annotations to such
-UUID.
+Last, but not least, the JSON output contains UUID version 5 calculated from
+the verbatim name-string. This UUID is guaranteed to be the same for the same
+name-string, promoting its use to globally connect information and annotations.
 
 \subsection*{Parsing Speed}
 
