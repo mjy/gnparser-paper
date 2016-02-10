@@ -45,12 +45,13 @@
 
 %\documentclass[twocolumn]{bmcart}
 % uncomment this for twocolumn layout and comment line below
-\documentclass[singleside]{bmcart}
+\documentclass{bmcart}
 
 %%% Load packages
 %\usepackage{amsthm,amsmath}
 %\RequirePackage{natbib}
 \RequirePackage{hyperref}
+\usepackage{etoolbox}
 \usepackage[utf8x]{inputenc} %unicode support
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -60,7 +61,6 @@
 \usepackage{multirow}
 \usepackage{fancyvrb}
 \usepackage{soul}
-\usepackage{etoolbox}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -83,6 +83,10 @@
 %\def\includegraphic{}
 %\def\includegraphics{}
 
+  \makeatletter
+  \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+  \makeatother
+  \reversemarginpar
 %%% Put your definitions there:
 \startlocaldefs
   \newcommand{\comment}[2]{\hspace{0in}#2}
@@ -94,10 +98,6 @@
       frame=lines,
       backgroundcolor=\color{white},
   }
-  \makeatletter
-  \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
-  \makeatother
-  \reversemarginpar
 \endlocaldefs
 
 
