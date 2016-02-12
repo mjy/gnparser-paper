@@ -655,10 +655,22 @@ it to the needs of \textit{gnparser}.
 
 ``\textit{parser}'' contains components for successful parsing of a scientific
 name: parsing grammar, abstract synthax tree (AST) composed of a scientific
-name components, warnings and errors facilities, formatters (normalizer,
-canonizer, JSON \cite{bray2014javascript} renderer). Typical usage is as an
-external library to provide parsing facilities to other parts: language
-interoperability, command line tool, REST and socket servers, etc.
+name components, warnings and errors facilities, formatters:
+
+\begin{itemize}
+
+  \item \textit{normalizer} to standardize name-string.
+
+  \item \textit{canonizer} to create canonical forms.
+
+  \item \textit{JSON renderer} to convert output into JSON
+    \cite{bray2014javascript}.
+
+\end{itemize}
+
+Typical ``parser'' is used as an external library. It provides parsing
+facilities to other parts: language interoperability, command line tool, REST
+and socket servers, etc.
 
 ``\textit{gnparser}'' accepts $String$ as input, and returns a $Result$.
 $Result$ then can be converted to JSON containing the following useful
@@ -685,7 +697,7 @@ provided via socket or file.
 
 \subsection*{web}
 
-``\textit{web}'' is a Play Framework application \cite{wampler2011scala}. It
+``\textit{web}'' is a Play Framework \cite{wampler2011scala} application. It
 depends on ``\textit{parser}'' library. ``\textit{web}'' allows to interact
 with ``\textit{parser}'' via HTTP protocol. It aimed both with simple HTML
 Figure~\ref{figure:webgui} and REST API interface.
@@ -701,26 +713,27 @@ Figure~\ref{figure:webgui} and REST API interface.
   \end{center}
 \end{figure}
 
-Usage documentation is available at README file [??? link].
+Usage documentation is available at README file (see section ``Availability and
+Requirements).
 
 \subsection*{Installation}
 
 ``\textit{gnparser}'' is available for launch in three bundles:
 
 \begin{itemize}
-  \item An \textit{parser} artifact is provided via Maven central. Physically
+  \item A \textit{parser} artifact is provided via Maven central. Physically
     it is a relatively small jar file without external dependencies. The
     artifact can be referenced by a build system (Maven, Gradle, SBT, etc.) in
     another projects. Build system then provides resolution of required
     dependencies.
 
   \item Zip-archived ``fat jar'' is located at the project's GitHub repository.
-    The jar contains ``\textit{gnparser}'' compiled files along with all
+    The jar contains \textit{gnparser} compiled files along with all
     necessary dependencies to launch it within JVM. The archive is also bundled
     with a launch script (for Windows, OS X and Linux) that can run command
-    line interface to ``\textit{gnparser}''.
+    line interface to \textit{gnparser}.
 
-  \item The project's docker container is located at Docker hub. Docker
+  \item The project's Docker container is located at Docker hub. Docker
     provides an additional layer of abstraction and automation of
     operating-system-level virtualization on Linux. It can be thought as
     lightweight virtualization technology within same Linux OS process. When it
@@ -732,19 +745,53 @@ Usage documentation is available at README file [??? link].
 
 \subsection*{Testing Methods}
 
-Data for our tests were randomly chosen from 24 million name-strings of the
-Global Names Index. These resulting datasets consisted of strings acquired
-from a variety of data sources and were a mixture of well-formed names, names
-with formatting and spelling mistakes, and non-name strings misrepresented as
-names. The following parameters were used during the testing:
+Data for our tests (1,000 and 100,000 name-strings) were randomly chosen from
+24 million name-strings of the Global Names Resolver \cite{resolver:gn}. These
+resulting datasets consisted of strings acquired from a variety of data sources
+and were a mixture of well-formed names, names with formatting and spelling
+mistakes, and non-name strings misrepresented as names.
 
-$Precision$ a percentage of names parsed correctly out of all detected names
-and is calculated as
+We compared performance of \textit{gnparser} with 2 other projects --
+\textit{biodiversity} parser \cite{biodiversity} (also developed by Global
+Names), and GBIF \textit{name-parser} \cite{gbifNameParser}. For comparisons we
+calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a
+dataset consisted of 1000 name-strings. Another project we considered was
+YASMEEN parser from iMarine project \cite{VandenBerghe2015}, however we found
+that with our dataset it generated dramatically more mistakes than other
+parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and could not finish
+full dataset without crashing, so we decided to exclude it from the tests.
+
+To estimate quality for all parsers we needed to pick a feature which is common
+for all three of them and is a good indicator of performance.  We decided to
+use a combination of canonical form and terminal authorship.  Canonical form
+represents the most stable elements of a name, while terminal authorship
+corresponds to the authority of the most detailed classification element of the
+name. For example in \textbf{Oriastrum lycopodioides Wedd.  var.  glabriusculum
+Reiche} canonical form is \textbf{Oriastrum lycopodioides glabriusculum} and
+terminal authorship is \textbf{Reiche}, not \textbf{Wedd.}.  Algorithms
+necessary to select components of a canonical form of a name and to find the
+terminal authorship are good indicators of a parsing quality.
+
+When both the canonical form and the terminal authorship were determined
+correctly we marked the result as true positive ($\text{tp}$).  If one or both
+of them were determined incorrectly -- the result was marked a false positive
+($\text{fp}$). Name-strings correctly discarded from parsing were marked as
+true negatives ($\text{tn}$). False negatives ($\text{fn}$) were ``suitable''
+name-strings which should be parsed, but were nevertheless discarded. The
+following parameters where used for analysis:
+
+$Accuracy$ -- a percentage of correctly determined results out of all results.
+It is calculated as
+
+\[Accuracy = \dfrac{\text{tp} + \text{tn}}
+  {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
+
+$Precision$ -- a percentage of name-strings parsed correctly out of all
+detected name-strings and is calculated as
 
 \[Precision = \dfrac{\text{tp}}{(\text{tp} + \text{fp})}\]
 
-$Recall$ a percentage of correctly detected names out of all names and is
-calculated as
+$Recall$ -- a percentage of correctly detected name-strings out of all name-strings and is calculated as
 
 \[Recall = \dfrac{\text{tp}}{(\text{tp} + \text{fn})}\]
 
@@ -754,55 +801,12 @@ to compare results nevertheless. It is calculated as
 
 \[F1 = \dfrac{2 \times Precision \times Recall}{(Precision + Recall)}\]
 
-$Accuracy$ is a percentage of correct results out of all results. It is
-calculated as
-
-\[Accuracy = \dfrac{\text{tp} + \text{tn}}
-  {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
-
-Validity of names was not taken into account, as it is out of scope of
-parsers' functionality. For example in case of a name-string \textbf{"Example
-name Word var.  something Capitalized Words, 1900"}, canonical form
-\textbf{"Example name something"} and terminal authorship \textbf{"Capitalized
-Words, 1900"} would be considered a true positive.
-
-We compared performance of gnparser with 2 other projects -- Biodiversity
-parser\cite{biodiversity} (also developed by Global Names), and GBIF
-\textit{name-parser} \cite{gbifNameParser}. Another project we considered was
-YASMEEN parser from iMarine\cite{VandenBerghe2015}, however we found that with
-our dataset it generated dramatically more mistakes than other parsers
-($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and we decided to exclude it
-from the tests.
-
-To find out the throughput of parsing we used a computer with Intel i7-4930K
-CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840
-EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing
-of 1,000,000 random name-strings from GNI.
-
-To study effects of parallel execution on throughput we used
-\textit{ParallelParser} class from Biodiversity parser and \textit{gnparse}
-command line interface for gnparser. For GBIF \textit{name-parser} we created a
-thin wrapper with multi-threaded capabilities\cite{gbifparser}.
-
-For determining $Precision$, $Recall$ and $Accuracy$ of parsed names the
-dataset size was 1000 name-strings. To estimate quality for all parsers we
-needed to pick a feature which is common for all three of them and is a good
-indicator of performance.  We decided to use a combination of canonical form
-and terminal authorship.  Canonical form represents the most stable elements
-of a name, while terminal authorship corresponds to the authority of the most
-detailed element of the name. For example in "\textit{Oriastrum lycopodioides}
-Wedd.  var.  \textit{glabriusculum} Reiche" canonical form is
-"\textit{Oriastrum lycopodioides glabriusculum}" and terminal authorship is
-"Reiche", not "Wedd.".  Algorithms necessary to select components of a
-canonical form of a name and to find the terminal authorship are good
-indicators of a parser quality.
-
-When both the canonical form and the terminal authorship were determined
-correctly we marked the result as true positive ($\text{tp}$).  If one or both
-of them were determined incorrectly -- the result was marked a false positive
-($\text{fp}$). Correctly discarded from parsing name-strings were marked as
-true negatives ($\text{tn}$). False negatives ($\text{fn}$) were "suitable"
-name-strings which should be parsed, but were nevertheless discarded.
+Parsers can analyze the structure of a name-string, but they cannot determine
+if a string is a ``real'' name -- it is out of the scope of parsers'
+functionality.  For example in case of a name-string \textbf{"Example name Word
+var. something Capitalized Words, 1900"}, canonical form \textbf{"Example
+name something"} and terminal authorship \textbf{"Capitalized Words, 1900"}
+would be considered a true positive.
 
 Some names in the dataset were not well-formed. If a human could extract the
 canonical form and the terminal authorship from them we did count them.
@@ -826,6 +830,16 @@ not feasible to manually find it for 100,000 names. To get a glimpse on names
 which had to be discarded, but were parsed instead we analysed intersections
 and differences of the results between the three parsers.
 
+To find out the throughput of parsing we used a computer with Intel i7-4930K
+CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840
+EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing
+of 1,000,000 random name-strings from GNI.
+
+To study effects of parallel execution on throughput we used
+\textit{ParallelParser} class from \textit{biodiversity} parser and
+\textit{gnparse} command line interface for \textit{gnparser}. For GBIF
+\textit{name-parser} we created a thin wrapper with multi-threaded
+capabilities \cite{gbifparser}.
 \section*{Results and Discussion}
 
 We discuss \textit{gnparser}, GBIF \textit{name-pasrser} and
@@ -891,16 +905,16 @@ mistakes, annotations, and Unicode characters miscodings. To alert users,
 \textit{gnparser} generates warnings for each found problem in a name-string.
 The other parsers do not have this feature.
 
-When parsers reach $\approx80\%$ $Accuracy$, they hit a "long tail" of problems
-where each particular type of problem  is rare, yet every new manual test
-against 1,000-10,000 name-strings reveals new issues.  Examples of these
+When parsers reach $\approx80\%$ $Accuracy$, they hit a ``long tail'' of
+problems where each particular type of a problem  is rare, yet every new manual
+test against 1,000-10,000 name-strings reveals new issues.  Examples of these
 challenges are given elsewhere \cite{Patterson:inpress-a}. For all three
 parsers, developers performed a meticulous task of adding one rare case after
 another to the list of problems and finding ways to incorporate solutions. That
 is, parsers need to be subject to continuous improvement. The problems found
 during preparation of this paper are being addressed in the next version of
 \textit{gnparser} as well. As the parsing rules improve, we believe that
-\textit{gnparser} can reach $>99.5\%$ Accuracy without diminishing $Recall$.
+\textit{gnparser} can reach $>99.5\%$ $Accuracy$ without diminishing $Recall$.
 
 As we incorporate new rules to increase $Recall$, we have to consider the risks
 of reducing $Precision$ by introducing new false positives. For example GBIF
@@ -969,10 +983,10 @@ For example the following names were not supported by GBIF
 \vspace{0.5cm}
 
 We use PEG approach because it supports nesting parsing rules within each
-other, and creating progressively more and more complex rules -- the first rule
-just defines what space is, the last rule defines hybrid formulas.  Such
-support for recursion allows \textit{gnparser} to handle full spectrum of
-scientific names.
+other, and creates progressively more and more complex rules. The first rule
+just defines a space between words, the last rule defines hybrid
+formulas.  Such support for recursion allows \textit{gnparser} to handle full
+spectrum of scientific names.
 
 \begin{table}[htb]
   \begin{center}
@@ -1115,21 +1129,15 @@ name-string, promoting its use to globally connect information and annotations.
 
 \subsection*{Parsing Speed}
 
-In our discussion so far there was little difference between biodiversity
-parser and gnparser. A dramatic difference appears in their parsing speed and
-ability to scale. Parsing speed is important for two reasons. Firstly a user
-gets results faster with a faster parser. Secondly if parser is 10 times
-faster it means the cost of hardware to run it can be 10 times cheaper for the
-same amount of work to be done.
-
 In those areas of performance discussed so far, there is little difference
 between \textit{biodiversity} parser and \textit{gnparser}. There is, however,
 a dramatic difference in their parsing speed and ability to scale. Speed is
 important for three reasons:
 
-\begin{enumerate}
 
-  \item users get response with a faster parser;
+\begin{itemize}
+
+  \item users get response faster with a faster parser;
 
   \item 20 times faster parser means the cost of hardware to run it can be
     20 times cheaper for the same amount of work done
@@ -1137,31 +1145,26 @@ important for three reasons:
   \item it enables faster upgrade of parsed data in large datasets. Work that
     before took 20 hours now can be done in 1 hour.
 
-\end{enumerate}
+\end{itemize}
 
 One of the main reasons to rewrite the parser software from scratch is to
 address existing bottlenecks within services. Parsing is key to other services
-such as reconciliation and resolution, such that improving the parser will
-increase user satisfaction elsewhere.
+such as reconciliation for example, and improving the parser will increase user
+satisfaction elsewhere.
 
 Results on the speed performance are given in Figure~\ref{figure:throughput}.
-From 1 to 4 CPU threads gnparser and gbif parser showed similar throughput,
-while biodiversity parser was ~5 times slower on one thread and ~8 times
-slower on 4 threads. GBIF parser scaled better beyond 4 processors and for 12
-parallel threads it was 1.22 times faster than gnparser. Both gnparser and
-GBIF parser had been significantly faster than biodiversity, and scaled better
-as well.
+With 1 to 4 CPU threads, \textit{gnparser} and GBIF \textit{name-parser} had a
+similar throughput, while \textit{biodiversity} parser was 5 times slower on
+one thread and  8 times slower on 4 threads. The GBIF \textit{name-parser}
+scaled better beyond 4 processors and for 12 parallel threads it was 1.22 times
+faster than \textit{gnparser}.  Both \textit{gnparser} and GBIF
+\textit{name-parser} had been significantly faster than \textit{biodiversity},
+and scaled better.
 
-Results on the speed performance are given in Figure~\ref{figure:throughput}.
-With 1 to 4 CPU threads, gnparser and gbif parser had a similar throughput,
-while biodiversity parser was 5 times slower on one thread and  8 times slower
-on 4 threads. The GBIF parser scaled better beyond 4 processors and for 12
-parallel threads it was 1.22 times faster than gnparser. Both gnparser and GBIF
-parser had been significantly faster than biodiversity, and scaled better.
-
-It is important to remember that \textit{gnparser} has significant amount of
-additional functionality missing in GBIF \textit{name-parser}. It justifies for
-us some loss in scalability after increasing number of threads beyond 4.
+As we showed \textit{gnparser} has additional functionality not presented in
+GBIF \textit{name-parser}. It justifies for us some loss in scalability after
+increasing number of threads beyond 4. For users who value scalability over
+additional functionalilty GBIF \textit{name-parser} might be a better choice.
 
 \subsection*{Accessibility}
 
@@ -1172,9 +1175,9 @@ as the more people use a software more cost-effective it is.
 We designed \textit{gnparser} with accessibility in mind from the start. Scala
 language allows the use of \textit{gnparser} as a library in Scala, Java,
 Python, JRuby, R, JavaScript and a great variety of other languages based on
-Java Virtual Machine. If a user wants to use it in some other language s/he can
-connect to the parser via a socket server interface. There is also a command
-line tool, a web interface, and a RESTful API.
+Java Virtual Machine. If a user wants to use it in some non-JVM language s/he
+can connect to the parser via a socket server interface. There is also a
+command line tool, a web interface, and a RESTful API.
 
 We pay close attention to documentation, trying to keep it detailed, clear and
 up to date. We have an extensive test suite which describes parser's behavior
