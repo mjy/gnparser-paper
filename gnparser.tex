@@ -213,17 +213,18 @@
   \parttitle{Background}
   Modern biology would be unworkable without scientific names based on Linnaean
   nomenclature. Names of organisms are pervasive in documents, databases, and
-  collections. They are metadata which allow us to discover, communicate, and combine information in
-  biodiversity, ecology, molecular biology, medicine and many other fields. Indexing and organizing such information via scientific names is
-  challenging for several reasons. Names for the same species may exist in a
-  variety of alternative forms (name-strings) such as \textit{Aedes
+  collections. They are metadata which allow us to discover, communicate, and
+  combine information in biodiversity, ecology, molecular biology, medicine and
+  many other fields. Indexing and organizing such information via scientific
+  names is challenging for several reasons. Names for the same species may
+  exist in a variety of alternative forms (name-strings) such as \textit{Aedes
   (Cancraedes) thurmanae} and \textit{Aedes thurmanae} Mattingly, 1958.  Simple
   string comparisons fail to connect much of the information associated with
   names because of these variations. Parsing offers a means of improving
   interconnectability. Parsing breaks names into semantic elements, reducing
-  variation, and allowing matching on the same key parts of the name-string that make up
-  a canonical form (``\textit{Aedes thurmanae}'' in the case of the examples
-  above).
+  variation, and allowing matching on the same key parts of the name-string
+  that make up a canonical form (``\textit{Aedes thurmanae}'' in the case of
+  the examples above).
   \parttitle{Results}
   We introduce Global Names Parser (\textit{gnparser}), a tool based on the
   Parsing Expression Grammar algorithm. The parser deals well with scientific
@@ -300,16 +301,20 @@
 
 Throughout the paper we distinguish between two terms -- ``name'' and
 ``name-string''. Term ``name-strings'' represents a sequence of characters
-(letters, numbers, punctuation, spaces, symbols). The term ``name'' is one or several words 
-which points to a taxon. A name can be expressed by many name-strings, some are
-well-formed and code compliant (in which case they are regarded as scientific names, for examples see
-Table~\ref{table:carex}). There many more names and surrogates for names that are not code-compliant and so are not scientific.  There are tens of millions of scientific names and possibly billions
-of legitimate name-strings.
+(letters, numbers, punctuation, spaces, symbols). The term ``name'' is one or
+several words which points to a taxon. A name can be expressed by many
+name-strings, some are well-formed and code compliant (in which case they are
+regarded as scientific names, for examples see Table~\ref{table:carex}). There
+many more names and surrogates for names that are not code-compliant and so are
+not scientific.  There are tens of millions of scientific names and possibly
+billions of legitimate name-strings.
 
 When we talk about ``code-compliancy'' we mean compliance with a corresponding
 code of nomenclature: Zoological (ICZN) \cite{ICZN}, Botanical (ICN)
 \cite{ICN}, Bacteria (ICNB) \cite{ICNB}, Viruses (ICTV) \cite{ICTV}, Cultivated
-plants (ICNCP) \cite{ICNCP}, Phylocode (ICPN) \cite{ICPN}. Conventionally, the term 'scientific' refers to names that are compliant with any of the codes excepting the Phylocode.
+plants (ICNCP) \cite{ICNCP}, Phylocode (ICPN) \cite{ICPN}. Conventionally, the
+term 'scientific' refers to names that are compliant with any of the codes
+excepting the Phylocode.
 
 \section*{Background}
 
@@ -318,19 +323,19 @@ because they can be used as near universal metadata to index, organize, and
 interconnect distributed information \cite{Patterson2010}. Nevertheless, use of
 names for informatics purposes presents an array of problems . As we
 demonstrate below, some of these problems can be solved by parsing: that is, to
-algorithmically deduce the semantic meaning of elements (words, annotations, author information, date, etc.) within
-the name-strings.
+algorithmically deduce the semantic meaning of elements (words, annotations,
+author information, date, etc.) within the name-strings.
 
 \begin{table}[!htb]
   \begin{center}
 
   \caption{Some legitimate versions of the scientific name for the Northern
-    Bulrush or Singlespike sedge.  The genus (\textit{Carex}), species (\textit{scirpoidea}),
-    and subspecies (\textit{convoluta}) may be annotated (var. subsp., and ssp.) or
-    have the name of the original authority for the infraspecies (Kükenthal),
-    the species (Michaux), the current infraspecific combination (Dunlop),
-    sometimes abbreviated and with or without dates. Image courtesy of
-  \cite{FNA2002}.}\label{table:carex}
+    Bulrush or Singlespike sedge.  The genus (\textit{Carex}), species
+    (\textit{scirpoidea}), and subspecies (\textit{convoluta}) may be annotated
+    (var. subsp., and ssp.) or have the name of the original authority for the
+    infraspecies (Kükenthal), the species (Michaux), the current infraspecific
+    combination (Dunlop), sometimes abbreviated and with or without dates.
+    Image courtesy of \cite{FNA2002}.}\label{table:carex}
 
     \begin{tabular}{| l | c |}
     \hline
@@ -367,50 +372,50 @@ the name-strings.
 Due to intrinsic diversity of name-strings (Table~\ref{table:carex}), exact
 string matching was able only to link less than 15\% of entries in major data
 environments \cite{Patterson:inpress-a}. This is insufficient to achieve the
-vision of a ``Big New Biology'' in which information about species is interconnected via scientific names. This
-problem can be addressed in part by promoting obligatory standard names such
-that authors, editors and publishers take responsibility for representing a
-scientific name in the same way. 
+vision of a ``Big New Biology'' in which information about species is
+interconnected via scientific names. This problem can be addressed in part by
+promoting obligatory standard names such that authors, editors and publishers
+take responsibility for representing a scientific name in the same way.
 % Paddy comment: reference, such as Zermoglio, or Boyle et al
-The alternative is to apply reconciliation in
-which an infrastructure maps alternative names for the same taxon together.
-The former strategy would require a costly international coordination, would
-not eliminate future human mistakes, it cannot be applied to older documents,
-does not allow for multiple points of view, nor for changes in taxonomic
-perspective. That is, even the use of standard names requires reconciliation,
-and reconciliation can benefit from standardization by resolving variant names
-to the recommended standard names.
+The alternative is to apply reconciliation in which an infrastructure maps
+alternative names for the same taxon together.  The former strategy would
+require a costly international coordination, would not eliminate future human
+mistakes, it cannot be applied to older documents, does not allow for multiple
+points of view, nor for changes in taxonomic perspective. That is, even the use
+of standard names requires reconciliation, and reconciliation can benefit from
+standardization by resolving variant names to the recommended standard names.
 
-The reconciliation process involves linking all known name-strings for the same taxon into
-reconciliation groups. Membership include lexical variants of any relevant
-name-strings, synonyms, surrogates, common names, and identifiers.  The
-assembly of lexical groups (various presentations of the same name or other
+The reconciliation process involves linking all known name-strings for the same
+taxon into reconciliation groups. Membership include lexical variants of any
+relevant name-strings, synonyms, surrogates, common names, and identifiers.
+The assembly of lexical groups (various presentations of the same name or other
 identifier) requires that all variant spellings of names are collated. Parsing
 can automate the task of creating lexical groups for scientific names. Parsing
-finds the 'common denominator' of spelling variants of scientific names – the canonical form comprised only of the scientific words,
-(\textit{Carex scirpoidea convoluta} in case of Table~\ref{table:carex}). It
-identifies other important for reconciliation information (infraspecific ranks,
-original and combination authorities etc.), and manages annotations and other
-intrusions into the name-string. Lexical groups then require another level of
-folding into reconciliation groups where homotypic and heterotypic synonyms are
-placed together. This process benefits from access to accurates database of
+finds the 'common denominator' of spelling variants of scientific names – the
+canonical form comprised only of the scientific words, (\textit{Carex
+scirpoidea convoluta} in case of Table~\ref{table:carex}). It identifies other
+important for reconciliation information (infraspecific ranks, original and
+combination authorities etc.), and manages annotations and other intrusions
+into the name-string. Lexical groups then require another level of folding into
+reconciliation groups where homotypic and heterotypic synonyms are placed
+together. This process benefits from access to accurates database of
 nomenclatural events (such as International Plant Name Index, Index Fungorum,
 and ZooBank and the Global Names Usage Bank \cite{Pyle2003}).
 
-Reconciliation relies heavily the most stable component of a name-string – a canonical
-form. Such approach brings us to another problem – the same canonical form may
-be used for more than one taxon or concept \cite{Remsen2016}, homonyms, chresonyms,
-or ranks of infraspecies. Analysis of ranks and the authors found by a parser
-helps to separate homonyms chresonyms and other similar names from each other,
-while an infrastructure to manage concepts is unlikely in the forseeable future
-\cite{Patterson:inpress-a}.
+Reconciliation relies heavily the most stable component of a name-string – a
+canonical form. Such approach brings us to another problem – the same canonical
+form may be used for more than one taxon or concept \cite{Remsen2016},
+homonyms, chresonyms, or ranks of infraspecies. Analysis of ranks and the
+authors found by a parser helps to separate homonyms chresonyms and other
+similar names from each other, while an infrastructure to manage concepts is
+unlikely in the forseeable future \cite{Patterson:inpress-a}.
 
-After reconciliation, the final step is to provide an option to replace outdated
-or incorrect names with ones that are endorsed by one or more taxonomic
-authorities. This is referred to as resolution. Resolution requires up to date
-high quality ``Taxonomic Authority Files'' \cite{VandenBerghe2015}, such as
-endorsed checklists (e.g. \cite{Zermoglio2016}), taxonomic sources (e.g.
-\cite{Boyle2013}) and taxonomic compilations  (e.g Catalogue of Life
+After reconciliation, the final step is to provide an option to replace
+outdated or incorrect names with ones that are endorsed by one or more
+taxonomic authorities. This is referred to as resolution. Resolution requires
+up to date high quality ``Taxonomic Authority Files'' \cite{VandenBerghe2015},
+such as endorsed checklists (e.g. \cite{Zermoglio2016}), taxonomic sources
+(e.g.  \cite{Boyle2013}) and taxonomic compilations  (e.g Catalogue of Life
 \cite{col}). Ideally such sources should be underpinned by nomenclatural
 services provided through nomenclatural registries, and should make their
 content available through services.  This will allow automated updating of
@@ -423,16 +428,16 @@ Increasingly, large biodiversity informatics projects (Encyclopedia of Life
 \cite{eol}, Global Biodiversity Informatics Facility \cite{gbif}, Atlas of
 Living Australia \cite{ala}, Barcode of Life \cite{bold}, iDigBio
 \cite{idigbio}, VertNet \cite{vertnet} etc.) dynamically aggregate information
-from many different sources. The name-strings in the distributed sources
-may be inconsistent in their format, impeding data integration. Impediments also
+from many different sources. The name-strings in the distributed sources may be
+inconsistent in their format, impeding data integration. Impediments also
 result from name-strings that are not properly formed, or contain annotations
 which are not part of the name, or are ``surrogate names'' – in that they are
-not code compliant names that may refer to organisms which are not formally described taxa. When parsed, many such name-strings
-can be labelled as not being scientific
-names and will therefore need special attention.  If a name-string cannot be
-ingested by a high quality parser, the string is almost certainly not a
-well-formed scientific name.  Common names are much less useful in
-interconnecting distributed information \cite{Patterson:inpress-a}.
+not code compliant names that may refer to organisms which are not formally
+described taxa. When parsed, many such name-strings can be labelled as not
+being scientific names and will therefore need special attention.  If a
+name-string cannot be ingested by a high quality parser, the string is almost
+certainly not a well-formed scientific name.  Common names are much less useful
+in interconnecting distributed information \cite{Patterson:inpress-a}.
 
 Parsing not only reduces variation, segregates non scientific names, but can
 open up new types of analysis.  Some of the semantic elements can be used for
@@ -444,51 +449,65 @@ We believe a scientific name parser needs to perform well according to the follo
 
 \begin{enumerate}
 
-  \item \textbf{High quality of semantic breakdown.} A parser should be able to break names into their
-    semantic elements to the same standards that can be achieved by a  trained
-    nomenclaturalist, or better. Success with this criterion will  overcome  problems
-    with the different forms of names in various databases so that the research community is not limited to
-    the use of databases where names have been parsed by humans or to exact string
-    matching. High quality semantic parsers eliminate the need for humans to perform
-    this very expensive, tedious and error-prone task.
+  \item \textbf{High quality of semantic breakdown.} A parser should be able to
+    break names into their semantic elements to the same standards that can be
+    achieved by a  trained nomenclaturalist, or better. Success with this
+    criterion will  overcome  problems with the different forms of names in
+    various databases so that the research community is not limited to the use
+    of databases where names have been parsed by humans or to exact string
+    matching. High quality semantic parsers eliminate the need for humans to
+    perform this very expensive, tedious and error-prone task.
 
   \item \textbf{Scope.} A parser should be able to parse all types of
     scientific names, including the most complex name-strings -- hybrid
     formulae, multi-infraspecific names, names with multilevel authorships etc.
-    Without such scope, the matching of the same name in different sources will be
-    incomplete and valuable information attached to scientific names is hidden
-    from researchers.
+    Without such scope, the matching of the same name in different sources will
+    be incomplete and valuable information attached to scientific names is
+    hidden from researchers.
 
   \item \textbf{Parsing Completeness.} All information included in a
-    name-string may important. In addition to the elements of the canonical form, authorship, year, or
-    rank information may allow us to identify or disambiguate homonyms, similar names, synonyms,
-    spelling mistakes, or chresonyms. A good parser designed for scientific names allows people who manage large
-    collections of names, or biodiversity databases that include names,  to weed out mistakes and increase the quality of their
-    databases.
+    name-string may important. In addition to the elements of the canonical
+    form, authorship, year, or rank information may allow us to identify or
+    disambiguate homonyms, similar names, synonyms, spelling mistakes, or
+    chresonyms. A good parser designed for scientific names allows people who
+    manage large collections of names, or biodiversity databases that include
+    names,  to weed out mistakes and increase the quality of their databases.
 
-  \item \textbf{Speed.} For the purposes of a names-based cyberinfrastructure (the vision of the Global Names Architecture), a
-    parser needs to be fast and handle periodic heavy loads if it is to offer real time services to usesr. High throughput of parsing becomes very important when managing federated data
-    environments. Increased speed with which people will receive requested
-    information improves user satisfaction, and it reduces the costs of
-    dependent projects in both hardware and software development.
+  \item \textbf{Speed.} For the purposes of a names-based cyberinfrastructure
+    (the vision of the Global Names Architecture), a parser needs to be fast
+    and handle periodic heavy loads if it is to offer real time services to
+    usesr. High throughput of parsing becomes very important when managing
+    federated data environments. Increased speed with which people will receive
+    requested information improves user satisfaction, and it reduces the costs
+    of dependent projects in both hardware and software development.
 
-  \item \textbf{Accessibility.} Our commitment to open source is most cost-effective
-    when the tools are available to the widest possible audience. A parser
-    needs good documentation, the ability to work as a library, act as a
-    command line tool, as a tool with graphical interface, and to run as socket
-    and RESTful services.
+  \item \textbf{Accessibility.} Our commitment to open source is most
+    cost-effective when the tools are available to the widest possible
+    audience. A parser needs good documentation, the ability to work as a
+    library, act as a command line tool, as a tool with graphical interface,
+    and to run as socket and RESTful services.
 
 \end{enumerate}
 
 
 \subsection*{Prior Art}
-% Paddy comment.  I am not confident that the coverage of prior art is complete.  Until reminded, FAT was excluded.  I recollect WoRMS had some tool, Thomson Ecological had some tool, George Garrity had some commercialized product. I suspect all authors should try to find any and all tools that work with biological names parsing.
+
+\marginpar{Paddy comment.\\  I am not confident that the coverage of prior art is
+complete.  Until reminded, FAT was excluded.  I recollect WoRMS had some
+tool, Thomson Ecological had some tool, George Garrity had some
+commercialized product. I suspect all authors should try to find any and all
+tools that work with biological names parsing.\\
+Dima:\\
+WoRMS use our parser, not sure about others. Can we use VandenBerghe2015 paper
+and list what they listed?}
+
 
 Until recently the problem of parsing scientific names  has been addressed by
 manual splitting of names into canonical form and the authorship part and
 by using home-grown scripts based on regular expressions.
 
-% paddy comment. When a statement like this is made, references need to be included.  How else do we know if the statement is correct.
+% paddy comment. When a statement like this is made, references need to be
+% included.  How else do we know if the statement is correct.
 \
 
 Manual approach of splitting names into 2 parts is expensive, slow, inflexible
