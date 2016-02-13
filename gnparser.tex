@@ -116,7 +116,8 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{gnparser: a Powerful Scientific Names Parser}
+\title{A Powerful Scientific Names Parser ``gnparser'' Based on Parsing
+Expression Grammars}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -210,22 +211,12 @@
 \begin{abstractbox}
 
 \begin{abstract} % abstract
-  % Dima comment: I feel abstract is too long, but dont see how to shorten it
+  % Dima comment: Trying to make background much shorter here too
   \parttitle{Background}
-  Modern biology would be unworkable without scientific names based on Linnaean
-  nomenclature. Names of organisms are pervasive in documents, databases, and
-  collections. They are metadata which allow us to discover, communicate, and
-  combine information in biodiversity, ecology, molecular biology, medicine and
-  many other fields. Indexing and organizing such information via scientific
-  names is challenging for several reasons. Names for the same species may
-  exist in a variety of alternative forms (name-strings) such as \textit{Aedes
-  (Cancraedes) thurmanae} and \textit{Aedes thurmanae} Mattingly, 1958.  Simple
-  string comparisons fail to connect much of the information associated with
-  names because of these variations. Parsing offers a means of improving
-  interconnectability. Parsing breaks names into semantic elements, reducing
-  variation, and allowing matching on the same key parts of the name-string
-  that make up a canonical form (``\textit{Aedes thurmanae}'' in the case of
-  the examples above).
+  Linking biological data using scientific names creates tremendous
+  opportunities for science. Variations in spellings of scientific names
+  creates a barrier to such linking. Breaking names into semantic elements is
+  a necessary step to alleviate this problem.
   \parttitle{Results}
   We introduce Global Names Parser (\textit{gnparser}), a tool based on the
   Parsing Expression Grammar algorithm. The parser deals well with scientific
@@ -238,15 +229,16 @@
   Jython, and JRuby. The parser can be used as a command line application,
   socket server, web-app or RESTful http-service. It is released under an Open
   Source MIT license.
-  \parttitle{Conclusions}
-  Global Names Parser (\textit{gnparser}) is a fast, high precision tool
-  relevant to biodiversity informatics. It can replace expensive and
-  error-prone manual parsing and standardization of scientific names in many
-  situations.  Parsing has been shown to dramatically increase the
-  interoperability of distributed biological information by improving the
-  matches among variant forms of the same scientific names.
-\end{abstract}
 
+  \parttitle{Conclusions}
+  Global Names Parser (\textit{gnparser}) is a fast, high precision tool for
+  bioinformaticians working with scientific names. It can replace expensive and
+  error-prone manual parsing and standardization of scientific names in many
+  situations. Parsing increases the interoperability of distributed biological
+  information from less than 15\% to ???\% by improving the matches among
+  variant forms of the same scientific names.
+
+\end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -560,7 +552,7 @@ and were a mixture of well-formed names, names with formatting and spelling
 mistakes, and non-name strings misrepresented as names.
 
 We compared performance of \textit{gnparser} with 2 other projects --
-\textit{biodiversity} parser \cite{biodiversity} (also developed by Global
+\textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by Global
 Names), and GBIF \textit{name-parser} \cite{gbifNameParser}. For comparisons we
 calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a
 dataset consisted of 1000 name-strings. Another project we considered was
@@ -1110,12 +1102,20 @@ Under accessibility we mean ability of a code to be used by the widest
 audience possible. For Open Source projects accessibility is very important,
 as the more people use a software more cost-effective it is.
 
-As we stated in the ``Background'' parsing is quintessential for organizing
-data, so every biodiversity database has their own solution and
-parsing algorithms of various levels of sophistication are quite ubiquitous.
-For example there is a parser in uBio \cite{ubio:parser}...
-\marginpar{Dima:\\Paddy and I decided we need to say why separate
-package for parser is important. Still writing thisi part...}
+\marginpar{Dima:\\Paddy and I decided to add ``parser as stand-alone package''
+discussion}
+
+Parsing is quintessential for organizing data, so every biodiversity database
+contains a parsing algorithm.  For example there is a parser in uBio
+\cite{ubio:parser}, Botanical Society of Britain and Ireland
+\cite{botsociety:parser}.  Parsing is an integral part of many biodiversity
+projects, for example FAT \cite{Sautter2006}, NetiNeti \cite{Akella2012},
+Taxonome \cite{Kluyver2013}. We believe in modular approach so we released
+\textit{biodiversity} \cite{Boyle2013} as a stand-alone package.  It allowed
+our users to mix and match it with their own projects. To our knowledge
+\textit{biodiversity} was the first scientific name parser released this way.
+Since then GBIF \textit{name-parser} \cite{gbifNameParser}, \texit{YASMEEN}
+\cite{VandenBerghe2015}, and \textit{gnparser} were released.
 
 We designed \textit{gnparser} with accessibility in mind from the start. Scala
 language allows the use of \textit{gnparser} as a library in Scala, Java,
@@ -1132,8 +1132,8 @@ format.
 All this creates larger potential audience for the parser, and will help many
 researches and programmers to deal with the complex problem in biodiversity
 informatics.\marginpar{Paddy:\\Perhaps list some teams who uses
-  parser.\\Dima:\\Noone uses gnparser yet, except us. We talk about use of
-biodiversity parser in Background}
+  parser.\\Dima:\\Noone uses gnparser yet, except us. We do list
+biodiversity parser users in discussion}
 
 The summary of results and discussion is depicted in
 Table~\ref{table:summary}
