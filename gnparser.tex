@@ -214,9 +214,11 @@ Expression Grammars}
   % Dima comment: Trying to make background much shorter here too
   \parttitle{Background}
   Linking biological data using scientific names creates tremendous
-  opportunities for science. Variations in spellings of scientific names
-  creates a barrier to such linking. Breaking names into semantic elements is
-  a necessary step to alleviate this problem.
+  opportunities for science. Variations in spellings of scientific names, many
+  names for a taxon, one name for different taxons create a barrier to such
+  linking. Breaking names into semantic elements is a necessary step to
+  alleviate this problem.
+
   \parttitle{Results}
   We introduce Global Names Parser (\textit{gnparser}), a tool based on the
   Parsing Expression Grammar algorithm. The parser deals well with scientific
@@ -303,16 +305,24 @@ with \textbf{bold}.
 
 \section*{Background}
 
-\marginpar{Dima:\\ Trying to rewrite \textbf{Background} accoring to
-\\http://bit.ly/1rIy9F7} Biology is entering a ``Big Data'' age, where global
-and fast access to knowledge becomes a reality. The names of organisms are
-invaluable in ``Big Data'' biology because they make it possible to index,
-organize, and interconnect distributed information \cite{Patterson2010}.
-Nevertheless, use of names for informatics purposes presents an array of
-problems. For example there are several alternative spellings for a name
-(Table~\ref{table:carex}), some names point to more than one taxon (homonyms),
-sometimes authorship in a name-string is about a paper without a nomenclatural
-significance (chresonyms).
+\marginpar{Dima:\\ Paddy and I decided on audience: Non-programmer people
+working with bio-databases should be able to read title, abstract, background
+without difficulties, understnd why parser is important for them, give paper to
+programmers}
+
+\marginpar{Dima: \\Alex and I decided on idea of the paper: we give most
+advanced and still fast parser. It is fast and good because of combination of
+Scala and PEG}
+
+
+Biology is entering a ``Big Data'' age, where global and fast access to
+knowledge becomes a reality. The names of organisms are invaluable in ``Big
+Data'' biology because they make it possible to index, organize, and
+interconnect distributed information \cite{Patterson2010}.  Nevertheless, use
+of names for informatics purposes presents an array of problems. For example
+there are several alternative spellings for a name (Table~\ref{table:carex}),
+some names point to more than one taxon (homonyms), sometimes authorship in a
+name-string is about a paper without a nomenclatural significance (chresonyms).
 
 \begin{table}[!htb]
   \begin{center}
