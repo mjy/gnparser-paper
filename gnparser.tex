@@ -64,7 +64,6 @@
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                             %%
 %%  If you wish to display your graphics for   %%
@@ -82,6 +81,7 @@
 
 %\def\includegraphic{}
 %\def\includegraphics{}
+\errorcontextlines 10000
 
   \makeatletter
   \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
@@ -299,7 +299,7 @@
 % <put your article body there>
 
 \marginpar{Paddy: \\The start of Results and Discussion (of results) began with
-prior art and reasons for selecting SCALA. In my view, these parts should be in
+prior art and reasons for selecting Scala. In my view, these parts should be in
 the Introduction and M\&M.  So, I moved them. Please confirm that it reads OK\\
 Dima: \\OK Paddy, lets leave them where you put them}
 
@@ -403,23 +403,22 @@ name-strings would reveal two different reconciliation groups:
 \end{itemize}
 
 Initially such problem of normalizing scientific names by parsing had been
-addressed by manual means. The manual splitting of names into canonical form
-and the authorship part is expensive, slow, inflexible and cannot elegantly
-deal with name-strings where authorship is present in the middle of the name
-(for example \textbf{Carex scirpoidea Michx. subsp.  convoluta (Kük.)
-D.A.Dunlop}). A person familiar with botanical rules of nomenclature would be
-able to analyse the example of 24 name-strings with relative ease, but not
-thousands and millions of name-strings. This requires an algorithmic solution,
-a scientific name parser!
+addressed as described above -- by manual means. A person familiar with
+botanical rules of nomenclature would be able to analyse the example of 24
+name-strings with relative ease, but not thousands and millions of
+name-strings. The manual splitting of names into canonical form and the
+authorship part is expensive, slow, inflexible and cannot elegantly deal with
+name-strings where authorship is present in the middle of the name (for example
+\textbf{Carex scirpoidea Michx. subsp.  convoluta (Kük.) D.A.Dunlop}).  This
+requires an algorithmic solution, a scientific name parser!
 
 An early algorithmic approach was to parse scientific names with regular
 language implemented as regular expression \cite{Leary2007}. Regular expression
 is a sequence of characters that describes a search pattern
-\cite{aho1992foundations}.  \marginpar{Paddy: ref needed \\Dima: ref was
-misplaced} For example a regular expression ``[A-Z][a-z]\{2\}'' corresponds
-to a capitalized word from 3 letters like ``Zoo''. Examples of parsers based on
-regular expressions are GBIF's \textit{name-parser} \cite{gbifNameParser}, and
-\textit{YASMEEN} \cite{VandenBerghe2015}.
+\cite{aho1992foundations}. For example a regular expression ``[A-Z][a-z]\{2\}''
+corresponds to a capitalized word from 3 letters like ``Zoo''. Examples of
+parsers based on regular expressions are GBIF's \textit{name-parser}
+\cite{gbifNameParser}, and \textit{YASMEEN} \cite{VandenBerghe2015}.
 
 Regular expression is a powerful approach to string matching, but it has
 limitations. For example regular expressions do not have facilities to deal
@@ -472,15 +471,23 @@ believe that a general use parser should satisfy the following requirements.
 \end{enumerate}
 
 These requirements became our design goals. Based on our experience with
-prototype systems, we selected Parsing Expression Grammars and SCALA language
+prototype systems, we selected Parsing Expression Grammars and Scala language
 for the following reasons.
 
 \subsection*{Adoption of Parsing Expression Grammars}
 
-Parsing Expression Grammar (PEG) \cite{Ford2004} is an alternative to regular
-expression methods for describing a syntax of scientific names. PEG is better
-for our goals for the following reasons: Parsing Expression Grammar is
-blablabla \marginpar{Add informal and simple explanation what PEG is}
+Parsing Expression Grammars (PEG) \cite{Ford2004} is a recently introduced
+method for parsing texts. PEG allows to define rules which describe a grammar
+of a text. In our case such rules are used to deconstruct scientific names.
+The rules are built from the ground up, staring from the simplest like
+``character'' or ``space''. Then a ``genus'' rule would be a combination of a
+``capital\_character'' followed by several ''lower\_case\_characters'',
+``authorship'' would be a combination of several ``authors'' and optionally a
+``year'', ``author'' would consist of ``author\_words'' etc. PEG rules are
+designed to be recursive and easy to combine to new rules of ever increasing
+complexity. Also each rule can have programmatic logic attached, making PEG
+approach very introspective and flexible. We beleive that PEG suites our
+goals better than regullar espressions for the following reasons:
 
 \begin{itemize}
 
@@ -611,21 +618,18 @@ modules (or subprojects in Scala terminology).
     \cite{bray2014javascript} to allow developers familiar with other languages
     to work with the output.  The output has the following information:
 
+\begin{description}
+  \item[details] contains the JSON-representation of a parsed scientific
+    name
 
-    \begin{itemize}
+  \itemr[quality\_warnings] describes potential problems if names are not
+    well-formed
 
-      \item $details$ contains the JSON-representation of a parsed scientific
-        name
+  \item[quality] depicts a quality level of the parsed name
 
-      \item $quality\_warnings$ describes potential problems if names are not
-        well-formed
-
-      \item $quality$ depicts a quality level of the parsed name
-
-      \item $positions$ maps the positions of every element in a parsed name to
-        the semantic meaning of the element
-
-    \end{itemize}
+  \item[positions] maps the positions of every element in a parsed name to
+    the semantic meaning of the element
+\end{description}
 
 The JSON schema can be found online \cite{gnparser-json}.
 
