@@ -435,7 +435,7 @@ procedure during a parsing event. As a result it is difficult to implement and
 maintain such functionality as error recovery, detailed warnings, and
 descriptions of errors.
 
-We wanted an algorithm  able to deal with complex scientitific names of broader
+We wanted an algorithm  able to deal with complex scientific names of broader
 complexity to give more flexibility than a regular expression approach.  We
 believe that a general use parser should satisfy the following requirements.
 
@@ -486,8 +486,8 @@ The rules are built from the ground up, staring from the simplest like
 ``year'', ``author'' would consist of ``author\_words'' etc. PEG rules are
 designed to be recursive and easy to combine to new rules of ever increasing
 complexity. Also each rule can have programmatic logic attached, making PEG
-approach very introspective and flexible. We beleive that PEG suites our
-goals better than regullar espressions for the following reasons:
+approach very introspective and flexible. We believe that PEG suites our
+goals better than regular expressions for the following reasons:
 
 \begin{itemize}
 
@@ -567,12 +567,12 @@ needed an environment with the following properties:
 
 While many of the properties are true for Ruby, but others, such as high
 performance, scalability and interoperability are lacking. To meet all
-requirements, and exploting what we had learned from \textit{biodiversity}, we
-refactored it to fulfil all requirements: Java virtual machine, Scala
-programming language \cite{odersky2004overview}, and \textit{parboiled2}
-library \cite{parboiled2}.  An alternative to \textit{parboiled2} is the Scala
+requirements, and exploiting what we had learned from \textit{biodiversity}, we
+refactored it to fulfil all requirements using Java virtual machine, Scala
+programming language \cite{odersky2004overview}, and the Open Source \textit{Parboiled2} library \cite{parboiled2} which implements PEG in Scala. An alternative to \textit{parboiled2} is the Scala
 parser combinators library \cite{moors2008parser} but has known problems with
-speed and memory consumption making \textit{parboiled2} our preferred choice.
+speed and memory consumption making \textit{parboiled2} our preferred choice. 
+
 
 The functional programming features of Scala allowed us to build a custom
 parsing language that describes the rules of the grammars of scientific names.
@@ -622,7 +622,7 @@ modules (or subprojects in Scala terminology).
   \item[details] contains the JSON-representation of a parsed scientific
     name
 
-  \itemr[quality\_warnings] describes potential problems if names are not
+  \item[quality\_warnings] describes potential problems if names are not
     well-formed
 
   \item[quality] depicts a quality level of the parsed name
@@ -640,39 +640,25 @@ The JSON schema can be found online \cite{gnparser-json}.
 
 
 
-  \item ``\textit{examples}'' contains usage examples to assist developers in building \textit{parser} into some popular programming languages: Java, Scala, Python, Ruby, and R
+  \item ``\textit{examples}'' contains  examples to assist developers in building \textit{parser} into other popular programming languages: Java, Scala, Python, Ruby, and R
+  
   \item ``\textit{runner}'' contains the code that allows users to run ``\textit{parser}''
-  from a command line as a standalone tool or to run it as a TCP/IP server
-  \item ``\textit{web}'' contains a web application and a RESTful interface as a simpler method to access ``\textit{parser}''
+  from a command line as a standalone tool or to run it as a TCP/IP socket server. ``\textit{runner}'' depends on the ``\textit{parser}''.   The core part is the launch script
+``\textit{gnparse}'' (for Linux/Mac and Windows) that creates JVM
+instance and runs ``\textit{parser}'' on multiple threads against the input
+provided via a socket or file.
+
+  \item ``\textit{web}'' contains a web application and a RESTful interface as a simpler method to access ``\textit{parser}''. It is a Play Framework \cite{wampler2011scala} application. It
+depends on the ``\textit{parser}'' library. ``\textit{web}'' achieves
+interactions with ``\textit{parser}'' via HTTP protocols. It works both with
+simple HTML and REST API interfaces
 \end{enumerate}
 
 All subprojects but ``\textit{web}'' can run in JVM 1.6. ``\textit{web}''
 requires JVM 1.8.
 
-\textit{Parboiled2} is an Open Source project, which allowed us to extend
-it to the needs of \textit{gnparser}.
 
-
-\subsection*{parser}
-
-
-
-\subsection*{runner}
-
-``\textit{runner}'' depends on the ``\textit{parser}''. It provides the functionality
-of a command line tool and a socket server. The core part is the launch script
-``\textit{gnparse}'' (for Linux/Mac and Windows) that creates JVM
-instance and runs ``\textit{parser}'' on multiple threads against the input
-provided via a socket or file.
-
-\subsection*{web}
-
-``\textit{web}'' is a Play Framework \cite{wampler2011scala} application. It
-depends on the ``\textit{parser}'' library. ``\textit{web}'' achieves
-interactions with ``\textit{parser}'' via HTTP protocols. It works both with
-simple HTML
-
-Figure~\ref{figure:webgui} and REST API interfaces.
+Figure~\ref{figure:webgui} .
 
 \begin{figure}[htbp]
   \begin{center}
@@ -695,28 +681,26 @@ Requirements).
 ``\textit{gnparser}'' is available for launch in three bundles:
 
 \begin{itemize}
-  \item A \textit{parser} artifact is provided via Maven central. Physically
+  \item A \textit{parser} artifact is provided via Maven central repository of Java code (REF!). Physically
     it is a relatively small jar file without external dependencies. The
-    artifact can be referenced by a build system (Maven, Gradle, SBT, etc.) in
-    another projects. Build system then provides resolution of required
-    dependencies.
-    %comment Paddy: not understandable by a biologist
+    artifact can be accessed by a build system such as Maven, Gradle, or SBT in
+    other projects. The build system then identifies and provides access to any other required
+    code-dependencies.
 
-  \item Zip-archived ``fat jar'' is located at the project's GitHub repository.
+  \item A Zip-archived ``fat jar'' is located at the project's GitHub repository.
     The jar contains the compiled files of \textit{gnparser} along with all
     necessary dependencies to launch it within JVM. The archive is also bundled
     with a launch script (for Windows, OS X and Linux) that can run a command
     line interface to \textit{gnparser}.
 
-  \item The project's Docker container is located at Docker hub. Docker
+  \item The project's Docker container is located at Docker hub  (*REF!). Docker
     provides an additional layer of abstraction and automation of
     operating-system-level virtualization on Linux. It can be thought as
     lightweight virtualization technology within same Linux OS process. When
     it is setup properly, everything -- starting from JVM and ending with
-    Scala and SBT -- can be run with simple commands: pull Docker image from
-    Hub, and then run socket or web server on a desired port.
+    Scala and SBT -- can be run with simple commands that will, for example,  pull the Docker image from the Hub, and run the socket or web server on a desired port.
 
-    % comment Paddy: Installation section is not understandable by a (this) biologist. I suspect the best thing is for me to be asking questions, and I change the text.
+  
 
 \end{itemize}
 
@@ -1019,7 +1003,7 @@ recursion allows \textit{gnparser} to handle full spectrum of scientific names.
   \end{center}
 \end{table}
 
-%comment: in the pdf, this 'Figure' appears before the two tables above, even though in the latex they are the other way round. Please check the journal requiremeents, but Figure legends usually follow the Figures.  and that 'Figure' is really one Table and one Figure.  I think they should be separated.
+%comment: in the pdf, this 'Figure' appears before the two tables above, even though in the latex they are the other way round. Please check the journal requirements, but Figure legends usually follow the Figures.  and that 'Figure' is really one Table and one Figure.  I think they should be separated.
 
 
 
@@ -1132,8 +1116,9 @@ globally connect information and annotations.
 % Comment paddy:  Biologists will not know the conventions of JSON, so it would
 % be useful to indicate what all of bits of the output mean. My view is to
 % repeat the result, with the meaning in some special way. For example with a
-% box, and indents for nested elelements?
+% box, and indents for nested elements?
 % Dima: I will try to add another table with explanations
+% http://globalnames.org/schemas/gnparser.json
 
 The output usually covers every element in the name-string, and the fields from
 the given above output mean the following:
