@@ -704,9 +704,6 @@ Data for our tests (1,000 and 100,000 name-strings) were randomly chosen from
 resulting datasets consisted of strings acquired from a variety of data sources
 and were a mixture of well-formed names, names with formatting and spelling
 mistakes, and name-strings that were misrepresented as names.
-\marginpar{Paddy: Surely the names came from GNI and not from resolver?\\Dima:
-They did come from resolver, but I did change to GNI, as resolver will be
-part of GNI}
 
 We compared performance of \textit{gnparser} with 2 other projects --
 \textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by
@@ -718,9 +715,6 @@ however we found that with our dataset it generated dramatically more mistakes
 than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was
 unable to finish full dataset without crashing. We excluded it from further
 tests.
-
-\marginpar{Paddy: and FAT?\\Dima: I consider FAT to be more similar to
-TaxonFinder}
 
 To estimate the quality for the parsers we needed a feature that is common to
 all three of them and is a good indicator of performance.  We decided to use a
@@ -742,7 +736,8 @@ following parameters where used for analysis:
 $Accuracy$ -- a proportion of correct results to all results.  It is calculated
 as:
 
-\[Accuracy = \dfrac{\text{tp} + \text{tn}} {\text{tp} + \text{tn} + \text{fp} + \text{fn}}\]
+\[Accuracy = \dfrac{\text{tp} + \text{tn}} {\text{tp} + \text{tn} + \text{fp} +
+    \text{fn}}\]
 
 $Precision$ -- a proportion of name-strings parsed correctly to all detected
 name-strings. It is is calculated as:
@@ -782,19 +777,17 @@ calculated $Precision$ for discarded/non-parsed strings. If done correctly
 not-parsed strings would include only names of viruses and terms that do not
 comply with the zoological, prokaryotic, and botanical Codes of nomenclature.
 
-\marginpar{Paddy: by what mechanism were the about 1000 name-strings
-discarded\\Dima: changed the sentence} We processed 100,000 name-strings with
-each parser.  Each parser discarded close to 1000 name-strings as
-not-parseable.  $Precision$ in this case showed percentage of correctly
-discarded names.  We do not know $Recall$, as it was not reasonable to manually
-determine this for 100,000 names. To get a sense of names which had to be
-discarded, but were parsed instead, we analysed intersections and differences
-of the results between the three parsers.
+We processed 100,000 name-strings with each parser.  Each parser discarded
+close to 1000 name-strings as not-parseable.  $Precision$ in this case showed
+percentage of correctly discarded names.  We do not know $Recall$, as it was
+not reasonable to manually determine this for 100,000 names. To get a sense of
+names which had to be discarded, but were parsed instead, we analysed
+intersections and differences of the results between the three parsers.
 
-To establish the throughput of parsing we used a computer with an Intel i7-4930K
-CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840
-EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing
-of 1,000,000 random name-strings from GNI.
+To establish the throughput of parsing we used a computer with an Intel
+i7-4930K CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB
+Samsung 840 EVO SSD, running Ubuntu version 14.04. Throughput was determined by
+processing of 1,000,000 random name-strings from GNI.
 
 To study effects of parallel execution on throughput we used the
 \textit{ParallelParser} class from \textit{biodiversity} parser and
@@ -822,9 +815,8 @@ High quality parsing is the most important out of the 5 requirements.  We
 compared \textit{gnparser} together with 2 other approaches to parsing that
 represent state of the art for parsing biological scientific names. GBIF
 \textit{name-parser} uses regular expressions approach, while \textit{gnparser}
-and \textit{biodiversity} parsers use PEG approach.  \marginpar{Paddy:
-FAT?\\Dima: considered FAT to be a name-finder, not a parser} Results for our
-quality measurements are shown in Table~\ref{table:precision}.
+and \textit{biodiversity} parsers use PEG approach.  Results for our quality
+measurements are shown in Table~\ref{table:precision}.
 
 If the test data contain a large proportion of true negatives ($\text{tn}$)
 $Accuracy$ is not a good measure as it favors algorithms which distinguish
@@ -861,9 +853,10 @@ name-string test data set, only 2 (the first 2) were well-formed names:
 
 \vspace{0.5cm}
 
-As illustrated by these examples, we expect parsers to deal with
-mistakes, annotations, and Unicode characters miscodings. To alert users,
-\textit{gnparser} generates warnings for each problem it identified in a name-string. The other parsers do not have this feature.
+As illustrated by these examples, we expect parsers to deal with mistakes,
+annotations, and Unicode characters miscodings. To alert users,
+\textit{gnparser} generates warnings for each problem it identified in a
+name-string. The other parsers do not have this feature.
 
 When parsers reach $\approx80\%$ $Accuracy$, they hit a ``long tail'' of
 problems where each particular type of a problem is rare, yet every new manual
@@ -903,12 +896,12 @@ were scientific names, while other parsers ignored them:
 
 Solutions like these might increase $Recall$ with certain low-quality datasets,
 but they also may decrease $Precision$ with other datasets. When dealing with
-``dirty'' datasets containing predictable problems, we find the best solution is
-to include a ``preparser'' script which ``normalizes'' known problems  and then
-apply a high quality parser to the result.  As an example, DRYAD contained many name-strings in which elements of
-scientific names had been concatenated with an interpolated character such
-as `\_’ (e.g. ``Homo\_sapiens'' and ``Pinoyscincus\_jagori\_grandis'')
-\cite{Patterson:inpress-a}.
+``dirty'' datasets containing predictable problems, we find the best solution
+is to include a ``preparser'' script which ``normalizes'' known problems  and
+then apply a high quality parser to the result.  As an example, DRYAD contained
+many name-strings in which elements of scientific names had been concatenated
+with an interpolated character such as `\_’ (e.g. ``Homo\_sapiens'' and
+``Pinoyscincus\_jagori\_grandis'') \cite{Patterson:inpress-a}.
 
 Our testing also revealed differences between regular expressions and PEG
 approaches. Both can achieve high quality results with canonical forms, but the
