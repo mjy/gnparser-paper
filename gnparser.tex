@@ -83,10 +83,11 @@
 %\def\includegraphics{}
 \errorcontextlines 10000
 
-  \makeatletter
-  \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
-  \makeatother
-  \reversemarginpar
+% \makeatletter
+% \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+% \makeatother
+% \reversemarginpar
+
 %%% Put your definitions there:
 \startlocaldefs
   \newcommand{\comment}[2]{\hspace{0in}#2}
@@ -561,9 +562,11 @@ While many of the properties are true for Ruby, but others, such as high
 performance, scalability and interoperability are lacking. To meet all
 requirements, and exploiting what we had learned from \textit{biodiversity}, we
 refactored it to fulfil all requirements using Java virtual machine, Scala
-programming language \cite{odersky2004overview}, and the Open Source \textit{Parboiled2} library \cite{parboiled2} which implements PEG in Scala. An alternative to \textit{parboiled2} is the Scala
-parser combinators library \cite{moors2008parser} but has known problems with
-speed and memory consumption making \textit{parboiled2} our preferred choice.
+programming language \cite{odersky2004overview}, and the Open Source
+\textit{Parboiled2} library \cite{parboiled2} which implements PEG in Scala. An
+alternative to \textit{parboiled2} is the Scala parser combinators library
+\cite{moors2008parser} but has known problems with speed and memory consumption
+making \textit{parboiled2} our preferred choice.
 
 The functional programming features of Scala allowed us to build a custom
 parsing language that describes the rules of the grammars of scientific names.
