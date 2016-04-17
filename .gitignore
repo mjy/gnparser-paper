@@ -16,3 +16,5 @@ t
 *.out
 *.synctex.gz
 *.tex.bak
+
+.idea
