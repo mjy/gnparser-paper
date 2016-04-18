@@ -18,3 +18,5 @@ t
 *.tex.bak
 
 .idea
+*~
+*.swp
