@@ -1,5 +1,3 @@
-\newcommand{\todo}[1]{\textcolor{red}{#1}}
-
 %% BioMed_Central_Tex_Template_v1.06
 %%                                      %
 %  bmc_article.tex            ver: 1.06 %
@@ -387,9 +385,9 @@ addressed by manual means. A person familiar with
  rules of botanical nomenclature would be able to analyse the example of 24
 name-strings with relative ease, but not thousands or millions of
 name-strings to which more than one nomenclatural code may be applied. The manual splitting of names into even two parts, the latinized elements elements of taxon names that make up the canonical form and the
-authorship is expensive, slow, inflexible.  To scale this exercise up and to address such edge cases requires an algorithmic solution, a scientific name parser! \todo{scientific name parser do what?}
+authorship is expensive, slow, inflexible. To scale this exercise up and to address such edge cases requires an algorithmic solution, a scientific name parser!
 
-The strategy of the algorithmic approach is to identify which combinations of the most atomic elements of a name-string (i.e. the UTF-8 encoded characters) represent words (such as Genus name, species name, Authors, annotations \todo{why some are capitalized?}) or dates.  An early algorithmic approach to parsing scientific names was with regular
+The strategy of the algorithmic approach is to identify which combinations of the most atomic elements of a name-string (i.e. the UTF-8 encoded characters) represent words (such as genus name, species name, authors, annotations) or dates.  An early algorithmic approach to parsing scientific names was with regular
 language implemented as regular expression \cite{Leary2007}. A regular expression
 is a sequence of characters that describes a search pattern
 \cite{aho1992foundations}. For example, a regular expression ``[A-Z][a-z]\{2\}''
@@ -609,7 +607,7 @@ requires JVM 1.8. Documentation is available in a README file (see section ``Ava
 \begin{itemize}
 %comment paddy, two references required below
   \item A \textit{parser} artifact is provided via the Maven central repository of
-    Java code (REFERENCE REQUIRED! \todo{paste href to}: \href{http://search.maven.org/#search%7Cga%7C1%7Cglobalnames}{Maven Cental}). Physically it is a relatively small jar file without
+    Java code \cite{maven-globalnames}. Physically it is a relatively small jar file without
     embedded external dependencies. The artifact can be accessed by a build system such
     as Maven, Gradle, or SBT in custom projects. The build system then
     identifies and provides access to all dependent jars.
@@ -938,59 +936,42 @@ All components of a name may be important and need to be parsed and
 categorized. With \textit{gnparser}, we describe the meaning of every word in
 the parsed name-string and present the results in JSON format. Parsing of \textbf{Carex
 scirpoidea Michx.  subsp. convoluta (Kük.) D.A. Dunlop} gives the following
-JSON output (\todo{should it be formatted as follows?}):
-
+JSON output
 \vspace{0.5cm}
 
 \begin{Verbatim}[fontsize=\small]
 {
-	"name_string_id": "203213f3-99d1-5f5e-810a-4453c4d220cb",
-	"parsed": true,
-	"quality": 1,
-	"parser_version": "0.2.0",
-	"verbatim": "Carex scirpoidea Michx.subsp. convoluta (Kük.) D.A. Dunlop",
-	"normalized": "Carex scirpoidea Michx.ssp. convoluta (Kük.) D. A. Dunlop",
-	"canonical_name": {
-		"value": "Carexscirpoidea convoluta",
-		"extended": "Carex scirpoidea ssp. convoluta"
-	},
-	"hybrid": false,
-	"surrogate": false,
-	"virus": false,
-	"details": [
-	{
-		"genus": { "value": "Carex" },
-		"specific_epithet": {
-			"value": "scirpoidea",
-			"authorship": { "value": "Michx.", 
-				"basionym_authorship": { "authors": [ "Michx." ] }
-			}
-		},
-		"infraspecific_epithets": [
-		{
-			"value": "convoluta",
-			"rank": "ssp.",
-			"authorship": {
-				"value": "(Kük.) D. A. Dunlop",
-				"basionym_authorship": {
-					"authors": [
-					"Kük."
-					]
-				},
-				"combination_authorship": {
-					"authors": [
-					"D. A. Dunlop"
-					]
-				}
-			}
-		}
-		]
-	}
-	],
-	"positions": [["genus", 0, 5], ["specific_epithet", 6, 16], ["author_word", 17, 23], 
-	  ["rank", 24, 30 ], ["infraspecific_epithet", 31, 40], ["author_word", 42, 46],
-	  ["author_word", 48, 50], ["author_word", 50, 52], ["author_word", 53, 59]
-	]
+  "name_string_id": "203213f3-99d1-5f5e-810a-4453c4d220cb",
+  "parsed": true, "quality": 1, "parser_version": "0.2.0",
+  "verbatim": "Carex scirpoidea Michx.subsp. convoluta (Kük.) D.A. Dunlop",
+  "normalized": "Carex scirpoidea Michx.ssp. convoluta (Kük.) D. A. Dunlop",
+  "canonical_name": {
+    "value": "Carexscirpoidea convoluta",
+    "extended": "Carex scirpoidea ssp. convoluta"
+  },
+  "hybrid": false, "surrogate": false, "virus": false,
+  "details": [ {
+    "genus": { "value": "Carex" },
+    "specific_epithet": {
+      "value": "scirpoidea",
+      "authorship": { 
+        "value": "Michx.", 
+        "basionym_authorship": { "authors": [ "Michx." ] }
+      }
+    },
+    "infraspecific_epithets": [ {
+      "value": "convoluta", "rank": "ssp.",
+      "authorship": {
+        "value": "(Kük.) D. A. Dunlop",
+        "basionym_authorship": { "authors": [ "Kük." ] },
+        "combination_authorship": { "authors": [ "D. A. Dunlop" ] }
+      }
+    } ]
+  } ],
+  "positions": [["genus", 0, 5], ["specific_epithet", 6, 16], ["author_word", 17, 23], 
+    ["rank", 24, 30 ], ["infraspecific_epithet", 31, 40], ["author_word", 42, 46],
+    ["author_word", 48, 50], ["author_word", 50, 52], ["author_word", 53, 59]
+  ]
 }
 \end{Verbatim}
 
@@ -1075,9 +1056,9 @@ are uBio \cite{ubio:parser}, the Botanical Society of Britain and Ireland
 
 We designed \textit{gnparser} with accessibility in mind from the outset. Scala
 language allows the use of \textit{gnparser} as a library in Scala, Java,
-Jython, JRuby, R, JavaScript \todo{JavaScript? How? We could compile gnparser with scala.js that produces JavaScript, but it is not done so far} and a variety of other languages based on
+Jython, JRuby, R and a variety of other languages based on
 Java Virtual Machine. If a user wants to use \textit{gnparser}  in some non-JVM
-language s/he \todo{legitimate? :)} can connect to the parser via a socket server interface. There is
+language s/he can connect to the parser via a socket server interface. There is
 also a command line tool, a web interface, and a RESTful API.
 
 We pay close attention to documentation, trying to keep it detailed, clear, and
@@ -1130,7 +1111,7 @@ library in languages like Scala, Java, R, Jyphon, JRuby.
 
 \begin{description}
   \item[Project Name:] gnparser
-  \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser \todo{should be a href?}
+  \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser
   \item[Operating System:] Platform independent
   \item[Programming Language:] Scala
   \item[License:] The MIT License
@@ -1152,6 +1133,9 @@ TODO: submit test files
   \item[JVM] -- Java Virtual Machine
   \item[PEG] -- Parsing Expression Grammar
   \item[REST] -- Representational State Transfer
+  \item[DYM] -- Dmitry Y. Mozzherin
+  \item[AAM] -- Alexander A. Myltsev
+  \item[DJP] -- David J. Patterson
 \end{description}
 
 \section*{Competing Interests}
@@ -1160,7 +1144,7 @@ The authors declare that they have no competing interests.
 
 \section*{Author's Contributions}
 
-DYM \todo{the abbreviation is not expanded and should be clear from the context?} and AAM designed gnparser. DYM created requirements and test suite. AAM
+DYM and AAM designed gnparser. DYM created requirements and test suite. AAM
 optimized gnparser for speed, refactored it into four internal subprojects.
 DYM set docker containers and kubernetes scripts. DYM and AAM wrote online
 documentation and JSON schema to formalize output. DJP corrected parser's
