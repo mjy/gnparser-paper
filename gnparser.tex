@@ -316,7 +316,7 @@ name-strings, we use \textbf{bold font}.
 Biology is entering a ``Big Data'' age, where global and fast access to all knowledge are envisaged. Progress towards this vision is still limited in scope. One impediment,
 especially for the long tail of smaller sources (of which some are not yet
 digital), is the absence of devices to inter-connect distributed data.  The names of
-organisms are invaluable in ``Big Data'' biology because they can be treated as metadata that can be used to discover, index, organize, and interconnect distributed information about species and other taxa \cite{Patterson2010}.  The use of names for informatics purposes is not straightforward because, for example, there may be many legitimate spellings for a name (Table~\ref{table:carex}). A names-based infrastructure must recognize which name-strings  represent the same scientific name.
+organisms are invaluable in ``Big Data'' biology because they can be treated as metadata that can be used to discover, index, organize, and interconnect distributed information about species and other taxa \cite{Patterson2010}.  The use of names for informatics purposes is not straightforward because, for example, there may be many legitimate spellings for a name (Table~\ref{table:carex}). A names-based infrastructure must recognize which name-strings represent the same scientific name.
 
 \begin{table}[!htb]
   \begin{center}
@@ -365,7 +365,7 @@ organisms are invaluable in ``Big Data'' biology because they can be treated as 
 
 Table~\ref{table:carex} illustrates that there is no single correct way to
 spell scientific names. Because of such variations, less than 15\% of the names in comparisons of large biological databases could be matched based on exact spellings of name-strings \cite{Patterson:inpress-a}. In order to improve this simple metric for interoperability, we need to be able to identify such spelling variants as the same name, a process referred to as ''lexical reconciliation''.  Reconciliation involves linking alternative name-strings (whether spelling variants, nomenclatural variants, identifiers, common names, or surrogates for names) for the same taxon into
-reconciliation groups. Most biologists do this intuitively - they recognize  that the name-strings in Table 1 refer to the same taxon. They do so by  ``parsing'' the name-strings into component elements (genus name, species name, authors, ranks etc.) and mentally discarding  less significant elements such as annotations and
+reconciliation groups. Most biologists do this intuitively - they recognize that the name-strings in Table 1 refer to the same taxon. They do so by  ``parsing'' the name-strings into component elements (genus name, species name, authors, ranks etc.) and mentally discarding less significant elements such as annotations and
 authorship. It then becomes clear all of name-strings have a common ``canonical
 form'' -- \textbf{Carex scirpoidea convoluta}. Further analysis of the
 name-strings would reveal two different reconciliation groups for, probably, one concept:
@@ -416,7 +416,7 @@ believe that a general use parser should satisfy the following requirements.
   \item \textbf{High Quality.} A parser should be able to break names into
     their semantic elements to the same standards that can be achieved by a
     trained nomenclaturalist or better. This will give users confidence in the
-    automated process and allow them to set aside  tedious and expensive manual parsing.
+    automated process and allow them to set aside tedious and expensive manual parsing.
 
   \item \textbf{Global Scope.} A parser should be able to parse all types of
     scientific names, inclusive of the most complex name-strings such as hybrid
@@ -426,9 +426,9 @@ believe that a general use parser should satisfy the following requirements.
   \item \textbf{Parsing Completeness.} All information included in a
     name-string is important, not only the canonical form of the scientific
     name. Authorship, year, rank information allow us to distinguish homonyms,
-    similar names, synonyms, spelling mistakes, or chresonyms.  Access to such information  improves the performance of subsequent reconciliation.
+    similar names, synonyms, spelling mistakes, or chresonyms.  Access to such information improves the performance of subsequent reconciliation.
 
-  \item \textbf{Speed.} Users, especially large-scale aggregators of  biodiversity data, are more satisfied with quick responses, as it allows them to move onto to more purposeful value-adding tasks.  Speed reduces the costs of building or running the hardware used for parsing. 
+  \item \textbf{Speed.} Users, especially large-scale aggregators of biodiversity data, are more satisfied with quick responses, as it allows them to move onto to more purposeful value-adding tasks.  Speed reduces the costs of building or running the hardware used for parsing. 
 
   \item \textbf{Accessibility.} To be available to the widest possible audience
     a parser should be released as a stand-alone program,  have a good
@@ -445,7 +445,7 @@ Parsing Expression Grammars (PEG) \cite{Ford2004} have been recently introduced 
 of target strings. In our case, such rules can be used to deconstruct scientific names.
 The rules are built from the ground up, staring from the simplest -- what UTF-characters refer to a ``character'' or ``space''.  That process will identify most 'words'.  Characters can be divided into digits and other characters to make dates identifiable. Further rules can be applied, such as a ``genus'' rule would be a name-string in which the first word begins with combination of a
 ``capital\_character'' followed by several ''lower\_case\_characters'' that fall within a relatively small spectrum of latinized letters;  
-``authorship'' would be one or a combination of capitalized words and optionally a ``year'' within, in some cases, authors grouped to form author-teams. PEG rules are designed to be recursive. They can be expanded to deal with increasingly complex name-strings, or address  errors such as absent spaces, extra spaces, or OCR errors. Each rule can have programmatic logic attached, making the PEG approach very flexible. We believe that PEG suits our goals
+``authorship'' would be one or a combination of capitalized words and optionally a ``year'' within, in some cases, authors grouped to form author-teams. PEG rules are designed to be recursive. They can be expanded to deal with increasingly complex name-strings, or address errors such as absent spaces, extra spaces, or OCR errors. Each rule can have programmatic logic attached, making the PEG approach very flexible. We believe that PEG suits our goals
 better than regular expressions for the following reasons:
 
 \begin{itemize}
@@ -481,7 +481,7 @@ Registry of Marine Species (WoRMS) \cite{worms}.  According to statistics compil
 popular bio-library in the Ruby language \cite{biogems}.
 
 We were pleased with PEG approach for scientific names parsing, but now regard
-the \textit{biodiversity} parser library as a working prototype. It has  allowed us
+the \textit{biodiversity} parser library as a working prototype. It has allowed us
 to identify problems and implement improvements in order to build a production parser.
 
 \subsection*{Adoption of Scala}
@@ -563,7 +563,7 @@ can be found online \cite{gnparser-json}.
 
 \end{itemize}
 
-  \item ``\textit{examples}'' contains  examples to assist developers in
+  \item ``\textit{examples}'' contains examples to assist developers in
     building \textit{parser} into other popular programming languages such as Java,
     Scala, Jython, JRuby, and R.
 
@@ -646,7 +646,7 @@ than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was
 unable to finish a full dataset without crashing. We excluded it from further tests.
 
 To estimate the quality of the parsers being compared, we used a
-combination of canonical form and terminal authorship as this is a feature that  common to all three parsers.  A canonical form
+combination of canonical form and terminal authorship as this is a feature that common to all three parsers.  A canonical form
 represents the essential scientific elements of a name, while the terminal authorship
 refers to the author of the lowest subtaxon referred to in the name. For
 example, with \textbf{Oriastrum lycopodioides Wedd.  var.  glabriusculum Reiche}, the
@@ -696,7 +696,7 @@ a string is a ``real'' name. For example, in the case of a name-string that has
 the same form as a subspecies such as \textbf{"Example name Word var. something
 Capitalized Words, 1900"}. In such a case, the identification of a canonical
 form as \textbf{"Example name something"} and terminal authorship as
-\textbf{"Capitalized Words, 1900"} would be considered a true positive. Clearly, it will be important for name-management services to  distinguish between name-strings of
+\textbf{"Capitalized Words, 1900"} would be considered a true positive. Clearly, it will be important for name-management services to distinguish between name-strings of
 scientific names, names of viruses, surrogate names, and non-names. To find out
 how well parsers distinguished strings which are not scientific names, we
 calculated $Precision$ for discarded/non-parsed strings. If done correctly,
@@ -730,8 +730,8 @@ quality, global scope, parsing completeness, speed, and accessibility.
 
 \subsection*{High Quality Parsing}
 
-Quality is the most important  of the 5 requirements.  We
-compared \textit{gnparser} together with 2 other approaches  that
+Quality is the most important of the 5 requirements.  We
+compared \textit{gnparser} together with 2 other approaches that
 represent state of the art for parsing biological scientific names. GBIF
 \textit{name-parser} uses regular expressions approach, while \textit{gnparser}
 and \textit{biodiversity} parsers use PEG approach.  Results for quality
@@ -987,9 +987,9 @@ contains UUID version 5 calculated from the verbatim name-string. This UUID is
 guaranteed to be the same for the same name-string, promoting its use to
 globally connect information and annotations.
 
-The output usually covers every semantic element in the name-string.  The fields in the  output illustrated above have the following meanings. 
+The output usually covers every semantic element in the name-string.  The fields in the output illustrated above have the following meanings. 
 
-%comment Paddy.  We use both bold and italics to convey special information, and it may or may not be better for this list to NOT have bold terms (Dma - your call).  I  also recommend that the list be indented one step to the right.
+%comment Paddy.  We use both bold and italics to convey special information, and it may or may not be better for this list to NOT have bold terms (Dma - your call).  I also recommend that the list be indented one step to the right.
 \begin{description}
 
   \item[name\_string\_id:] UUID v5 identifier;
@@ -1016,7 +1016,7 @@ The output usually covers every semantic element in the name-string.  The fields
   % comment paddy, perhaps add a line about the conventions for showing nesting
 \end{description}
 
-% comment Paddy Dma, my attempt to show the semantic elements and their relationships at  https://docs.google.com/spreadsheets/d/1hjG6f5C9xGvfnUs351ijBkmwt5Y8SwQ5L7HEc4dXaAw/edit#gid=0 is far too incomplete.  I would rather we tried to do unpack the tree in some Google doc or Google slide, and include it - most likely in the form of a table or some kind of list. If we can make a big dent in this (this Saturday or via Skype), and you send me a copy of the 6000 lines so I can try to cross-check for any omissions.  Then I can return the result to you
+% comment Paddy Dma, my attempt to show the semantic elements and their relationships at https://docs.google.com/spreadsheets/d/1hjG6f5C9xGvfnUs351ijBkmwt5Y8SwQ5L7HEc4dXaAw/edit#gid=0 is far too incomplete.  I would rather we tried to do unpack the tree in some Google doc or Google slide, and include it - most likely in the form of a table or some kind of list. If we can make a big dent in this (this Saturday or via Skype), and you send me a copy of the 6000 lines so I can try to cross-check for any omissions.  Then I can return the result to you
 
 
 \cite{gnparser-json}.
@@ -1032,7 +1032,7 @@ satisfaction elsewhere.
 Results on the speed performance are given in Figure~\ref{figure:throughput}.
 With 1 to 4 CPU threads, \textit{gnparser} and GBIF \textit{name-parser} had a
 similar throughput, while \textit{biodiversity} parser was 5 times slower on
-one thread and  8 times slower on 4 threads. The GBIF \textit{name-parser}
+one thread and 8 times slower on 4 threads. The GBIF \textit{name-parser}
 scaled best beyond 4 processors and for 12 parallel threads it was 1.22 times
 faster than \textit{gnparser}.  
 
@@ -1067,7 +1067,7 @@ and is a source of examples of parser functionality and output
 format.
 
 This commitment to accessibility creates a larger potential audience for the parser, and will help
-many researchers and programmers to deal with the  problems that arises from variant forms of scientific names.
+many researchers and programmers to deal with the problems that arises from variant forms of scientific names.
 
 The summary of results and discussion is depicted in
 Table~\ref{table:summary}
@@ -1101,7 +1101,7 @@ Table~\ref{table:summary}
 \section*{Conclusions}
 
 This paper describes  \textit{gnparser}, a powerful tool designed to break names of taxa into their component parts.  This then allows standardization of names by transforming them into a canonical form, a step that in turn dramatically improves name
-matching and data integration. Parsing  aids the discovery of  names in
+matching and data integration. Parsing aids the discovery of names in
 sources, and sharing them in a standardised forms (for example to create a common index).
 Parsing further allows users to extract, compare and analyse metadata within the name-strings, and allowing comparisons of the efforts of individuals or to map trends over time. The gnparser tool is released under MIT Open Source license, contains command
 line executable, socket, web, and REST services, and is optimized for use as a
