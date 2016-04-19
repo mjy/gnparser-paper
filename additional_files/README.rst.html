@@ -1,0 +1,316 @@
+<h1 id="global-names-parser">Global Names Parser</h1>
+<p><a href="https://travis-ci.org/GlobalNamesArchitecture/gnparser"><img src="https://secure.travis-ci.org/GlobalNamesArchitecture/gnparser.svg" alt="Continuous Integration Status" /></a></p>
+<h2 id="brief-intro">Brief Intro</h2>
+<p><code>gnparser</code> splits scientific names into elements with meta information. For example, <code>&quot;Homo sapiens Linnaeus&quot;</code> is decomposed to human readable information as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+<th>Position</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Homo</td>
+<td>genus</td>
+<td>(0,4)</td>
+</tr>
+<tr class="even">
+<td>sapiens</td>
+<td>specific_epithet</td>
+<td>(5,12)</td>
+</tr>
+<tr class="odd">
+<td>Linnaeus</td>
+<td>author</td>
+<td>(13,21)</td>
+</tr>
+</tbody>
+</table>
+<p>Try it as a command line tool under Linux/Mac:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-0.2.0.zip
+<span class="kw">unzip</span> gnparser-0.2.0.zip
+<span class="kw">sudo</span> rm -rf /opt/gnparser
+<span class="kw">sudo</span> mv gnparser-0.2.0 /opt/gnparser
+<span class="kw">sudo</span> rm -f /usr/local/bin/gnparse
+<span class="kw">sudo</span> ln -s /opt/gnparser/bin/gnparse /usr/local/bin
+<span class="kw">gnparse</span> <span class="st">&quot;Homo sapiens Linnaeus&quot;</span>
+<span class="kw">gnparse</span> -help</code></pre></div>
+<p><code>gnparser</code> is also <a href="https://github.com/gn-docker/gnparser">dockerized</a>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">docker</span> pull gnames/gnparser
+<span class="co"># to run web-server</span>
+<span class="kw">docker</span> run -d -p 80:9000 --name gnparser gnames/gnparser
+<span class="co"># to run socket server</span>
+<span class="kw">docker</span> run -d -p 4334:4334 --name gnparser gnames/gnparser socket</code></pre></div>
+<p>Finally, run it right from your SBT console:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> -p project
+$ <span class="kw">echo</span> <span class="st">&#39;sbt.version=0.13.8&#39;</span> <span class="kw">&gt;</span> project/build.properties
+$ <span class="kw">sbt</span> <span class="st">&#39;;set libraryDependencies += &quot;org.globalnames&quot; %% &quot;gnparser&quot; % &quot;0.2.0&quot;;console&#39;</span>
+<span class="kw">scala&gt;</span> import org.globalnames.parser.ScientificNameParser.{instance =<span class="kw">&gt;</span> scientificNameParser}
+<span class="kw">scala&gt;</span> scientificNameParser.fromString(<span class="st">&quot;Homo sapiens Linnaeus&quot;</span>)<span class="kw">.renderCompactJson</span></code></pre></div>
+<h2 id="introduction">Introduction</h2>
+<p>Global Names Parser or <code>gnparser</code> is a Scala library for breaking scientific names into meaningful elements. It is based on <a href="http://parboiled2.org">parboiled2</a> -- a Parsing Expression Grammar (PEG) library. The <code>gnparser</code> project evolved from another PEG-based scientific names parser --<a href="https://github.com/GlobalNamesArchitecture/biodiversity">biodiversity</a> written in Ruby. Both projects were developed as a part of <a href="http://globalnames.org">Global Names Architecture</a>.</p>
+<p>It is common to use regular expressions for parsing scientific names, and this approach works well at extracting canonical forms in simple cases. However for complex scientific names and for breaking names into their semantic elements an approach using regular expressions often fails, unable to overcome the recursive nature of data embedded in names. By contrast, <code>gnparser</code> is able to deal with the most complex scientific name strings.</p>
+<p><code>gnparser</code> takes a name string like <code>Drosophila (Sophophora) melanogaster Meigen, 1830</code> and returns back parsed components in JSON format. We supply an informal <a href="/JSON_FIELDS.md">description of the output fields</a>. Parser's behavior is defined in its tests and the <a href="https://raw.githubusercontent.com/GlobalNamesArchitecture/gnparser/master/parser/src/test/resources/test_data.txt">test file</a> is a good source of information about parser's capabilities, its input and output.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Fast (~5x faster than <a href="https://github.com/GlobalNamesArchitecture/biodiversity">biodiversity gem</a>), rock solid and elegant</li>
+<li>Extracts all elements from a name, not only a canonical form</li>
+<li>Works with very complex scientific names, including hybrids</li>
+<li>Can be used directly in any language that can call Java -- Scala, Java, R, Python, Ruby etc.</li>
+<li>Can run as a command line application</li>
+<li>Can run as a socket server</li>
+<li>Can run as a web server</li>
+<li>Can be scaled to many CPUs and computers</li>
+<li>Calculates a stable UUID version 5 ID from the content of a string</li>
+</ul>
+<h2 id="use-cases">Use Cases</h2>
+<h3 id="getting-the-simplest-possible-canonical-form">Getting the simplest possible canonical form</h3>
+<p>Canonical forms are great for matching names despite alternative spellings. Use <code>canonical_form</code> field from parsing results for this use case.</p>
+<h3 id="getting-canonical-form-with-infraspecies-ranks">Getting canonical form with infraspecies ranks</h3>
+<p>In botany infraspecific ranks play an important role. Use <code>canonical_extended</code> field to preserve them.</p>
+<h3 id="normalizing-name-strings">Normalizing name strings</h3>
+<p>There are many inconsistencies in writing of scientific names. Use <code>normalized</code> field to bring them all to a common form in spelling, empty spaces, ranks.</p>
+<h3 id="removing-authorships-in-the-middle-of-the-name">Removing authorships in the middle of the name</h3>
+<p>Many data administrators store their name strings in two columns and split them into &quot;name part&quot; and &quot;authorship part&quot;. Such practice is not very effective for names like &quot;<em>Prosthechea cochleata</em> (L.) W.E.Higgins <em>var. grandiflora</em> (Mutel) Christenson&quot;. Combination of <code>canonical_extended</code> with the <code>authorship</code> from the lowest taxon will do the job better.</p>
+<h3 id="figuring-out-if-names-are-well-formed">Figuring out if names are well-formed</h3>
+<p>If there are problems with parsing a name, parser generates <code>quality_warning</code> messages and lowers parsing <code>quality</code> of the name. Quality means the following:</p>
+<ul>
+<li><code>&quot;quality&quot;: 1</code> - No problems were detected</li>
+<li><code>&quot;quality&quot;: 2</code> - There were small problems, normalized result should still be good</li>
+<li><code>&quot;quality&quot;: 3</code> - There were serious problems with the name, and the final result is rather doubtful</li>
+<li><code>&quot;parse&quot;: false</code> - A string could not be recognized as a scientific name</li>
+</ul>
+<h3 id="creating-stable-guids-for-name-strings">Creating stable GUIDs for name strings</h3>
+<p>Parser uses UUID version 5 to generate its <code>id</code> field. There is algorithmic 1:1 relationship between the name string and the UUID. Moreover the same algorithm can be used in any popular language to generate the same UUID. Such IDs can be used to globally connect information about name strings.</p>
+<p>More information about UUID version 5 can be found in the <a href="http://globalnames.org/news/2015/05/31/gn-uuid-0-5-0/">Global Names blog</a>.</p>
+<p>You can also use UUID calculation library in your code as it is shown in <a href="#scala">Scala example section</a>.</p>
+<h3 id="assembling-canonical-forms-etc.-from-original-spelling">Assembling canonical forms etc. from original spelling</h3>
+<p>Parser tries to correct problems with spelling, but sometimes it is important to keep original spellings in canonical forms or authorships. The <code>positions</code> field attaches semantic meaning to every word in the original name string and allows to create canonical forms or other combinations using verbatim spelling of the words. Each element in <code>positions</code> contains 3 parts:</p>
+<ol style="list-style-type: decimal">
+<li>semantic meaning of a word</li>
+<li>start position of the word</li>
+<li>end position of the word</li>
+</ol>
+<p>For example <code>[&quot;species&quot;, 6, 11]</code> means that a specific epithet starts at 6th character and ends <em>before</em> 11th character of the string.</p>
+<h2 id="dependency-declaration-for-java-or-scala">Dependency Declaration for Java or Scala</h2>
+<p>The artifacts for <code>gnparser</code> live on <a href="http://search.maven.org/#search%7Cga%7C1%7Cgnparser">Maven Central</a> and can be set as a dependency in following ways:</p>
+<p>SBT:</p>
+<div class="sourceCode"><pre class="sourceCode Scala"><code class="sourceCode scala">libraryDependencies += <span class="st">&quot;org.globalnames&quot;</span> %% <span class="st">&quot;gnparser&quot;</span> % <span class="st">&quot;0.2.0&quot;</span></code></pre></div>
+<p>Maven:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.globalnames<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>gnparser_2.11<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>0.2.0<span class="kw">&lt;/version&gt;</span>
+<span class="kw">&lt;/dependency&gt;</span>
+
+<span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.globalnames<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>gnparser_2.10<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>0.2.0<span class="kw">&lt;/version&gt;</span>
+<span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<h2 id="release-package">Release Package</h2>
+<p><a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/tag/release-0.2.0">Release package</a> should be sufficient for all usages but development. It is not needed for including parser into Java or Scala code -- <a href="#dependency-declaration-for-java-or-scala">declare dependency instead</a>.</p>
+<h3 id="requirements">Requirements</h3>
+<p>Java Run Environment (JRE) version &gt;= 1.6 (&gt;= 1.8 for Web server)</p>
+<h3 id="released-files">Released Files</h3>
+<table>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gnparser-assembly-0.2.0.jar</code></td>
+<td><a href="#fat-jar">Fat Jar</a></td>
+</tr>
+<tr class="even">
+<td><code>gnparser-0.2.0.zip</code></td>
+<td>`Command line tool and socket</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>server &lt;#command-line-tool-and-socket-server&gt;`_</td>
+</tr>
+<tr class="even">
+<td><code>gnparser-web-0.2.0.zip</code></td>
+<td>`Web service and REST API</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>&lt;#web-service-and-rest-api&gt;`_</td>
+</tr>
+<tr class="even">
+<td><code>release-0.2.0.zip</code></td>
+<td>Source code's zip file</td>
+</tr>
+<tr class="odd">
+<td><code>release-0.2.0.tar.gz</code></td>
+<td>Source code's tar file</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fat-jar">Fat Jar</h2>
+<p>Sometimes it is beneficial to have a jar that contains everything necessary to run a program. Such jar would include Scala and all required libraries.</p>
+<p><a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-assembly-0.2.0.jar">Fat jar</a> for <code>gnparser</code> can be found in the <a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/tag/release-0.2.0">current release</a>.</p>
+<h2 id="command-line-tool-and-socket-server">Command Line Tool and Socket Server</h2>
+<h3 id="installation-on-linuxmac">Installation on Linux/Mac</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-0.2.0.zip
+<span class="kw">unzip</span> gnparser-0.2.0.zip
+<span class="kw">sudo</span> rm -rf /opt/gnparser
+<span class="kw">sudo</span> mv gnparser-0.2.0 /opt/gnparser
+<span class="kw">sudo</span> rm -f /usr/local/bin/gnparse
+<span class="kw">sudo</span> ln -s /opt/gnparser/bin/gnparse /usr/local/bin</code></pre></div>
+<h3 id="installation-on-windows">Installation on Windows</h3>
+<ol style="list-style-type: decimal">
+<li>Download <a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-0.2.0.zip">gnparser-0.2.0.zip</a></li>
+<li>Extract it to a place where you usually store program files</li>
+<li>Update your <a href="https://java.com/en/download/help/path.xml">PATH</a> to point to bin subdirectory</li>
+<li>Now you can use <code>gnparse</code> command provided by <code>gnparse.bat</code> script from CMD</li>
+</ol>
+<h3 id="usage-of-executable">Usage of Executable</h3>
+<p>Note that <code>gnparse</code> loads Java run environment every time it is called. As a result parsing one name at a time is <strong>much</strong> slower than parsing many names from a file. When parsing large file expect rates of 3000-6000 name strings per second on one CPU.</p>
+<p>To parse one name</p>
+<pre><code>gnparse &quot;Parus major Linnaeus, 1788&quot;</code></pre>
+<p>To parse names from a file (one name per line).</p>
+<pre><code>gnparse -input file_with_names.txt [-output output_file.json]</code></pre>
+<p>To see help</p>
+<pre><code>gnparse -help</code></pre>
+<h3 id="usage-as-a-socket-server">Usage as a Socket Server</h3>
+<p>Use socket (TCP/IP) server when <code>gnparser</code> library cannot be imported directly by a programming language. Setting <code>-port</code> is optional, 4334 is the default port.</p>
+<pre><code>gnparse -server -port 1234</code></pre>
+<p>To test the socket connection use <code>telnet localhost 1234</code>, enter a name and press <code>Enter</code></p>
+<h2 id="web-service-and-rest-api">Web Service and REST API</h2>
+<h3 id="installation-on-linuxmac-1">Installation on Linux/Mac</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-web-0.2.0.zip
+<span class="kw">unzip</span> gnparser-web-0.2.0.zip
+<span class="kw">sudo</span> rm -rf /opt/gnparser-web
+<span class="kw">sudo</span> mv gnparser-web-0.2.0 /opt/gnparser-web
+<span class="kw">sudo</span> rm -f /usr/local/bin/gnparser-web
+<span class="kw">sudo</span> ln -s /opt/gnparser-web/bin/gnparser-web /usr/local/bin</code></pre></div>
+<p>To start web server in production mode on <a href="http://0.0.0.0:9000" class="uri">http://0.0.0.0:9000</a></p>
+<pre><code>gnparser-web</code></pre>
+<h3 id="installation-on-windows-1">Installation on Windows</h3>
+<ol style="list-style-type: decimal">
+<li>Download <a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/download/release-0.2.0/gnparser-web-0.2.0.zip">gnparser-web-0.2.0.zip</a></li>
+<li>Unzip it, and then launch CMD at that path</li>
+<li>Run <code>cd gnparser-web-0.2.0</code></li>
+<li>Run <code>.\bin\gnparser-web.bat</code></li>
+</ol>
+<p>You can open it in a browser at <a href="http://localhost:9000"><a href="http://localhost:9000" class="uri">http://localhost:9000</a></a>.</p>
+<h3 id="rest-api-interface">REST API Interface</h3>
+<p>Make sure to CGI-escape name strings for GET requests. An '&amp;' character needs to be converted to '%26'</p>
+<ul>
+<li><code>GET /api?names=[&quot;Aus bus&quot;, &quot;Aus bus Linn. 1758&quot;]</code></li>
+<li><code>POST /api</code> with request body of JSON array of strings</li>
+</ul>
+<h2 id="usage-as-a-library">Usage as a Library</h2>
+<p>Several languages are supported either natively or by running their JVM-based versions. <a href="/examples">Examples folder</a> provides scientific name parsing code snippets for Scala, Java, Jython, JRuby and R languages.</p>
+<p>To avoid declaring multiple dependencies Jython, JRuby and R need a <a href="#fat-jar">reference gnparser fat-jar</a>.</p>
+<p>If you decide to follow examples get the code from the <a href="https://github.com/GlobalNamesArchitecture/gnparser/releases/tag/release-0.2.0">release</a> or <a href="#getting-code-for-development">clone it from GitHub</a></p>
+<h3 id="scala">Scala</h3>
+<p><a href="/examples/java-scala/src/main/scala/org/globalnames/parser/examples/ParserScala.scala">Scala example</a> is an SBT subproject. To run it execute the command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sbt</span> <span class="st">&#39;examples/runMain org.globalnames.parser.examples.ParserScala&#39;</span></code></pre></div>
+<p>Calculation of UUID version 5 can be done in the following way:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">scala&gt; <span class="kw">val</span> gen = org.<span class="fu">globalnames</span>.<span class="fu">UuidGenerator</span>()
+scala&gt; gen.<span class="fu">generate</span>(<span class="st">&quot;Salinator solida&quot;</span>)
+res0: java.<span class="fu">util</span>.<span class="fu">UUID</span> = da1a79e5-c16f-5ff7-a925-14c5c7ecdec5</code></pre></div>
+<h3 id="java">Java</h3>
+<p><a href="/examples/java-scala/src/main/java/org/globalnames/parser/examples/ParserJava.java">Java example</a> is an SBT subproject. To run it execute the command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sbt</span> <span class="st">&#39;examples/runMain org.globalnames.parser.examples.ParserJava&#39;</span></code></pre></div>
+<h3 id="jython">Jython</h3>
+<p><a href="/examples/jython/parser.py">Jython example</a> requires <a href="http://www.jython.org/">Jython</a> -- a Python language implementation for Java Virtual Machine. Jython distribution should be installed locally <a href="https://wiki.python.org/jython/InstallationInstructions">according to instructions</a>.</p>
+<p>To run it execute the command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">java</span> -jar <span class="ot">$JYTHON_HOME</span>/jython.jar \
+  -Dpython.path=/path/to/gnparser-assembly-0.2.0.jar \
+  examples/jython/parser.py</code></pre></div>
+<p>(JYTHON_HOME needs to be defined or replaced by path to Jython jar)</p>
+<h3 id="r">R</h3>
+<p><a href="/examples/R/parser.R">R example</a> requires <a href="https://cran.r-project.org/web/packages/rJava/index.html">rJava package</a> to be installed. To run it execute the command:</p>
+<pre><code>Rscript /opt/gnparser/examples/R/parser.R</code></pre>
+<h3 id="jruby">JRuby</h3>
+<p><a href="/examples/jruby/parser.rb">JRuby example</a> requires <a href="http://jruby.org/">JRuby</a> -- a Ruby language implementation for Java Virtual Machine. JRuby distribution should be installed locally <a href="http://jruby.org/getting-started">according to instructions</a>.</p>
+<p>To run it execute the command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">jruby</span> -J-classpath /path/to/gnparser-assembly-0.2.0.jar \
+  examples/jruby/parser.rb</code></pre></div>
+<h2 id="getting-code-for-development">Getting Code for Development</h2>
+<h3 id="requirements-1">Requirements</h3>
+<ul>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="http://www.scala-lang.org/download/install.html">Scala version &gt;= 2.10.6</a></li>
+<li>Java SDK version &gt;= 1.8.0</li>
+<li><a href="http://www.scala-sbt.org/download.html">SBT</a> &gt;= 0.13.8</li>
+</ul>
+<h3 id="installation">Installation</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> clone https://github.com/GlobalNamesArchitecture/gnparser.git
+<span class="kw">cd</span> gnparser</code></pre></div>
+<p>If you decide to participate in <code>gnparser</code> development -- fork the repository and submit pull requests of your work.</p>
+<h3 id="project-structure">Project Structure</h3>
+<p>The project consists of four parts:</p>
+<ul>
+<li><code>parser</code> contains core routines for parsing input string</li>
+<li><code>examples</code> contains usage samples for some popular programming languages</li>
+<li><code>runner</code> contains code required to run <code>parser</code> from a command line as a standalone tool or to run it as a TCP/IP server</li>
+<li><code>web</code> contains a web app and a RESTful interface to <code>parser</code></li>
+</ul>
+<h3 id="commands">Commands</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sbt test</code></td>
+<td>Runs all tests</td>
+</tr>
+<tr class="even">
+<td><code>sbt ++2.10.6 test</code></td>
+<td>Runs all tests against Scala v2.10.6</td>
+</tr>
+<tr class="odd">
+<td><code>sbt assembly</code></td>
+<td>Creates <a href="#fat-jar">fat jars</a> for</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>command line and web</td>
+</tr>
+<tr class="odd">
+<td><code>sbt stage</code></td>
+<td>Creates executables for</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>command line and web</td>
+</tr>
+<tr class="odd">
+<td><code>sbt web/run</code></td>
+<td>Runs the web server in development mode</td>
+</tr>
+</tbody>
+</table>
+<h2 id="docker-container">Docker container</h2>
+<p>For usage with Docker containers read <a href="https://github.com/gn-docker/gnparser">gnparser container instructions</a>.</p>
+<h2 id="contributors">Contributors</h2>
+<ul>
+<li>Alexander Myltsev <a href="http://myltsev.name"><a href="http://myltsev.name" class="uri">http://myltsev.name</a></a> <a href="https://github.com/alexander-myltsev"><script type="text/javascript">
+<!--
+h='&#x67;&#x69;&#116;&#104;&#x75;&#98;';a='&#64;';n='&#x61;&#108;&#x65;&#120;&#x61;&#110;&#100;&#x65;&#114;&#x2d;&#x6d;&#x79;&#108;&#116;&#x73;&#x65;&#118;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x61;&#108;&#x65;&#120;&#x61;&#110;&#100;&#x65;&#114;&#x2d;&#x6d;&#x79;&#108;&#116;&#x73;&#x65;&#118;&#32;&#x61;&#116;&#32;&#x67;&#x69;&#116;&#104;&#x75;&#98;</noscript></a></li>
+<li>Dmitry Mozzherin <a href="https://github.com/dimus"><script type="text/javascript">
+<!--
+h='&#x67;&#x69;&#116;&#104;&#x75;&#98;';a='&#64;';n='&#100;&#x69;&#x6d;&#x75;&#x73;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#100;&#x69;&#x6d;&#x75;&#x73;&#32;&#x61;&#116;&#32;&#x67;&#x69;&#116;&#104;&#x75;&#98;</noscript></a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>Released under <a href="/LICENSE">MIT license</a></p>

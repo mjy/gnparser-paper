@@ -559,7 +559,7 @@ modules:
 
   \item \textit{JSON renderer}, the parsing result is converted to JSON
     \cite{bray2014javascript} to allow developers to work with the output from other languages. The output (figure 1, also see Discussion) has the following information: \textbf{details} contains the JSON-representation of a parsed scientific name; \textbf{quality\_warnings} describes potential problems if names are not well-formed; \textbf{quality} depicts a quality level of the parsed name;  and \textbf{positions} maps the positions of every element in a parsed name to the semantic meaning of the element. Full and formal explanation of all parser fields is given as a JSON schema
-can be found online \cite{gnparser-json}.
+can be found online \cite{gnparser-json} [see additional file gnparser.json].
 
 \end{itemize}
 
@@ -585,7 +585,7 @@ can be found online \cite{gnparser-json}.
 \end{enumerate}
 
 All subprojects except ``\textit{web}'' can run in JVM 1.6. ``\textit{web}''
-requires JVM 1.8. Documentation is available in a README file (see section ``Availability and Requirements).
+requires JVM 1.8. Documentation is available in a README file [see additional file README.rst.html].
 
 \begin{figure}[htbp]
   \begin{center}
@@ -1062,7 +1062,7 @@ language s/he can connect to the parser via a socket server interface. There is
 also a command line tool, a web interface, and a RESTful API.
 
 We pay close attention to documentation, trying to keep it detailed, clear, and
-up to date. We have an extensive test suite that describes the parser's behavior
+up to date. We have an extensive test suite [see additional file test\_data.txt] that describes the parser's behavior
 and is a source of examples of parser functionality and output
 format.
 
@@ -1120,7 +1120,18 @@ library in languages like Scala, Java, R, Jython, JRuby.
 
 \section*{Additional Files}
 
-TODO: submit test files
+  \subsection*{Additional file 1 --- gnparser.json}
+  Full and formal explanation of all parser fields is given as a JSON schema.
+  
+  \subsection*{Additional file 2 --- test\_data.txt}
+  Extensive test suite that describes the parser's behavior. It is also a 
+  source of examples of parser functionality and output format.
+  Test suite consists of a pipe delimited input (scientific name) and parsed
+  output in JSON format.
+
+  \subsection*{Additional file 2 --- README.rst.html}
+  README.rst file that is converted to HTML format. It is also available at 
+  project home page \cite{gnparser}.  
 
 \section*{Abbreviations}
 
