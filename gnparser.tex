@@ -520,16 +520,16 @@ performance, scalability and interoperability are lacking. To meet all
 requirements, and exploiting what we had learned from \textit{biodiversity}, we
 refactored the code to fulfil all our requirements using the Java virtual machine, Scala
 programming language \cite{odersky2004overview}, and the Open Source
-\textit{parboiled2} library \cite{parboiled2} which implements PEG in Scala. An
+\textit{parboiled2} library \cite{parboiled2, myltsev-parboiled2} (with our improvements \cite{parboiled2-gna}) which implements PEG in Scala \footnote{An
 alternative to \textit{parboiled2} is the Scala parser combinators library
 \cite{moors2008parser} but it has known problems with speed and memory consumption
-making \textit{parboiled2} our preferred choice. The functional programming features of Scala allowed us to build a custom
-parsing language that describes the rules of the grammars of scientific names.
+making \textit{parboiled2} our preferred choice.}. The functional programming features of Scala allowed us to build a 
+domain specific language that describes the rules of the grammars to parse scientific names.
 This produces a Parsing Expression Grammar with considerably more
 flexibility than external Lexers such as Bison or Yacc. As this domain specific
 language is within \textit{parboiled2} it can take advantage of the Macro
-capacity of Scala \cite{Burmako:2013:SML:2489837.2489840} to modify the
-compiler and how the program operates. The result is that the software operates
+capacity of Scala \cite{Burmako:2013:SML:2489837.2489840} to modify the result code and 
+how the program operates. The result is that the software operates
 with high efficiency. With this combination, the resulting \textit{gnparser} achieved a significant
 boost in speed, scalability, and portability of the library.  We limited this
 version to work with scientific names that comply with the botanical,
