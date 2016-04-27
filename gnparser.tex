@@ -61,6 +61,7 @@
 \usepackage{multirow}
 \usepackage{fancyvrb}
 \usepackage{soul}
+\usepackage{enumitem}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -91,6 +92,7 @@
 \makeatletter
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}%
 \makeatother
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
 
 %%% Put your definitions there:
 \startlocaldefs
