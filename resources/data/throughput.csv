@@ -1,9 +1,9 @@
 parser,threads,mph
-gnparser,1,21.4
-gnparser,2,41.1
-gnparser,4,73.8
-gnparser,8,89.3
-gnparser,12,93.8
+gnparser,1,29.44
+gnparser,2,50.85
+gnparser,4,90.45
+gnparser,8,120.75
+gnparser,12,130.93
 gbif-parser,1,23.0
 gbif-parser,2,45.5
 gbif-parser,4,76.3
