@@ -234,7 +234,7 @@
   of publication, names of authors, annotations, etc.) to all elements of a
   name. It is able to work with nested structures like for example in hybrid
   formulas. \textit{gnparser} performs with $\approx 99\%$ accuracy and
-  processes 30 million name-strings/hour per CPU\@. The \textit{gnparser}
+  processes 30 million name-strings/hour per CPU thread. The \textit{gnparser}
   library is compatible with Scala, Java, R, Jython, and JRuby. The parser can
   be used as a command line application, as a socket server, a web-app or as a
   RESTful http-service. It is released under an Open source MIT license.
@@ -1005,11 +1005,11 @@ we have presented to it.
       \cline{5--7}
       & & & & gn & gbif & bio \\
       \hline
-      1  & 5944  & 6389  & 1111 & 1 & 1.07 & 0.19 \\
-      2  & 11416 & 12638 & 1722 & 1 & 1.11 & 0.14 \\
-      4  & 20500 & 21994 & 2556 & 1 & 1.07 & 0.12 \\
-      8  & 24805 & 30972 & 2777 & 1 & 1.25 & 0.11 \\
-      12 & 26055 & 31833 & 2527 & 1 & 1.22 & 0.10 \\
+      1  & 8178  & 6389  & 1111 & 1 & 0.78 & 0.14 \\
+      2  & 14125 & 12638 & 1722 & 1 & 0.89 & 0.12 \\
+      4  & 25125 & 21994 & 2556 & 1 & 0.88 & 0.10 \\
+      8  & 33541 & 30972 & 2777 & 1 & 0.92 & 0.08 \\
+      12 & 36369 & 31833 & 2527 & 1 & 0.88 & 0.07 \\
       \hline
     \end{tabular}
     \include{throughput}
@@ -1219,7 +1219,7 @@ Table~\ref{table:summary}
       \textit{Accuracy}                     & $98.9\%$ & $96.7\%$ & $98.4\%$\\
       \textit{Hybrid formulas support}      & Yes      & No       & Yes     \\
       \textit{Infrasubspecies support}      & Yes      & No       & Yes     \\
-      \textit{Throughput (names/s)}         & 5944     & 6389     & 1111    \\
+      \textit{Throughput (names/s/thread)}  & 8178     & 6389     & 1111    \\
       \textit{Parsing details}              & Complete & Partial  & Complete\\
       \textit{Library for the same language}& Yes      & Yes      & Yes     \\
       \textit{Library for other languages}  & Yes      & Yes      & No      \\
