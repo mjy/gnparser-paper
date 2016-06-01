@@ -17,6 +17,16 @@ It is possible just to look at the [text of the paper][paper] on GitHub, or in
 a text editor, however there is a secondary Git repository at OverLeaf which
 generates PDF and makes it [publicly available][overleaf].
 
+Continuous build
+----------------
+
+For linux add to .latexmcrc
+
+```
+$pdflatex = 'pdflatex -interaction=nonstopmode';
+$pdf_previewer = "evince";
+```
+
 [gnparser]: https://github.com/GlobalNamesArchitecture/gnparser
 [zenhub]: https://www.zenhub.io/
 [gn]: http://globalnames.org
