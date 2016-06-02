@@ -15,11 +15,10 @@ ggplot(data=data, aes(x=threads, y=nps(mph),
   geom_line(size=0.5) + geom_point(size=3) +
   xlab("CPU Threads") + ylab("Names/Second") +
   scale_shape_discrete(name="Parser",
-                       breaks=c("gnparser","biodiversity","gbif-parser")) +
+                       breaks=c("gnparser", "gbif-parser", "biodiversity")) +
   scale_x_continuous(breaks = c(2, 4, 6, 8, 10, 12)) +
-  scale_y_continuous(limits = c(0,40000),
-                     minor_breaks = c(5000, 15000, 25000, 35000),
-                     breaks = c(0, 10000, 20000, 30000, 40000)) +
+  scale_y_continuous(limits = c(0,37000),
+                     breaks = c(0, 10000, 20000, 30000, 37000)) +
   theme(
       legend.key = element_rect(fill = "white"),
       legend.background = element_rect(fill = "white", color="black", size=0.3),
@@ -27,7 +26,7 @@ ggplot(data=data, aes(x=threads, y=nps(mph),
       panel.grid.major = element_line(colour = "white"),
       axis.line.x = element_line(colour = "black"),
       axis.line.y = element_line(colour = "black"),
-      axis.title.y = element_text(vjust = 1),
+      axis.title.y = element_text(vjust = 1, margin=margin(0,10,0,0)),
       axis.ticks = element_line(colour = "black"),
       axis.text = element_text(colour = "black", size = 10),
       # panel.grid.minor = element_blank(),
