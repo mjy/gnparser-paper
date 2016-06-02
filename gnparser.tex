@@ -223,8 +223,7 @@
   them --- to divide them into their elements and establish the roles of each
   element. Once done, we significantly improve the matching of different
   spellings for the same species by relying on the most widely used elements of
-  names and by postponing the use of elements that differ or are rare to
-  fine-tune results.
+  names and then fine-tune matching results using other elements of names.
 
   \parttitle{Results} We introduce Global Names Parser (\textit{gnparser}), a
   Java tool written in Scala language (a language for Java Virtual Machine) to
@@ -233,7 +232,7 @@
   semantic meaning (such as genus name, species epithet, annotation, rank, year
   of publication, names of authors, annotations, etc.) to all elements of a
   name. It is able to work with nested structures like for example in hybrid
-  formulas. \textit{gnparser} performs with $\approx 99\%$ accuracy and
+  formulas. \textit{gnparser} performs with $\approx99\%$ accuracy and
   processes 30 million name-strings/hour per CPU thread. The \textit{gnparser}
   library is compatible with Scala, Java, R, Jython, and JRuby. The parser can
   be used as a command line application, as a socket server, a web-app or as a
@@ -312,9 +311,9 @@ name.  A name can be expressed by many name-strings (for example see
 Table~\ref{table:carex}).  There are millions of legitimately formed scientific
 names and probably billions of possible name-strings for them. We use the term
 ``element'' for the components of a name or name-string. Traditionally,
-scientific names for genera, and taxa below genus are presented in italics. In
-this paper, where we wish to emphasize examples of name-strings, we use
-\textbf{bold font}.
+scientific names for genera, and taxa below genus are presented in
+\textit{italics}. In this paper, where we wish to emphasize examples of
+name-strings, we use \textbf{bold font}.
 
 \section*{Background}
 
@@ -379,7 +378,7 @@ must recognize which name-strings represent the same scientific name.
 Table~\ref{table:carex} illustrates that there is no single correct way to
 spell scientific names. Because of such variations, less than 15\% of the names
 in comparisons of large biological databases could be matched based on exact
-spellings of name-strings \cite{Patterson:inpress-a}. In order to improve this
+spellings of name-strings \cite{Patterson2016}. In order to improve this
 simple metric for interoperability, we need to be able to identify such
 spelling variants as the same name, a process referred to as ``lexical
 reconciliation''.  Reconciliation involves linking alternative name-strings
@@ -608,12 +607,12 @@ the software performs with high efficiency. With this combination, the
 and portability.  We limited this version to work with scientific names that
 comply with the botanical, zoological, and prokaryotic codes of nomenclature,
 but not with names of viruses because they are formed in different ways
-\cite{ICTV, Patterson:inpress-a} and would need a different PEG.
+\cite{ICTV, Patterson2016} and would need a different PEG.
 
 \section*{Implementation}
 
 The \textit{gnparser} project is entirely written in Scala. It supports two
-major Scala versions: 2.10.6+ and 2.11.x. The code is organized into four
+major Scala versions: 2.10.6+ and 2.11.x. The code is organized into three
 modules:
 
 \begin{enumerate}
@@ -638,42 +637,41 @@ modules:
   \item \textit{JSON renderer}, the parsing result is converted to JSON
     \cite{bray2014javascript} to allow developers to work with the output from
     other languages. The output (Figure~\ref{figure:webgui}, also see
-    \hyperref[sec:discussion]{Discussion}) has the following information: \textbf{details} contains the
-    JSON-representation of a parsed scientific name; \textbf{quality\_warnings}
-    describes potential problems if names are not well-formed; \textbf{quality}
-    depicts a quality level of the parsed name;  and \textbf{positions} maps
-    the positions of every element in a parsed name to the semantic meaning of
-    the element. Full and formal explanation of all parser fields is given as a
-    JSON schema can be found online \cite{gnparser-json} [see additional file
-    gnparser.json].
+    \hyperref[sec:discussion]{Discussion}) has the following information:
+    \textbf{details} contains the JSON-representation of a parsed scientific
+    name; \textbf{quality\_warnings} describes potential problems if names are
+    not well-formed; \textbf{quality} depicts a quality level of the parsed
+    name;  and \textbf{positions} maps the positions of every element in a
+    parsed name to the semantic meaning of the element. Full and formal
+    explanation of all parser fields is given as a JSON schema and can be found
+    online \cite{gnparser-json} [also see additional file gnparser.json].
 
 \end{itemize}
 
   \item ``\textit{examples}'' contains examples to assist developers in adding
-    ``parser'' functionality into other popular programming languages such
-    as Java, Scala, Jython, JRuby, and R.
+    ``\textit{parser}'' functionality into other popular programming languages
+    such as Java, Scala, Jython, JRuby, and R.
 
   \item ``\textit{runner}'' contains the code that allows users to run
     ``\textit{parser}'' from a command line as a standalone tool or to run it
     as a TCP/IP socket server. ``\textit{runner}'' depends on the
     ``\textit{parser}''.   The core part is the launch script
-    ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates a JVM instance
-    and runs ``\textit{parser}'' on multiple threads against the input provided
-    via a socket or file.
-
-  \item ``\textit{web}'' contains a web application and a RESTful interface as
-    simpler methods to access ``\textit{parser}''. It is a Play Framework
-    \cite{wampler2011scala} application. It depends on the ``\textit{parser}''
-    library. ``\textit{web}'' achieves interactions with ``\textit{parser}''
-    via HTTP protocols. It works both with simple HTML and REST API interfaces.
+    ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates a JVM
+    instance and runs ``\textit{parser}'' on multiple threads against the input
+    provided via a socket or file. The ``\textit{runner}'' also contains a web
+    application and a RESTful interface as simpler methods to access
+    ``\textit{parser}''. It depends on the ``\textit{parser}'' library.
+    ``\textit{web}'' achieves interactions with ``\textit{parser}'' via HTTP
+    protocols. It works both with simple HTML and REST API interfaces.
     Figure~\ref{figure:webgui} illustrates a parsing example using the
-    web-interface.
+    web-interface. Socket and REST services use Akka framework which makes them
+    highly concurrent and scalable.
 
 \end{enumerate}
 
-All subprojects except ``\textit{web}'' can run in JVM 1.6. ``\textit{web}''
-requires JVM 1.8. Documentation is available in a README file [see additional
-file README.rst.html].
+``\textit{parser}`` and ``\textit{examples}`` can run in JVM 1.6.
+``\textit{runner}'' requires JVM 1.8. Documentation is available in a README
+file [see additional file README.rst.html].
 
 \begin{figure}[htbp]
   \begin{center}
@@ -712,8 +710,8 @@ file README.rst.html].
     thought as a lightweight virtualization technology within a Linux OS host.
     When it is setup properly, everything --- starting from JVM and ending with
     Scala and SBT --- can be run with simple commands that will, for example,
-    pull the Docker image from the Hub, and run the socket or web server on an
-    appropriate port.
+    pull the \textit{gnparser}'s Docker image from the DockerHub, and run the
+    socket or web server on an appropriate port.
 
 \end{itemize}
 
@@ -736,11 +734,11 @@ parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to
 finish a full dataset without crashing. We excluded it from further tests.
 
 To estimate the quality of the parsers being compared, we used a combination of
-canonical form and terminal authorship as this is a feature that common to all
-three parsers.  A canonical form represents the essential scientific elements
-of a name, while the terminal authorship refers to the author of the lowest
-subtaxon found in the name. For example, with \textbf{Oriastrum
-lycopodioides Wedd.\ var.\ glabriusculum Reiche}, the canonical form is
+canonical form and terminal authorship as this is a feature that is common to
+all three parsers.  A canonical form represents the essential scientific
+elements of a name, while the terminal authorship refers to the author of the
+lowest subtaxon found in the name. For example, with \textbf{Oriastrum
+  lycopodioides Wedd.\ var.\ glabriusculum Reiche}, the canonical form is
 \textbf{Oriastrum lycopodioides glabriusculum} and the terminal authorship is
 \textbf{Reiche}, not \textbf{Wedd.}.
 
@@ -802,7 +800,9 @@ close to 1000 name-strings as not-parseable.  $Precision$ in this case showed
 percentage of correctly discarded names.  We do not know $Recall$, as it was
 not reasonable to manually determine this for 100,000 names. To get a sense of
 names which should be discarded but were parsed instead, we analysed
-intersections and differences of the results between the three parsers.
+intersections and differences of the results between the three parsers.  The
+following versions had been used for quality comparisons: \textit{gnparser} v.
+0.2.0, GBIF \textit{name-parser} v. 0.1.0, \textit{biodiversity} v. 3.4.1.
 
 To establish the throughput of parsing we used a computer with an Intel
 i7-4930K CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB
@@ -811,9 +811,11 @@ processing of 1,000,000 random name-strings from GNI.
 
 To study the effects of parallel execution on throughput we used the
 \textit{ParallelParser} class from \textit{biodiversity} parser. We used
-\textit{gnparse} (a command line-based script) for \textit{gnparser}.
-For GBIF \textit{name-parser}, we created a thin wrapper with multi-threaded
-capabilities \cite{gbifparser}.
+\textit{gnparse} (a command line-based script) for \textit{gnparser}.  For GBIF
+\textit{name-parser}, we created a thin wrapper with multi-threaded
+capabilities \cite{gbifparser}. The following versions had been used for
+throughput benchmarks: \textit{gnparser} v. 0.3.0, GBIF \textit{name-parser} v.
+0.1.0, \textit{biodiversity} v. 3.4.1.
 
 \section*{Results and Discussion}\label{sec:discussion}
 
@@ -877,7 +879,7 @@ name-string. The other parsers do not have this feature.
 When parsers reach $\approx80\%$ $Accuracy$, they hit a ``long tail'' of
 problems where each particular type of a problem is rare, yet every new manual
 test against a new test set of 1,000--10,000 name-strings reveals new issues.
-Examples of these challenges are given elsewhere \cite{Patterson:inpress-a}.
+Examples of these challenges are given elsewhere \cite{Patterson2016}.
 For all three parsers, developers had to perform the meticulous task of adding
 rules to address one rare case after another. That is, parsers need to be
 subject to continuous improvement. The problems found during preparation of
@@ -915,7 +917,7 @@ datasets, but they decrease $Precision$. Many ``dirty'' datasets contain
 recurring problems. As an example, DRYAD contains many name-strings in which
 elements of scientific names are concatenated with an interpolated character
 such as `\_’ (e.g. ``Homo\_sapiens'' and ``Pinoyscincus\_jagori\_grandis'')
-\cite{Patterson:inpress-a}. For them, our solution was to include a
+\cite{Patterson2016}. For them, our solution was to include a
 ``preparser'' script which ``normalizes'' known problems that are inherent
 within that dataset and then apply a high quality parser to the result.
 
@@ -1042,7 +1044,7 @@ paragraph above, that the species \textbf{Carex scirpoidea} was described by
 \textbf{Michx}.
 
 Another area in which parsers with limited abilities can give misleading
-results is with negated names \cite{Patterson:inpress-a}. In these cases, the
+results is with negated names \cite{Patterson2016}. In these cases, the
 name-string includes some annotation or marks to indicate that the information
 associated with the name does NOT refer to the taxon with the scientific name
 that is included. Examples include \textbf{Gambierodiscus aff toxicus} or
@@ -1153,22 +1155,20 @@ a JSON Schema file \cite{gnparser-json}.
 In the areas of performance discussed above, there is little difference between
 \textit{biodiversity} parser and \textit{gnparser}. There is, however, a
 dramatic difference in their parsing speed and ability to scale. Parsing tasks
-that took 20 hours with earlier parsers can now be completed in 1 hour. Parsing
-is a key to other services such as name-reconciliation and subsequent
-resolution.  Improving the parser will increase user satisfaction elsewhere.
+that took 20 hours with earlier \textit{biodiversity} parsers can now be
+completed in a few minutes on a multithreaded computer. Parsing is a key to
+other services such as name-reconciliation and subsequent resolution.
+Improving the parser will increase user satisfaction elsewhere.
 
 Results on the speed performance are given in Figure~\ref{figure:throughput}.
-With 1 to 4 CPU threads, \textit{gnparser} and GBIF \textit{name-parser} had a
-similar throughput, while \textit{biodiversity} parser was 5 times slower on
-one thread and 8 times slower on 4 threads. The GBIF \textit{name-parser}
-scaled best beyond 4 processors and for 12 parallel threads it was 1.22 times
-faster than \textit{gnparser}.
+Depending on a number of CPU threads, \textit{gnparser} had been
+$\approx10-25\%$ faster than \textit{gbif-parser}. On 1 thread
+\textit{gnparser} was 7 times faster than \textit{biodiversity}, 10 times
+faster on 4 threads, and 14 times faster on 12 threads.
 
-\textit{gnparser} has some functionality not presented in the GBIF
-\textit{name-parser}. This includes management of complex infraspecies and
-hybrid names, better performance with negated names and names without capitals,
-and overall precision, recall, accuracy and F1. Inspite of this additional
-functionality \textit{gnparser} outperformed other tested parsers.
+\textit{gnparser} has functionality not presented in the GBIF
+\textit{name-parser} as described in previous sections. In spite of this
+additional functionality \textit{gnparser} outperformed other tested parsers.
 
 \subsection*{Accessibility}
 
@@ -1184,7 +1184,7 @@ Britain and Ireland \cite{botsociety:parser} FAT \cite{Sautter2006}, NetiNeti
 \cite{Akella2012}, and Taxonome \cite{Kluyver2013}. A modular approach offers
 an option of re-use and avoids replication of effort. \textit{biodiversity} was
 the first biodiversity parser to be released as a stand-alone package that
-could be used as a module - as it was with the iPlant project \cite{Boyle2013}.
+could be used as a module --- as it was with the iPlant project \cite{Boyle2013}.
 The same approach has now been adopted with the GBIF \textit{name-parser}
 \cite{gbifNameParser}, \textit{YASMEEN} \cite{VandenBerghe2015}, and
 \textit{gnparser}.
@@ -1252,7 +1252,7 @@ library in languages like Scala, Java, R, Jython, JRuby.
 \begin{description}
   \item[Project Name:] gnparser
   \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser
-  \item[Operating System:] Any platform able to run JVM 1.6
+  \item[Operating System:] Any platform able to run JVM 1.8
   \item[Programming Language:] Scala
   \item[License:] The MIT License
   \item[Any restrictions to use by non-academic:] no restriction
