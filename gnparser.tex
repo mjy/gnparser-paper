@@ -62,6 +62,8 @@
 \usepackage{fancyvrb}
 \usepackage{soul}
 \usepackage{enumitem}
+\usepackage{bera}
+\usepackage{xcolor}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -97,12 +99,29 @@
 %%% Put your definitions there:
 \startlocaldefs
   \newcommand{\comment}[2]{\hspace{0in}#2}
-  \lstdefinelanguage{json}{basicstyle=\normalfont\ttfamily,
-                           numbersep=8pt,
-                           showstringspaces=false,
-                           breaklines=true,
-                           frame=lines,
-                           backgroundcolor=\color{white}}
+
+  \colorlet{punct}{red!60!black}
+  \definecolor{background}{HTML}{EEEEEE}
+  \definecolor{delim}{RGB}{20,105,176}
+  \lstdefinelanguage{json}{
+   basicstyle=\scriptsize\ttfamily,
+   numbers=left,
+   numberstyle=\scriptsize,
+   stepnumber=1,
+   numbersep=8pt,
+   showstringspaces=false,
+   breaklines=true,
+   frame=lines,
+   backgroundcolor=\color{background},
+   extendedchars=true,
+   literate=
+    *{:}{{{\color{punct}{:}}}}{1}
+    {,}{{{\color{punct}{,}}}}{1}
+    {\{}{{{\color{delim}{\{}}}}{1}
+    {\}}{{{\color{delim}{\}}}}}{1}
+    {[}{{{\color{delim}{[}}}}{1}
+    {]}{{{\color{delim}{]}}}}{1}
+    {ü}{{{\"u}}}{1}}
 \endlocaldefs
 
 
@@ -613,7 +632,7 @@ but not with names of viruses because they are formed in different ways
 \section*{Implementation}
 
 The \textit{gnparser} project is entirely written in Scala. It supports two
-major Scala versions: 2.10.6+ and 2.11.x. The code is organized into three
+major Scala versions: 2.10.6+ and 2.11.x. The code is organized into four
 modules:
 
 \begin{enumerate}
@@ -649,29 +668,32 @@ modules:
 
 \end{itemize}
 
+  \item ``\textit{spark-python}'' contains facilities to use
+  ``\textit{gnparser}'' from Python Spark. \marginpar{Should we describe
+    PySpark support in details?}
+
   \item ``\textit{examples}'' contains examples to assist developers in adding
     ``\textit{parser}'' functionality into other popular programming languages
     such as Java, Scala, Jython, JRuby, and R.
 
   \item ``\textit{runner}'' contains the code that allows users to run
-    ``\textit{parser}'' from a command line as a standalone tool or to run it
-    as a TCP/IP socket server. ``\textit{runner}'' depends on the
-    ``\textit{parser}''.   The core part is the launch script
-    ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates a JVM
-    instance and runs ``\textit{parser}'' on multiple threads against the input
-    provided via a socket or file. The ``\textit{runner}'' also contains a web
-    application and a REST interface as simpler methods to access
-    ``\textit{parser}''. It depends on the ``\textit{parser}'' library.
-    ``\textit{web}'' achieves interactions with ``\textit{parser}'' via HTTP
-    protocols. It works both with simple HTML and REST API interfaces.
-    Figure~\ref{figure:webgui} illustrates a parsing example using the
-    web-interface. Socket and REST services use Akka framework which makes them
-    highly concurrent and scalable.
+    ``\textit{parser}'' from a command line as a standalone tool or to run it as
+    a TCP/IP socket or HTTP web server. ``\textit{runner}'' depends on the
+    ``\textit{parser}''. The core part is the launch script ``\textit{gnparse}''
+    (for Linux/Mac and Windows) that creates a JVM instance and runs
+    ``\textit{parser}'' on multiple threads against the input provided via a
+    socket or file. The ``\textit{runner}'' also contains a web application and
+    a RESTful interface as simpler methods to access ``\textit{parser}''. It
+    depends on the ``\textit{parser}'' library.  ``\textit{web}'' achieves
+    interactions with ``\textit{parser}'' via HTTP protocol. It works both with
+    simple HTML and REST API interfaces.  Figure~\ref{figure:webgui} illustrates
+    a parsing example using the web-interface. Socket and REST services use Akka
+    framework which makes them highly concurrent and scalable.
 
 \end{enumerate}
 
-``\textit{parser}`` and ``\textit{examples}`` can run in JVM 1.6.
-``\textit{runner}'' requires JVM 1.8. Documentation is available in a README
+``\textit{parser}`` and ``\textit{examples}`` can run in JVM~1.6+.
+``\textit{runner}'' requires JVM~1.8+. Documentation is available in a README
 file [see additional file README.rst.html].
 
 \begin{figure}[htbp]
@@ -683,7 +705,7 @@ file [see additional file README.rst.html].
       JSON format.}\label{figure:webgui}
 
     \vspace{5mm}
-    \includegraphics[scale=0.175]{images/2.png}
+    \includegraphics[scale=0.35]{images/2.png}
   \end{center}
 \end{figure}
 
@@ -692,7 +714,7 @@ file [see additional file README.rst.html].
 ``\textit{gnparser}'' is available for launch in three bundles.
 
 \begin{itemize}
-  \item A \textit{parser} artifact is provided via the Maven central repository
+  \item A \textit{parser} artifact is provided via the Maven~central~repository
     of Java code \cite{maven-globalnames}. Physically it is a relatively small
     jar file without embedded external dependencies. The artifact can be
     accessed by a build system such as Maven, Gradle, or SBT in custom
@@ -702,10 +724,10 @@ file [see additional file README.rst.html].
   \item A Zip-archived ``fat jar'' is located at the project's GitHub
     repository. The jar contains the compiled files of \textit{gnparser} along
     with all necessary dependencies to launch it within JVM\@. The archive is
-    also bundled with a launch script (for Windows, OS X and Linux) that can
+    also bundled with a launch script (for Windows, OS~X and Linux) that can
     run a command line interface to \textit{gnparser}.
 
-  \item The project's Docker container image is located at Docker Hub
+  \item The project's Docker container image is located at Docker~Hub
     \cite{gnparser-docker}. Docker provides an additional layer of abstraction
     and automation of operating-system-level virtualization on Linux. It can be
     thought as a lightweight virtualization technology within a Linux OS host.
@@ -724,7 +746,7 @@ The resulting datasets consisted of strings acquired from a variety of data
 sources and were a mixture of well-formed names, names with formatting and
 spelling mistakes, and name-strings that were misrepresented as names.
 
-We compared performance of \textit{gnparser} with 2 other projects:
+We compared performance of \textit{gnparser} with two other projects:
 \textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by
 Global Names team), and GBIF \textit{name-parser} \cite{gbifNameParser}. For
 comparison, we calculated $Precision$, $Recall$ and $Accuracy$ (as described
@@ -1022,8 +1044,9 @@ we have presented to it.
 \subsection*{Parsing Completeness}
 
 The extraction of canonical forms from name-strings representing scientific
-names is the most useful and widely used parsing goal. Sometimes the canonical
-form does not determine a name completely.
+names is the most useful and widely used parsing goal. Sometimes, however, this
+may not be sufficient because the canonical form does not determine a name
+completely.
 
 In the example in Table~\ref{table:carex} \textbf{Carex scirpoidea convoluta}
 is a canonical form for \textbf{Carex scirpoidea var.\ convoluta Kükenthal} and
@@ -1054,12 +1077,14 @@ All components of a name may be important and need to be parsed and
 categorized. With \textit{gnparser}, we describe the meaning of every word in
 the parsed name-string and present the results in JSON format. Parsing of
 \textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A. Dunlop} gives
-the following JSON output \vspace{0.5cm}
+the following JSON output
 
-\begin{Verbatim}[fontsize=\scriptsize]
+\vspace{0.1cm}
+
+\begin{lstlisting}[language=json]
 {
   "name_string_id": "203213f3-99d1-5f5e-810a-4453c4d220cb",
-  "parsed": true, "quality": 1, "parser_version": "0.2.0",
+  "parsed": true, "quality": 1, "parser_version": "0.3.1",
   "verbatim": "Carex scirpoidea Michx.subsp. convoluta (Kük.) D.A. Dunlop",
   "normalized": "Carex scirpoidea Michx.ssp. convoluta (Kük.) D. A. Dunlop",
   "canonical_name": {
@@ -1072,8 +1097,7 @@ the following JSON output \vspace{0.5cm}
     "specific_epithet": {
       "value": "scirpoidea",
       "authorship": {
-        "value": "Michx.",
-        "basionym_authorship": { "authors": [ "Michx." ] }
+        "value": "Michx.", "basionym_authorship": { "authors": [ "Michx." ] }
       }
     },
     "infraspecific_epithets": [ {
@@ -1090,7 +1114,7 @@ the following JSON output \vspace{0.5cm}
     ["author_word", 48, 50], ["author_word", 50, 52], ["author_word", 53, 59]
   ]
 }
-\end{Verbatim}
+\end{lstlisting}
 
 \vspace{0.5cm}
 
@@ -1180,7 +1204,7 @@ development.
 Parsing of scientific names is essential for organizing biodiversity data, such
 that many biodiversity database environments and projects include a parsing
 algorithm. Examples are uBio \cite{ubio:parser}, the Botanical Society of
-Britain and Ireland \cite{botsociety:parser} FAT \cite{Sautter2006}, NetiNeti
+Britain and Ireland \cite{botsociety:parser}, FAT \cite{Sautter2006}, NetiNeti
 \cite{Akella2012}, and Taxonome \cite{Kluyver2013}. A modular approach offers
 an option of re-use and avoids replication of effort. \textit{biodiversity} was
 the first biodiversity parser to be released as a stand-alone package that
@@ -1252,7 +1276,7 @@ library in languages like Scala, Java, R, Jython, JRuby.
 \begin{description}
   \item[Project Name:] gnparser
   \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser
-  \item[Operating System:] Any platform able to run JVM 1.8
+  \item[Operating System:] Any platform able to run JVM~1.8
   \item[Programming Language:] Scala
   \item[License:] The MIT License
   \item[Any restrictions to use by non-academic:] no restriction
@@ -1269,7 +1293,7 @@ library in languages like Scala, Java, R, Jython, JRuby.
   Test suite consists of a pipe delimited input (scientific name) and parsed
   output in JSON format.
 
-  \subsection*{Additional file 2 --- README.rst.html}
+  \subsection*{Additional file 3 --- README.rst.html}
   README.rst file that is converted to HTML format. It is also available at
   project home page \cite{gnparser}.
 
