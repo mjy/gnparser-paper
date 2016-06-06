@@ -7,8 +7,10 @@
 *.blg
 *.dvi
 *.rtf
+gnparser.html
 t
 .latexmkrc
+.Rhistory
 *.json
 *.rb
 *.md
