@@ -62,6 +62,8 @@
 \usepackage{fancyvrb}
 \usepackage{soul}
 \usepackage{enumitem}
+\usepackage{bera}
+\usepackage{xcolor}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 
@@ -97,12 +99,29 @@
 %%% Put your definitions there:
 \startlocaldefs
   \newcommand{\comment}[2]{\hspace{0in}#2}
-  \lstdefinelanguage{json}{basicstyle=\normalfont\ttfamily,
-                           numbersep=8pt,
-                           showstringspaces=false,
-                           breaklines=true,
-                           frame=lines,
-                           backgroundcolor=\color{white}}
+
+  \colorlet{punct}{red!60!black}
+  \definecolor{background}{HTML}{EEEEEE}
+  \definecolor{delim}{RGB}{20,105,176}
+  \lstdefinelanguage{json}{
+   basicstyle=\scriptsize\ttfamily,
+   numbers=left,
+   numberstyle=\scriptsize,
+   stepnumber=1,
+   numbersep=8pt,
+   showstringspaces=false,
+   breaklines=true,
+   frame=lines,
+   backgroundcolor=\color{background},
+   extendedchars=true,
+   literate=
+    *{:}{{{\color{punct}{:}}}}{1}
+    {,}{{{\color{punct}{,}}}}{1}
+    {\{}{{{\color{delim}{\{}}}}{1}
+    {\}}{{{\color{delim}{\}}}}}{1}
+    {[}{{{\color{delim}{[}}}}{1}
+    {]}{{{\color{delim}{]}}}}{1}
+    {ü}{{{\"u}}}{1}}
 \endlocaldefs
 
 
@@ -163,7 +182,8 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\address[id=aff1]{\orgname{University of Illinois},
+\address[id=aff1]{\orgname{University of Illinois,
+                    Illinois Natural History Survey, Species File Group},
                   \street{1816 South Oak St.},
                   \city{Champaign},
                   \state{IL},
@@ -214,10 +234,10 @@
 
   \parttitle{Background} We are able to investigate biology on grander scales
   by integrating biological data from multiple sources. The use of scientific
-  names of organisms allows to aggregate information on the same taxa out of
+  names of organisms allows aggregation of information on the same taxa out of
   many different places. There are impediments to such aggregation because
   there is often more than one name for a taxon, or one name may apply to more
-  then one taxa. Names are often spelled with variations, sometimes misspelled,
+  then one taxon. Names are often spelled with variations, sometimes misspelled,
   abbreviated, annotated. Author information often varies dramatically. To
   effectively match scientific names to each other we want to parse
   them --- to divide them into their elements and establish the roles of each
@@ -229,9 +249,9 @@
   Java tool written in Scala language (a language for Java Virtual Machine) to
   parse scientific names. It is based on a Parsing Expression Grammar. The
   parser can be applied to scientific names of any complexity. It assigns a
-  semantic meaning (such as genus name, species epithet, annotation, rank, year
-  of publication, names of authors, annotations, etc.) to all elements of a
-  name. It is able to work with nested structures like for example in hybrid
+  semantic meaning (such as genus name, species epithet, rank, year of
+  publication, names of authors, annotations, etc.) to all elements of a name.
+  It is able to work with nested structures like for example in hybrid
   formulas. \textit{gnparser} performs with $\approx99\%$ accuracy and
   processes 30 million name-strings/hour per CPU thread. The \textit{gnparser}
   library is compatible with Scala, Java, R, Jython, and JRuby. The parser can
@@ -302,13 +322,13 @@
 \section*{Conventions}
 
 Throughout the paper we distinguish ``name'', ``scientific name'', and
-``name-string''.  ``Name'' refers to one or several words that act(s) as a
+``name-string''. ``Name'' refers to one or several words that act(s) as a
 label for a taxon. A ``scientific name'' is a name formed in compliance with a
 nomenclatural code (Code) or, if beyond the scope of the Codes, is consistent
-with the expectations of a Code.  The term ``name-string'' is the sequence of
+with the expectations of a Code. The term ``name-string'' is the sequence of
 characters (letters, numbers, punctuation, spaces, symbols) that forms the
-name.  A name can be expressed by many name-strings (for example see
-Table~\ref{table:carex}).  There are millions of legitimately formed scientific
+name. A name can be expressed by many name-strings (for example see
+Table~\ref{table:carex}). There are millions of legitimately formed scientific
 names and probably billions of possible name-strings for them. We use the term
 ``element'' for the components of a name or name-string. Traditionally,
 scientific names for genera, and taxa below genus are presented in
@@ -321,10 +341,10 @@ Biology is entering a ``Big Data'' age, where global and fast access to all
 knowledge is envisaged. Progress towards this vision is still limited in
 scope. One impediment, especially for the long tail of smaller sources (of
 which some are not yet digital), is the absence of devices to inter-connect
-distributed data.  The names of organisms are invaluable in ``Big Data''
+distributed data. The names of organisms are invaluable in ``Big Data''
 biology because they can be treated as metadata that can be used to discover,
 index, organize, and interconnect distributed information about species and
-other taxa \cite{Patterson2010}.  The use of names for informatics purposes is
+other taxa \cite{Patterson2010}. The use of names for informatics purposes is
 not straightforward because, for example, there may be many legitimate
 spellings for a name (Table~\ref{table:carex}). A names-based infrastructure
 must recognize which name-strings represent the same scientific name.
@@ -333,13 +353,13 @@ must recognize which name-strings represent the same scientific name.
   \begin{center}
 
   \caption{Some legitimate versions of the scientific name for the Northern
-    Bulrush or Singlespike sedge.  The genus (\textit{Carex}), species
+    Bulrush or Singlespike sedge. The genus (\textit{Carex}), species
     (\textit{scirpoidea}), and subspecies (\textit{convoluta}) may be annotated
     (var., subsp., and ssp.) or include or omit the name of the original
     authority for the infraspecies (Kükenthal), the species (Michaux), the
     current infraspecific combination (Dunlop), sometimes abbreviated,
     differently spelled, and with or without initials and dates. This list is
-    not complete.  Image courtesy of \cite{FNA2002}.}\label{table:carex}
+    not complete. Image courtesy of \cite{FNA2002}.}\label{table:carex}
 
     \begin{tabular}{| l | c |}
     \hline
@@ -381,11 +401,11 @@ in comparisons of large biological databases could be matched based on exact
 spellings of name-strings \cite{Patterson2016}. In order to improve this
 simple metric for interoperability, we need to be able to identify such
 spelling variants as the same name, a process referred to as ``lexical
-reconciliation''.  Reconciliation involves linking alternative name-strings
+reconciliation''. Reconciliation involves linking alternative name-strings
 (whether spelling variants, nomenclatural variants, identifiers, common names,
 or surrogates for names) for the same taxon into reconciliation groups. Most
 biologists do this intuitively --- they recognize that the name-strings in
-Table~\ref{table:carex} refer to the same taxon. They do so by  ``parsing'' the
+Table~\ref{table:carex} refer to the same taxon. They do so by ``parsing'' the
 name-strings into elements (genus name, species name, authors, ranks etc.) and
 mentally discarding less significant elements such as annotations and
 authorship. It then becomes clear all of name-strings have a common ``canonical
@@ -415,7 +435,7 @@ this exercise up requires an algorithmic solution, a scientific name parser!
 The strategy of the algorithmic approach is to identify which combinations of
 the most atomic elements of a name-string (i.e.\ the UTF-8 encoded characters)
 represent words (such as genus name, species name, authors, annotations) or
-dates.  An early algorithmic approach to parsing scientific names was with
+dates. An early algorithmic approach to parsing scientific names was with
 regular language implemented as regular expression \cite{Leary2007}. A regular
 expression is a sequence of characters that describes a search pattern
 \cite{aho1992foundations}. For example, a regular expression
@@ -429,14 +449,14 @@ Examples of parsers based on regular expressions are GBIF's
 \textit{name-parser} \cite{gbifNameParser}, and \textit{YASMEEN}
 \cite{VandenBerghe2015}.
 
-While regular expression is a powerful approach to string parsing,  it has
+While regular expression is a powerful approach to string parsing, it has
 limitations. It cannot elegantly deal with name-strings where an authorship
 element is present in the middle of the name (for example \textbf{Carex
-scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A.Dunlop}).  Indeed regular
+scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A.Dunlop}). Indeed regular
 expressions are not well suited to any targets with recursive (nested) elements
 \cite{yu1997handbook}, such as hybrid formulae (e.g. \textbf{Brassica oleracea
-L.\ subsp.\ capitata (L.) DC.\ convar.\ fruticosa (Metzg.) Alef.\  $\times$ B.
-oleracea L.\ subsp.\ capitata (L.) var.\  costata DC.}). Name parsing built on
+L.\ subsp.\ capitata (L.) DC.\ convar.\ fruticosa (Metzg.) Alef.\ $\times$ B.
+oleracea L.\ subsp.\ capitata (L.) var.\ costata DC.}). Name parsing built on
 regular expressions is impractical for complex name-strings.
 
 Another limitation with most regular expression software tools is that they are
@@ -448,7 +468,7 @@ recovery, detailed warnings, descriptions of errors are missing.
 
 We wanted an approach able to deal with the most complex scientific names of
 broader complexity to give more flexibility than can be achieved with a regular
-expression approach.  We believe that a general use parser should satisfy the
+expression approach. We believe that a general use parser should satisfy the
 following requirements.
 
 \begin{enumerate}
@@ -462,22 +482,22 @@ following requirements.
   \item \textbf{Global Scope.} A parser should be able to parse all types of
     scientific names, inclusive of the most complex name-strings such as hybrid
     formulae, multi-infraspecific names, names with multilevel authorships and
-    so on.   No name-strings should be left unparsed, otherwise information
+    so on. No name-strings should be left unparsed, otherwise information
     attached to them may remain undiscoverable.
 
   \item \textbf{Parsing Completeness.} All information included in a
     name-string is important, not only the canonical form of the scientific
     name. Authorship, year, rank information allow us to distinguish homonyms,
-    similar names, synonyms, spelling mistakes, or chresonyms.  Access to such
+    similar names, synonyms, spelling mistakes, or chresonyms. Access to such
     information improves the performance of subsequent reconciliation.
 
   \item \textbf{Speed.} Users, especially large-scale aggregators of
     biodiversity data, are more satisfied with quick responses, as it allows
-    them to move onto to more purposeful value-adding tasks.  Speed reduces the
+    them to move onto to more purposeful value-adding tasks. Speed reduces the
     costs of building or running the hardware used for parsing.
 
   \item \textbf{Accessibility.} To be available to the widest possible audience
-    a parser should be released as a stand-alone program,  have a good
+    a parser should be released as a stand-alone program, have a good
     documentation, be able to work as a library, to function as a command line
     tool, as a tool within a graphical interface, and to run as a socket or as
     RESTful services.
@@ -493,9 +513,9 @@ for the following reasons.
 Parsing Expression Grammars (PEG) \cite{Ford2004} have been recently introduced
 for parsing strings. PEG allows developers to define the rules (``grammar'')
 which describe general structure of target strings. In our case, such rules can
-be used to deconstruct scientific names.  The rules are built from the ground
+be used to deconstruct scientific names. The rules are built from the ground
 up, starting from the simplest --- such as a combination of ``characters''
-separated by ``spaces''.  That process will identify most `words'.  Characters
+separated by ``spaces''. That process will identify most `words'. Characters
 can be divided into digits and other characters to make dates identifiable.
 Further rules can be applied, such as a ``genus'' rule would describe a part of
 a name-string in which the first word begins with combination of a
@@ -532,7 +552,7 @@ expressions for the following reasons:
 
 In 2008, as a part of Global Names project, we created a specialized parsing
 library \textit{biodiversity} \cite{biodiversity} written in Ruby and based on
-PEG\@.  We used an excellent \textit{TreeTop} Ruby library \cite{treetop} as
+PEG\@. We used an excellent \textit{TreeTop} Ruby library \cite{treetop} as
 the underlying PEG implementation.
 
 The PEG approach allowed us to deal with complex scientific names gracefully.
@@ -542,7 +562,7 @@ considerable popularity. At the time of writing, it had been downloaded more
 than 150,000 times \cite{bdiv-downloads}, it is used by many taxon name
 resolution projects (e.g. Encyclopedia of Life \cite{eol}, Canadian Register of
 Marine Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant}, and World
-Registry of Marine Species (WoRMS) \cite{worms}.  According to statistics
+Registry of Marine Species (WoRMS) \cite{worms}. According to statistics
 compiled by BioRuby, \textit{biodiversity}, at the time of writing, has been
 the most popular bio-library in the Ruby language \cite{biogems}.
 
@@ -571,7 +591,7 @@ needed an environment with the following properties:
     \item a wide range of libraries: utilities, web frameworks, etc.;
 
     \item a powerful development environment with IDEs, testing frameworks,
-      debuggers,  profilers and the like;
+      debuggers, profilers and the like;
 
     \item mature libraries for search and cluster computations;
 
@@ -597,14 +617,14 @@ choice.}.
 
 The functional programming features of Scala allowed us to build a domain
 specific language that describes the rules of the grammars to parse scientific
-names.  This produces a Parsing Expression Grammar with considerably more
+names. This produces a Parsing Expression Grammar with considerably more
 flexibility than external lexers such as Bison or Yacc. As this domain specific
 language is within \textit{parboiled2} it can take advantage of the Macro
 capacity of Scala \cite{Burmako:2013:SML:2489837.2489840} to optimize the
 compilation of the code and the subsequent running of the program. As a result
 the software performs with high efficiency. With this combination, the
 \textit{gnparser} library achieved a significant boost in speed, scalability,
-and portability.  We limited this version to work with scientific names that
+and portability. We limited this version to work with scientific names that
 comply with the botanical, zoological, and prokaryotic codes of nomenclature,
 but not with names of viruses because they are formed in different ways
 \cite{ICTV, Patterson2016} and would need a different PEG.
@@ -612,7 +632,7 @@ but not with names of viruses because they are formed in different ways
 \section*{Implementation}
 
 The \textit{gnparser} project is entirely written in Scala. It supports two
-major Scala versions: 2.10.6+ and 2.11.x. The code is organized into three
+major Scala versions: 2.10.6+ and 2.11.x. The code is organized into four
 modules:
 
 \begin{enumerate}
@@ -621,10 +641,10 @@ modules:
     contains the components for parsing of scientific names from the most
     atomic elements to semantically-defined terms. It includes the parsing
     grammar, abstract syntax tree (AST) composed of the components of
-    scientific names, warning and error facilities.  When the parsing is
+    scientific names, and warning and error facilities. When the parsing is
     complete and semantic elements of name-strings have been assigned to AST
     nodes, then the elements can be recombined and formatted to meet further
-    needs.  For example:
+    needs. For example:
 
 \begin{itemize}
 
@@ -641,36 +661,39 @@ modules:
     \textbf{details} contains the JSON-representation of a parsed scientific
     name; \textbf{quality\_warnings} describes potential problems if names are
     not well-formed; \textbf{quality} depicts a quality level of the parsed
-    name;  and \textbf{positions} maps the positions of every element in a
+    name; and \textbf{positions} maps the positions of every element in a
     parsed name to the semantic meaning of the element. Full and formal
     explanation of all parser fields is given as a JSON schema and can be found
     online \cite{gnparser-json} [also see additional file gnparser.json].
 
 \end{itemize}
 
+  \item ``\textit{spark-python}'' contains facilities to use
+  ``\textit{gnparser}'' from Python Spark. \marginpar{Should we describe
+    PySpark support in details?}
+
   \item ``\textit{examples}'' contains examples to assist developers in adding
     ``\textit{parser}'' functionality into other popular programming languages
     such as Java, Scala, Jython, JRuby, and R.
 
   \item ``\textit{runner}'' contains the code that allows users to run
-    ``\textit{parser}'' from a command line as a standalone tool or to run it
-    as a TCP/IP socket server. ``\textit{runner}'' depends on the
-    ``\textit{parser}''.   The core part is the launch script
-    ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates a JVM
-    instance and runs ``\textit{parser}'' on multiple threads against the input
-    provided via a socket or file. The ``\textit{runner}'' also contains a web
-    application and a RESTful interface as simpler methods to access
-    ``\textit{parser}''. It depends on the ``\textit{parser}'' library.
-    ``\textit{web}'' achieves interactions with ``\textit{parser}'' via HTTP
-    protocols. It works both with simple HTML and REST API interfaces.
-    Figure~\ref{figure:webgui} illustrates a parsing example using the
-    web-interface. Socket and REST services use Akka framework which makes them
-    highly concurrent and scalable.
+    ``\textit{parser}'' from a command line as a standalone tool or to run it as
+    a TCP/IP socket or HTTP web server. ``\textit{runner}'' depends on the
+    ``\textit{parser}''. The core part is the launch script ``\textit{gnparse}''
+    (for Linux/Mac and Windows) that creates a JVM instance and runs
+    ``\textit{parser}'' on multiple threads against the input provided via a
+    socket or file. The ``\textit{runner}'' also contains a web application and
+    a RESTful interface as simpler methods to access ``\textit{parser}''. It
+    depends on the ``\textit{parser}'' library.  ``\textit{web}'' achieves
+    interactions with ``\textit{parser}'' via HTTP protocol. It works both with
+    simple HTML and REST API interfaces.  Figure~\ref{figure:webgui} illustrates
+    a parsing example using the web-interface. Socket and REST services use Akka
+    framework which makes them highly concurrent and scalable.
 
 \end{enumerate}
 
-``\textit{parser}`` and ``\textit{examples}`` can run in JVM 1.6.
-``\textit{runner}'' requires JVM 1.8. Documentation is available in a README
+``\textit{parser}`` and ``\textit{examples}`` can run in JVM~1.6+.
+``\textit{runner}'' requires JVM~1.8+. Documentation is available in a README
 file [see additional file README.rst.html].
 
 \begin{figure}[htbp]
@@ -682,7 +705,7 @@ file [see additional file README.rst.html].
       JSON format.}\label{figure:webgui}
 
     \vspace{5mm}
-    \includegraphics[scale=0.175]{images/2.png}
+    \includegraphics[scale=0.35]{images/2.png}
   \end{center}
 \end{figure}
 
@@ -691,7 +714,7 @@ file [see additional file README.rst.html].
 ``\textit{gnparser}'' is available for launch in three bundles.
 
 \begin{itemize}
-  \item A \textit{parser} artifact is provided via the Maven central repository
+  \item A \textit{parser} artifact is provided via the Maven~central~repository
     of Java code \cite{maven-globalnames}. Physically it is a relatively small
     jar file without embedded external dependencies. The artifact can be
     accessed by a build system such as Maven, Gradle, or SBT in custom
@@ -701,11 +724,11 @@ file [see additional file README.rst.html].
   \item A Zip-archived ``fat jar'' is located at the project's GitHub
     repository. The jar contains the compiled files of \textit{gnparser} along
     with all necessary dependencies to launch it within JVM\@. The archive is
-    also bundled with a launch script (for Windows, OS X and Linux) that can
+    also bundled with a launch script (for Windows, OS~X and Linux) that can
     run a command line interface to \textit{gnparser}.
 
-  \item The project's Docker container image is located at Docker Hub
-    \cite{gnparser-docker}.  Docker provides an additional layer of abstraction
+  \item The project's Docker container image is located at Docker~Hub
+    \cite{gnparser-docker}. Docker provides an additional layer of abstraction
     and automation of operating-system-level virtualization on Linux. It can be
     thought as a lightweight virtualization technology within a Linux OS host.
     When it is setup properly, everything --- starting from JVM and ending with
@@ -723,19 +746,19 @@ The resulting datasets consisted of strings acquired from a variety of data
 sources and were a mixture of well-formed names, names with formatting and
 spelling mistakes, and name-strings that were misrepresented as names.
 
-We compared performance of \textit{gnparser} with 2 other projects:
+We compared performance of \textit{gnparser} with two other projects:
 \textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by
 Global Names team), and GBIF \textit{name-parser} \cite{gbifNameParser}. For
 comparison, we calculated $Precision$, $Recall$ and $Accuracy$ (as described
 below) using a dataset consisted of 1000 name-strings. Another project we
-considered was the YASMEEN parser from iMarine  \cite{VandenBerghe2015}. We
+considered was the YASMEEN parser from iMarine \cite{VandenBerghe2015}. We
 found that with our dataset it generated dramatically more mistakes than other
 parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to
 finish a full dataset without crashing. We excluded it from further tests.
 
 To estimate the quality of the parsers being compared, we used a combination of
 canonical form and terminal authorship as this is a feature that is common to
-all three parsers.  A canonical form represents the essential scientific
+all three parsers. A canonical form represents the essential scientific
 elements of a name, while the terminal authorship refers to the author of the
 lowest subtaxon found in the name. For example, with \textbf{Oriastrum
   lycopodioides Wedd.\ var.\ glabriusculum Reiche}, the canonical form is
@@ -743,14 +766,14 @@ lowest subtaxon found in the name. For example, with \textbf{Oriastrum
 \textbf{Reiche}, not \textbf{Wedd.}.
 
 When both the canonical form and the terminal authorship were determined
-correctly we marked the result as true positive ($N_{tp}$).  If one or both of
+correctly we marked the result as true positive ($N_{tp}$). If one or both of
 them were determined incorrectly, the result was marked a false positive
 ($N_{fp}$). Name-strings correctly discarded from parsing were marked as true
 negatives ($N_{tn}$). False negatives ($N_{fn}$) were ``suitable''
 name-strings which should be parsed, but were not. The following parameters
 where used for analysis:
 
-$Accuracy$ --- the proportion of correct results to all results.  It is
+$Accuracy$ --- the proportion of correct results to all results. It is
 calculated as:
 
 \[Accuracy = \dfrac{N_{tp} + N_{tn}}{N_{tp} + N_{tn} + N_{fp} + N_{fn}}\]
@@ -795,12 +818,12 @@ If done correctly, not-parsed strings would include only names of viruses and
 terms that do not comply with the Codes of zoological, prokaryotic, and
 botanical nomenclature.
 
-We processed 100,000 name-strings with each parser.  Each parser discarded
-close to 1000 name-strings as not-parseable.  $Precision$ in this case showed
-percentage of correctly discarded names.  We do not know $Recall$, as it was
+We processed 100,000 name-strings with each parser. Each parser discarded
+close to 1000 name-strings as not-parseable. $Precision$ in this case showed
+percentage of correctly discarded names. We do not know $Recall$, as it was
 not reasonable to manually determine this for 100,000 names. To get a sense of
 names which should be discarded but were parsed instead, we analysed
-intersections and differences of the results between the three parsers.  The
+intersections and differences of the results between the three parsers. The
 following versions had been used for quality comparisons: \textit{gnparser} v.
 0.2.0, GBIF \textit{name-parser} v. 0.1.0, \textit{biodiversity} v. 3.4.1.
 
@@ -811,10 +834,10 @@ processing of 1,000,000 random name-strings from GNI.
 
 To study the effects of parallel execution on throughput we used the
 \textit{ParallelParser} class from \textit{biodiversity} parser. We used
-\textit{gnparse} (a command line-based script) for \textit{gnparser}.  For GBIF
+\textit{gnparse} (a command line-based script) for \textit{gnparser}. For GBIF
 \textit{name-parser}, we created a thin wrapper with multi-threaded
 capabilities \cite{gbifparser}. The following versions had been used for
-throughput benchmarks: \textit{gnparser} v. 0.3.0, GBIF \textit{name-parser} v.
+throughput benchmarks: \textit{gnparser} v. 0.3.1, GBIF \textit{name-parser} v.
 0.1.0, \textit{biodiversity} v. 3.4.1.
 
 \section*{Results and Discussion}\label{sec:discussion}
@@ -826,17 +849,17 @@ quality, global scope, parsing completeness, speed, and accessibility.
 
 \subsection*{High Quality Parsing}
 
-Quality is the most important of the 5 requirements.  We
+Quality is the most important of the 5 requirements. We
 compared \textit{gnparser} together with 2 other approaches that
 represent state of the art for parsing biological scientific names. GBIF
 \textit{name-parser} uses regular expressions approach, while \textit{gnparser}
-and \textit{biodiversity} parsers use PEG approach.  Results for quality
+and \textit{biodiversity} parsers use the PEG approach. Results for quality
 measurements are shown in Table~\ref{table:precision}.
 
 If test data contain a large proportion of true negatives ($N_{tn}$) $Accuracy$
 will not be a good measure as it favors algorithms which distinguish negative
 results, rather than finding positive ones. We manually checked our test
-datasets and established that  $\approx1\%$ were not scientific names. Given
+datasets and established that $\approx1\%$ were not scientific names. Given
 that true negatives are rare, they will have very limited influence on
 $Accuracy$. $Recall$ for all parsers was high, which means that false negatives
 are not important.
@@ -935,7 +958,7 @@ should be missed or rejected, no matter how complex they are. During our
 testing we found that $Accuracy$ of GBIF's \textit{name-parser} was negatively
 affected because of how it managed (or did not manage) hybrid formulae and
 infrasubspecific names (names with more then one infraspecific epithet). This
-is where the regular expression approach reveals its limitations.  For example
+is where the regular expression approach reveals its limitations. For example
 the following names were not parsed by the GBIF \textit{name-parser}:
 
 \vspace{0.5cm}
@@ -1031,14 +1054,14 @@ is a canonical form for \textbf{Carex scirpoidea var.\ convoluta Kükenthal} and
 name-string refers to the variety \textbf{convoluta} of \textbf{Carex
 scirpoidea} that had been described by \textbf{Kükenthal}. The second
 captures Dunlop's reclassification of \textbf{convoluta} as a subspecies. We
-are not be able to distinguish between these two different names without
-knowing the rank and/or the corresponding authorship.  Furthermore, it is
+are not able to distinguish between these two different names without
+knowing the rank and/or the corresponding authorship. Furthermore, it is
 useful to see in the second example that \textbf{(Kük.)} was the original
 author and \textbf{Dunlop} was the author of the new combination.
 
 After matching by canonical form, the ranks, authors, and "types" of authorship
 help users to distinguish name-strings with similar or identical canonical
-names from each other.  The name-string \textbf{Carex scirpoidea Michx.\ var.\
+names from each other. The name-string \textbf{Carex scirpoidea Michx.\ var.\
   convoluta Kükenth.} adds new information not evident in the examples in the
 paragraph above, that the species \textbf{Carex scirpoidea} was described by
 \textbf{Michx}.
@@ -1053,44 +1076,44 @@ that is included. Examples include \textbf{Gambierodiscus aff toxicus} or
 All components of a name may be important and need to be parsed and
 categorized. With \textit{gnparser}, we describe the meaning of every word in
 the parsed name-string and present the results in JSON format. Parsing of
-\textbf{Carex scirpoidea Michx.\  subsp.\ convoluta (Kük.) D.A. Dunlop} gives
-the following JSON output \vspace{0.5cm}
+\textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A. Dunlop} gives
+the following JSON output
 
-\begin{Verbatim}[fontsize=\scriptsize]
+\vspace{0.1cm}
+
+\begin{lstlisting}[language=json]
 {
-  "name_string_id": "203213f3-99d1-5f5e-810a-4453c4d220cb",
-  "parsed": true, "quality": 1, "parser_version": "0.2.0",
-  "verbatim": "Carex scirpoidea Michx.subsp. convoluta (Kük.) D.A. Dunlop",
-  "normalized": "Carex scirpoidea Michx.ssp. convoluta (Kük.) D. A. Dunlop",
-  "canonical_name": {
-    "value": "Carexscirpoidea convoluta",
-    "extended": "Carex scirpoidea ssp. convoluta"
+  "name_string_id" : "203213f3-99d1-5f5e-810a-4453c4d220cb",
+  "parsed" : true, "quality" : 1, "parser_version" : "0.3.1",
+  "verbatim" : "Carex scirpoidea Michx. subsp. convoluta (Kük.) D.A. Dunlop",
+  "normalized" : "Carex scirpoidea Michx. ssp. convoluta (Kük.) D. A. Dunlop",
+  "canonical_name" : {
+    "value" : "Carex scirpoidea convoluta", "extended" : "Carex scirpoidea ssp. convoluta"
   },
-  "hybrid": false, "surrogate": false, "virus": false,
-  "details": [ {
-    "genus": { "value": "Carex" },
-    "specific_epithet": {
-      "value": "scirpoidea",
-      "authorship": {
-        "value": "Michx.",
-        "basionym_authorship": { "authors": [ "Michx." ] }
+  "hybrid" : false, "surrogate" : false, "virus" : false,
+  "details" : [ {
+    "genus" : { "value" : "Carex" },
+    "specific_epithet" : {
+      "value" : "scirpoidea",
+      "authorship" : {
+        "value" : "Michx.",
+        "basionym_authorship" : { "authors" : [ "Michx." ] }
       }
     },
-    "infraspecific_epithets": [ {
-      "value": "convoluta", "rank": "ssp.",
-      "authorship": {
-        "value": "(Kük.) D. A. Dunlop",
-        "basionym_authorship": { "authors": [ "Kük." ] },
-        "combination_authorship": { "authors": [ "D. A. Dunlop" ] }
+    "infraspecific_epithets" : [ {
+      "value" : "convoluta", "rank" : "ssp.",
+      "authorship" : {
+        "value" : "(Kük.) D. A. Dunlop",
+        "basionym_authorship" : { "authors" : [ "Kük." ] },
+        "combination_authorship" : { "authors" : [ "D. A. Dunlop" ] }
       }
     } ]
   } ],
-  "positions": [["genus", 0, 5], ["specific_epithet", 6, 16], ["author_word", 17, 23],
-    ["rank", 24, 30 ], ["infraspecific_epithet", 31, 40], ["author_word", 42, 46],
-    ["author_word", 48, 50], ["author_word", 50, 52], ["author_word", 53, 59]
-  ]
+  "positions" : [ [ "genus", 0, 5 ], [ "specific_epithet", 6, 16 ], [ "author_word", 17, 23 ],
+  [ "rank", 24, 30 ], [ "infraspecific_epithet", 31, 40 ], [ "author_word", 42, 46 ],
+  [ "author_word", 48, 50 ], [ "author_word", 50, 52 ], [ "author_word", 53, 59 ] ]
 }
-\end{Verbatim}
+\end{lstlisting}
 
 \vspace{0.5cm}
 
@@ -1100,12 +1123,12 @@ virus name, a hybrid, or a surrogate. Surrogates are name-strings that are
 alternatives to names (such as acronyms) and they may or may not include part
 of a scientific or colloquial name (e.g. \textbf{Coleoptera sp. BOLD:AAV0432}).
 The output also includes a statement of the position of each element in the
-name-string.  Last, but not least, the JSON output contains UUID version 5
+name-string. Last, but not least, the JSON output contains UUID version 5
 calculated from the verbatim name-string. This UUID is guaranteed to be the
 same for the same name-string, promoting its use to globally connect
 information and annotations.
 
-The output usually covers every semantic element in the name-string.  The
+The output usually covers every semantic element in the name-string. The
 fields in the output illustrated above have the following meanings.
 
 \begin{description}
@@ -1166,7 +1189,7 @@ $\approx10-25\%$ faster than \textit{gbif-parser}. On 1 thread
 \textit{gnparser} was 7 times faster than \textit{biodiversity}, 10 times
 faster on 4 threads, and 14 times faster on 12 threads.
 
-\textit{gnparser} has functionality not presented in the GBIF
+\textit{gnparser} displays functionality not presented in the GBIF
 \textit{name-parser} as described in previous sections. In spite of this
 additional functionality \textit{gnparser} outperformed other tested parsers.
 
@@ -1179,8 +1202,8 @@ development.
 
 Parsing of scientific names is essential for organizing biodiversity data, such
 that many biodiversity database environments and projects include a parsing
-algorithm.  Examples are uBio \cite{ubio:parser}, the Botanical Society of
-Britain and Ireland \cite{botsociety:parser} FAT \cite{Sautter2006}, NetiNeti
+algorithm. Examples are uBio \cite{ubio:parser}, the Botanical Society of
+Britain and Ireland \cite{botsociety:parser}, FAT \cite{Sautter2006}, NetiNeti
 \cite{Akella2012}, and Taxonome \cite{Kluyver2013}. A modular approach offers
 an option of re-use and avoids replication of effort. \textit{biodiversity} was
 the first biodiversity parser to be released as a stand-alone package that
@@ -1192,7 +1215,7 @@ The same approach has now been adopted with the GBIF \textit{name-parser}
 We designed \textit{gnparser} with accessibility in mind from the outset. Scala
 language allows the use of \textit{gnparser} as a library in Scala, Java,
 Jython, JRuby, R and a variety of other languages based on Java Virtual
-Machine. If users want to use \textit{gnparser}  in some non-JVM language
+Machine. If users want to use \textit{gnparser} in some non-JVM language
 they can connect to the parser via a socket server interface. There is also a
 command line tool, a web interface, and a RESTful API.
 
@@ -1235,12 +1258,12 @@ Table~\ref{table:summary}
 
 \section*{Conclusions}
 
-This paper describes  \textit{gnparser}, a powerful tool designed to break
-names of taxa into their semantic elements.  This then allows standardization
+This paper describes \textit{gnparser}, a powerful tool designed to break
+names of taxa into their semantic elements. This then allows standardization
 of names by transforming them into a canonical form, a step that in turn
 dramatically improves name matching and data integration. Parsing aids the
 discovery of names in sources, and sharing them in standardised forms (for
-example to create a common index).  Parsing further allows users to extract,
+example to create a common index). Parsing further allows users to extract,
 compare and analyse metadata within the name-strings, and allowing comparisons
 of the efforts of individuals or to map trends over time. The \textit{gnparser}
 tool is released under MIT Open source license, contains command line
@@ -1252,7 +1275,7 @@ library in languages like Scala, Java, R, Jython, JRuby.
 \begin{description}
   \item[Project Name:] gnparser
   \item[Project home page:] https://github.com/GlobalNamesArchitecture/gnparser
-  \item[Operating System:] Any platform able to run JVM 1.8
+  \item[Operating System:] Any platform able to run JVM~1.8
   \item[Programming Language:] Scala
   \item[License:] The MIT License
   \item[Any restrictions to use by non-academic:] no restriction
@@ -1269,7 +1292,7 @@ library in languages like Scala, Java, R, Jython, JRuby.
   Test suite consists of a pipe delimited input (scientific name) and parsed
   output in JSON format.
 
-  \subsection*{Additional file 2 --- README.rst.html}
+  \subsection*{Additional file 3 --- README.rst.html}
   README.rst file that is converted to HTML format. It is also available at
   project home page \cite{gnparser}.
 
@@ -1298,7 +1321,7 @@ The authors declare that they have no competing interests.
 
 DYM and AAM designed \textit{gnparser}. DYM created requirements and test
 suite. AAM optimized \textit{gnparser} for speed, refactored it into three
-internal subprojects.  DYM set Docker containers and Kubernetes scripts. DYM
+internal subprojects. DYM set Docker containers and Kubernetes scripts. DYM
 and AAM wrote online documentation and JSON schema to formalize output. DJP
 corrected parser's results, calibrated quality output and errors output. DYM
 and AAM drafted manuscript and DJP edited its final version. All authors read
@@ -1307,7 +1330,10 @@ and approved the final manuscript.
 \section*{Acknowledgements}
 
 This work is supported by National Science Foundation under grant number NSF
-DBI-1356347
+DBI-1356347. The authors thank administrators of the Species File Group for
+generous and much needed finanical and logistic support during the transfer of
+the GNA grant from the Marine Biological Laboratory to our new home at
+University of Illinois.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%

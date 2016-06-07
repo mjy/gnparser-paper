@@ -7,8 +7,10 @@
 *.blg
 *.dvi
 *.rtf
+gnparser.html
 t
 .latexmkrc
+.Rhistory
 *.json
 *.rb
 *.md
@@ -20,3 +22,4 @@ t
 .idea
 *~
 *.swp
+.DS_Store
