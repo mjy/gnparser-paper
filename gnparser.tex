@@ -398,20 +398,18 @@ must recognize which name-strings represent the same scientific name.
 Table~\ref{table:carex} illustrates that there is no single correct way to
 spell scientific names. Because of such variations, less than 15\% of the names
 in comparisons of large biological databases could be matched based on exact
-spellings of name-strings \cite{Patterson2016}. In order to improve this
-simple metric for interoperability, we need to be able to identify such
-spelling variants as the same name, a process referred to as ``lexical
-reconciliation''. Reconciliation involves linking alternative name-strings
-(whether spelling variants, nomenclatural variants, identifiers, common names,
-or surrogates for names) for the same taxon into reconciliation groups. Most
-biologists do this intuitively --- they recognize that the name-strings in
-Table~\ref{table:carex} refer to the same taxon. They do so by ``parsing'' the
-name-strings into elements (genus name, species name, authors, ranks etc.) and
-mentally discarding less significant elements such as annotations and
-authorship. It then becomes clear all of name-strings have a common ``canonical
-form'' --- \textbf{Carex scirpoidea convoluta}. Further analysis of the
-name-strings would reveal two different reconciliation groups for, probably,
-one concept:
+spellings of name-strings \cite{Patterson2016}. In order to improve this simple
+metric for interoperability, we need to be able to identify such spelling
+variants as the same name, a process referred to as ``lexical reconciliation''.
+Lexical reconciliation involves linking alternative spelling variants for the
+same taxon into a "lexical group". Most biologists do this intuitively ---
+they recognize that the name-strings in Table~\ref{table:carex} refer to the
+same taxon. They do so by ``parsing'' the name-strings into elements (genus
+name, species name, authors, ranks etc.) and mentally discarding less
+significant elements such as annotations and authorship. It then becomes clear
+all of name-strings have a common ``canonical form'' --- \textbf{Carex
+scirpoidea convoluta}. Further analysis of the name-strings would reveal two
+different lexical groups for, probably, one concept:
 
 \begin{itemize}
 
@@ -466,8 +464,8 @@ procedure during a parsing event. As a result complex regular expression-based
 parsers are difficult to implement and maintain, and functions such as error
 recovery, detailed warnings, descriptions of errors are missing.
 
-We wanted an approach able to deal with the most complex scientific names of
-broader complexity to give more flexibility than can be achieved with a regular
+We wanted an approach able to deal with scientific names of a very broad
+complexity scope to give more flexibility than can be achieved with a regular
 expression approach. We believe that a general use parser should satisfy the
 following requirements.
 
@@ -506,7 +504,7 @@ following requirements.
 
 These requirements became our design goals. Based on our experience with
 prototype systems, we selected Parsing Expression Grammars and Scala language
-for the following reasons.
+for the reasons described below.
 
 \subsection*{Adoption of Parsing Expression Grammars}
 
@@ -515,7 +513,7 @@ for parsing strings. PEG allows developers to define the rules (``grammar'')
 which describe general structure of target strings. In our case, such rules can
 be used to deconstruct scientific names. The rules are built from the ground
 up, starting from the simplest --- such as a combination of ``characters''
-separated by ``spaces''. That process will identify most `words'. Characters
+separated by ``spaces''. That process will identify most ``words''. Characters
 can be divided into digits and other characters to make dates identifiable.
 Further rules can be applied, such as a ``genus'' rule would describe a part of
 a name-string in which the first word begins with combination of a
@@ -568,17 +566,17 @@ the most popular bio-library in the Ruby language \cite{biogems}.
 
 We were pleased with PEG approach for scientific names parsing, but now regard
 the \textit{biodiversity} parser library as a working prototype. It has allowed
-us to identify problems and implement improvements in order to build a
-production parser.
+us to identify problems and implement improvements in order to build a better,
+faster parser.
 
 \subsection*{Adoption of Scala}
 
 The \textit{biodiversity} package has performance and scalability issues
 because of the choice of Ruby as its programming language. Ruby is one of the
 best languages for rapid prototyping, but it is an interpreted dynamic language
-with, originally, a single-threaded runtime in a virtual machine. This makes it
-slow and inappropriate for rapid service or large tasks. We determined that we
-needed an environment with the following properties:
+with, originally, a single-threaded runtime during execution. This makes it
+slow and inappropriate for rapid service or ``Big Data'' tasks. We determined
+that we needed an environment with the following properties:
 
 \begin{itemize}
 
@@ -624,7 +622,9 @@ capacity of Scala \cite{Burmako:2013:SML:2489837.2489840} to optimize the
 compilation of the code and the subsequent running of the program. As a result
 the software performs with high efficiency. With this combination, the
 \textit{gnparser} library achieved a significant boost in speed, scalability,
-and portability. We limited this version to work with scientific names that
+and portability.
+
+We limited this version to work with scientific names that
 comply with the botanical, zoological, and prokaryotic codes of nomenclature,
 but not with names of viruses because they are formed in different ways
 \cite{ICTV, Patterson2016} and would need a different PEG.
