@@ -668,26 +668,31 @@ modules:
 
 \end{itemize}
 
-  \item ``\textit{spark-python}'' contains facilities to use
-  ``\textit{gnparser}'' from Python Spark. \marginpar{Should we describe
-    PySpark support in details?}
+  \item ``\textit{spark-python}'' module contains facilities to use
+    ``\textit{gnparser}'' with Apache Spark scripts written in Python. Apache
+    Spark is a highly distributive and scalable development environment for
+    processing massive sets of data (``Big Data''). Spark is written in Scala,
+    but can also be used with Python, R and Java languages. Spark programs
+    written in Java and Scala are able to run ``\textit{parser}'' in
+    distributed fashion natively. The ``\textit{spark-python}'' project makes
+    such use possible for Python programs as well.
 
-  \item ``\textit{examples}'' contains examples to assist developers in adding
-    ``\textit{parser}'' functionality into other popular programming languages
-    such as Java, Scala, Jython, JRuby, and R.
+  \item ``\textit{examples}'' module contains examples to assist developers in
+    adding ``\textit{parser}'' functionality into other popular programming
+    languages such as Java, Scala, Jython, JRuby, and R.
 
-  \item ``\textit{runner}'' contains the code that allows users to run
-    ``\textit{parser}'' from a command line as a standalone tool or to run it as
-    a TCP/IP socket or HTTP web server. ``\textit{runner}'' depends on the
-    ``\textit{parser}''. The core part is the launch script ``\textit{gnparse}''
-    (for Linux/Mac and Windows) that creates a JVM instance and runs
-    ``\textit{parser}'' on multiple threads against the input provided via a
-    socket or file. The ``\textit{runner}'' also contains a web application and
-    a RESTful interface as simpler methods to access ``\textit{parser}''. It
-    depends on the ``\textit{parser}'' library.  ``\textit{web}'' achieves
-    interactions with ``\textit{parser}'' via HTTP protocol. It works both with
-    simple HTML and REST API interfaces.  Figure~\ref{figure:webgui} illustrates
-    a parsing example using the web-interface. Socket and REST services use Akka
+  \item ``\textit{runner}'' module contains the code that allows users to run
+    ``\textit{parser}'' from a command line as a standalone tool or to run it
+    as a TCP/IP socket or HTTP web server. It depends on the
+    ``\textit{parser}'' module. The core part is the launch script
+    ``\textit{gnparse}'' (for Linux/Mac and Windows) that creates a JVM
+    instance and runs ``\textit{parser}'' on multiple threads against the input
+    provided via a socket or file. The ``\textit{runner}'' also contains a web
+    application and a RESTful interface as simpler methods to access
+    ``\textit{parser}''. ``\textit{web}'' achieves interactions with
+    ``\textit{parser}'' via HTTP protocol. It works both with simple web (HTML)
+    and REST API interfaces. Figure~\ref{figure:webgui} illustrates a parsing
+    example using the web-interface. Socket and REST services use Akka
     framework which makes them highly concurrent and scalable.
 
 \end{enumerate}
@@ -740,7 +745,7 @@ file [see additional file README.rst.html].
 
 \subsection*{Testing Methods}
 
-Data for our tests were packages of 1,000 and 100,000 name-strings randomly
+Data for our tests were sets of 1,000 and 100,000 name-strings randomly
 chosen from 24 million name-strings of the Global Names Index \cite{gn:index}.
 The resulting datasets consisted of strings acquired from a variety of data
 sources and were a mixture of well-formed names, names with formatting and
@@ -784,7 +789,7 @@ all detected name-strings. It is is calculated as:
 \[Precision = \dfrac{N_{tp}}{N_{tp} + N_{fp}}\]
 
 $Recall$ --- the proportion of correctly detected name-strings relative to
-all parseable name-strings and calculated as:
+all parseable name-strings and is calculated as:
 
 \[Recall = \dfrac{N_{tp}}{N_{tp} + N_{fn}}\]
 
@@ -834,11 +839,11 @@ processing of 1,000,000 random name-strings from GNI.
 
 To study the effects of parallel execution on throughput we used the
 \textit{ParallelParser} class from \textit{biodiversity} parser. We used
-\textit{gnparse} (a command line-based script) for \textit{gnparser}. For GBIF
-\textit{name-parser}, we created a thin wrapper with multi-threaded
-capabilities \cite{gbifparser}. The following versions had been used for
-throughput benchmarks: \textit{gnparser} v. 0.3.1, GBIF \textit{name-parser} v.
-0.1.0, \textit{biodiversity} v. 3.4.1.
+`\textit{gnparse file --simple}' (a command line-based script set to return
+simplified output) for \textit{gnparser}. For GBIF \textit{name-parser}, we
+created a thin wrapper with multi-threaded capabilities \cite{gbifparser}. The
+following versions had been used for throughput benchmarks: \textit{gnparser}
+v. 0.3.1, GBIF \textit{name-parser} v.  0.1.0, \textit{biodiversity} v. 3.4.1.
 
 \section*{Results and Discussion}\label{sec:discussion}
 
@@ -1027,7 +1032,7 @@ we have presented to it.
       \hline
       \multirow{1}{*}Threads & gnparser & gbif-paser & biodiversity
       & \multicolumn{3}{c |}{Ratio} \\
-      \cline{5--7}
+      \cline{5-7}
       & & & & gn & gbif & bio \\
       \hline
       1  & 8178  & 6389  & 1111 & 1 & 0.78 & 0.14 \\
@@ -1044,8 +1049,8 @@ we have presented to it.
 \subsection*{Parsing Completeness}
 
 The extraction of canonical forms from name-strings representing scientific
-names is the most useful and widely used parsing goal. Sometimes, however, this
-may not be sufficient because the canonical form does not determine a name
+names is the most beneficial and widely used parsing goal. Sometimes, however,
+this may not be sufficient because the canonical form does not determine a name
 completely.
 
 In the example in Table~\ref{table:carex} \textbf{Carex scirpoidea convoluta}
@@ -1185,7 +1190,7 @@ Improving the parser will increase user satisfaction elsewhere.
 
 Results on the speed performance are given in Figure~\ref{figure:throughput}.
 Depending on a number of CPU threads, \textit{gnparser} had been
-$\approx10-25\%$ faster than \textit{gbif-parser}. On 1 thread
+$\approx10-20\%$ faster than \textit{gbif-parser}. On 1 thread
 \textit{gnparser} was 7 times faster than \textit{biodiversity}, 10 times
 faster on 4 threads, and 14 times faster on 12 threads.
 
@@ -1214,15 +1219,16 @@ The same approach has now been adopted with the GBIF \textit{name-parser}
 
 We designed \textit{gnparser} with accessibility in mind from the outset. Scala
 language allows the use of \textit{gnparser} as a library in Scala, Java,
-Jython, JRuby, R and a variety of other languages based on Java Virtual
-Machine. If users want to use \textit{gnparser} in some non-JVM language
+Jython, JRuby and a variety of other languages based on Java Virtual Machine it
+can also be used natively in R and Python via JVM-binding libraries. If
+programmers want to use \textit{gnparser} in some JVM-incompatible language
 they can connect to the parser via a socket server interface. There is also a
 command line tool, a web interface, and a RESTful API.
 
 We pay close attention to documentation, trying to keep it detailed, clear, and
 up to date. We have an extensive test suite [see additional file
-test\_data.txt] that describes the parser's behavior and is a source of
-examples of parser functionality and output format.
+test\_data.txt] that describes the parser's behavior and contains examples of
+\textit{gnparser} functionality and output format.
 
 This commitment to accessibility creates a larger potential audience for the
 parser, and will help many researchers and programmers to deal with the
