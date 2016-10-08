@@ -22,3 +22,4 @@ t
 *~
 *.swp
 .DS_Store
+.vim.custom
