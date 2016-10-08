@@ -1,0 +1,494 @@
+\newcommand{\noop}[1]{}
+\begin{thebibliography}{38}
+% BibTex style file: bmc-mathphys.bst (version 1.01), 2012-01-06
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\textsf{#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem{Patterson2010}
+\begin{barticle}
+\bauthor{\bsnm{Patterson}, \binits{D.J.}},
+\bauthor{\bsnm{Cooper}, \binits{J.}},
+\bauthor{\bsnm{Kirk}, \binits{P.M.}},
+\bauthor{\bsnm{Pyle}, \binits{R.L.}},
+\bauthor{\bsnm{Remsen}, \binits{D.P.}}:
+\batitle{{Names are key to the big new biology}}.
+\bjtitle{Trends in Ecology and Evolution}
+\bvolume{25}(\bissue{12}),
+\bfpage{686}--\blpage{691}
+(\byear{2010}).
+doi:\doiurl{10.1016/j.tree.2010.09.004}
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem{Patterson2016}
+\begin{barticle}
+\bauthor{\bsnm{Patterson}, \binits{D.}},
+\bauthor{\bsnm{Mozzherin}, \binits{D.}},
+\bauthor{\bsnm{Shorthouse}, \binits{D.}},
+\bauthor{\bsnm{Thessen}, \binits{A.}}:
+\batitle{Challenges with using names to link digital biodiversity information}.
+\bjtitle{Biodiversity Data Journal}
+\bvolume{4},
+\bfpage{8080}
+(\byear{2016}).
+doi:\doiurl{10.3897/BDJ.4.e8080}
+\end{barticle}
+\endbibitem
+
+%%% 3
+\bibitem{Leary2007}
+\begin{barticle}
+\bauthor{\bsnm{Leary}, \binits{P.R.}},
+\bauthor{\bsnm{Remsen}, \binits{D.P.}},
+\bauthor{\bsnm{Norton}, \binits{C.N.}},
+\bauthor{\bsnm{Patterson}, \binits{D.J.}},
+\bauthor{\bsnm{Sarkar}, \binits{I.N.}}:
+\batitle{{uBioRSS: Tracking taxonomic literature using RSS}}.
+\bjtitle{Bioinformatics}
+\bvolume{23}(\bissue{11}),
+\bfpage{1434}--\blpage{1436}
+(\byear{2007}).
+doi:\doiurl{10.1093/bioinformatics/btm109}
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem{aho1992foundations}
+\begin{bbook}
+\bauthor{\bsnm{Aho}, \binits{A.V.}},
+\bauthor{\bsnm{Ullman}, \binits{J.D.}}:
+\bbtitle{Foundations of Computer Science}
+vol. \bseriesno{2}.
+\bpublisher{Computer Science Press New York}, \blocation{???}
+(\byear{1992})
+\end{bbook}
+\endbibitem
+
+%%% 5
+\bibitem{gbifNameParser}
+\begin{botherref}
+{GBIF} name-parser.
+\url{https://github.com/gbif/name-parser/releases/tag/name-parser-2.10}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 6
+\bibitem{VandenBerghe2015}
+\begin{barticle}
+\bauthor{\bsnm{{Vanden Berghe}}, \binits{E.}},
+\bauthor{\bsnm{Coro}, \binits{G.}},
+\bauthor{\bsnm{Bailly}, \binits{N.}},
+\bauthor{\bsnm{Fiorellato}, \binits{F.}},
+\bauthor{\bsnm{Aldemita}, \binits{C.}},
+\bauthor{\bsnm{Ellenbroek}, \binits{A.}},
+\bauthor{\bsnm{Pagano}, \binits{P.}}:
+\batitle{{Retrieving taxa names from large biodiversity data collections using
+  a flexible matching workflow}}.
+\bjtitle{Ecological Informatics}
+\bvolume{28},
+\bfpage{29}--\blpage{41}
+(\byear{2015}).
+doi:\doiurl{10.1016/j.ecoinf.2015.05.004}
+\end{barticle}
+\endbibitem
+
+%%% 7
+\bibitem{yu1997handbook}
+\begin{botherref}
+\oauthor{\bsnm{Yu}, \binits{S.}}:
+Handbook of formal languages, regular languages
+(1997)
+\end{botherref}
+\endbibitem
+
+%%% 8
+\bibitem{Ford2004}
+\begin{bchapter}
+\bauthor{\bsnm{Ford}, \binits{B.}}:
+\bctitle{{Parsing Expression Grammars: A Recognition-Based Syntactic
+  Foundation}}.
+In: \bbtitle{Proceedings of the 31st ACM SIGPLAN-SIGACT Symposium on Principles
+  of Programming Languages},
+pp. \bfpage{111}--\blpage{122}
+(\byear{2004})
+\end{bchapter}
+\endbibitem
+
+%%% 9
+\bibitem{biodiversity}
+\begin{botherref}
+GlobalNamesArchitecture/biodiversity: Scientific Name Parser.
+\url{https://github.com/GlobalNamesArchitecture/biodiversity}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 10
+\bibitem{treetop}
+\begin{botherref}
+Treetop.
+\url{http://treetop.rubyforge.org/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 11
+\bibitem{bdiv-downloads}
+\begin{botherref}
+search | RubyGems.org | your community gem host.
+\url{https://rubygems.org/search?utf8=\%E2\%9C\%93\&query=biodiversity}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 12
+\bibitem{eol}
+\begin{botherref}
+Encyclopedia of Life.
+\url{http://eol.org/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 13
+\bibitem{carms}
+\begin{botherref}
+Canadian Register of Marine Species.
+\url{http://www.marinespecies.org/carms/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 14
+\bibitem{iplant}
+\begin{botherref}
+iPlant Taxonomic Name Resolution Service.
+\url{http://tnrs.iplantcollaborative.org/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 15
+\bibitem{worms}
+\begin{botherref}
+Wo{RMS} - World Register of Marine Species.
+\url{http://www.marinespecies.org/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 16
+\bibitem{biogems}
+\begin{botherref}
+Ruby Libraries for Biology.
+\url{http://biogems.info/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 17
+\bibitem{odersky2004overview}
+\begin{botherref}
+\oauthor{\bsnm{Odersky}, \binits{M.}},
+\oauthor{\bsnm{Altherr}, \binits{P.}},
+\oauthor{\bsnm{Cremet}, \binits{V.}},
+\oauthor{\bsnm{Emir}, \binits{B.}},
+\oauthor{\bsnm{Maneth}, \binits{S.}},
+\oauthor{\bsnm{Micheloud}, \binits{S.}},
+\oauthor{\bsnm{Mihaylov}, \binits{N.}},
+\oauthor{\bsnm{Schinz}, \binits{M.}},
+\oauthor{\bsnm{Stenman}, \binits{E.}},
+\oauthor{\bsnm{Zenger}, \binits{M.}}:
+An overview of the scala programming language.
+Technical report
+(2004)
+\end{botherref}
+\endbibitem
+
+%%% 18
+\bibitem{parboiled2}
+\begin{botherref}
+A macro-based {PEG} parser generator for Scala 2.10+.
+\url{https://github.com/GlobalNamesArchitecture/parboiled2}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 19
+\bibitem{myltsev-parboiled2}
+\begin{botherref}
+\oauthor{\bsnm{Myltsev}, \binits{A.}},
+\oauthor{\bsnm{Doenitz}, \binits{M.}}:
+parboiled2: Improved parsing expression grammars parsers generator in scala
+\end{botherref}
+\endbibitem
+
+%%% 20
+\bibitem{parboiled2-gna}
+\begin{botherref}
+GlobalNamesArchitecture/parboiled2: A macro-based {PEG} parser generator for
+  Scala 2.10+.
+doi:\doiurl{10.5281/zenodo.50340}.
+\url{https://github.com/GlobalNamesArchitecture/parboiled2}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 21
+\bibitem{moors2008parser}
+\begin{botherref}
+\oauthor{\bsnm{Moors}, \binits{A.}},
+\oauthor{\bsnm{Piessens}, \binits{F.}},
+\oauthor{\bsnm{Odersky}, \binits{M.}}:
+Parser combinators in scala
+(2008)
+\end{botherref}
+\endbibitem
+
+%%% 22
+\bibitem{Burmako:2013:SML:2489837.2489840}
+\begin{bchapter}
+\bauthor{\bsnm{Burmako}, \binits{E.}}:
+\bctitle{Scala macros: Let our powers combine!: On how rich syntax and static
+  types work with metaprogramming}.
+In: \bbtitle{Proceedings of the 4th Workshop on Scala}.
+\bsertitle{SCALA '13},
+pp. \bfpage{3}--\blpage{1310}.
+\bpublisher{ACM},
+\blocation{New York, NY, USA}
+(\byear{2013}).
+doi:\doiurl{10.1145/2489837.2489840}.
+\burl{http://doi.acm.org/10.1145/2489837.2489840}
+\end{bchapter}
+\endbibitem
+
+%%% 23
+\bibitem{ICTV}
+\begin{bbook}
+\bauthor{\bsnm{{King, A.M.Q., Adams, M.J., Carstens, E.B., Lefkowitz, E.J. }},
+  \binits{E.}}:
+\bbtitle{{Virus Taxonomy: Classification and Nomenclature of Viruses: Ninth
+  Report of the International Committee on Taxonomy of Viruses.}},
+pp. \bfpage{1}--\blpage{1338}
+(\byear{2011})
+\end{bbook}
+\endbibitem
+
+%%% 24
+\bibitem{bray2014javascript}
+\begin{botherref}
+\oauthor{\bsnm{Bray}, \binits{T.}}:
+The javascript object notation ({JSON}) data interchange format
+(2014)
+\end{botherref}
+\endbibitem
+
+%%% 25
+\bibitem{gnparser-json}
+\begin{botherref}
+{JSON} schema for gnparser output.
+\url{http://globalnames.org/schemas/gnparser.json}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 26
+\bibitem{maven-globalnames}
+\begin{botherref}
+Maven Central: Global Names Artifacts.
+\url{https://search.maven.org/#search|ga|1|globalnames}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 27
+\bibitem{gnparser-docker}
+\begin{botherref}
+Global Names Parser Docker Image.
+\url{https://hub.docker.com/r/gnames/gnparser/}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 28
+\bibitem{gn:index}
+\begin{botherref}
+Global Names Index.
+\url{http://gni.globalnames.org}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 29
+\bibitem{Boyle2013}
+\begin{barticle}
+\bauthor{\bsnm{Boyle}, \binits{B.}},
+\bauthor{\bsnm{Hopkins}, \binits{N.}},
+\bauthor{\bsnm{Lu}, \binits{Z.}},
+\bauthor{\bsnm{{Raygoza Garay}}, \binits{J.A.}},
+\bauthor{\bsnm{Mozzherin}, \binits{D.}},
+\bauthor{\bsnm{Rees}, \binits{T.}},
+\bauthor{\bsnm{Matasci}, \binits{N.}},
+\bauthor{\bsnm{Narro}, \binits{M.L.}},
+\bauthor{\bsnm{Piel}, \binits{W.H.}},
+\bauthor{\bsnm{McKay}, \binits{S.J.}},
+\bauthor{\bsnm{Lowry}, \binits{S.}},
+\bauthor{\bsnm{Freeland}, \binits{C.}},
+\bauthor{\bsnm{Peet}, \binits{R.K.}},
+\bauthor{\bsnm{Enquist}, \binits{B.J.}}:
+\batitle{{The taxonomic name resolution service: an online tool for automated
+  standardization of plant names.}}
+\bjtitle{BMC bioinformatics}
+\bvolume{14}(\bissue{1}),
+\bfpage{16}
+(\byear{2013}).
+doi:\doiurl{10.1186/1471-2105-14-16}
+\end{barticle}
+\endbibitem
+
+%%% 30
+\bibitem{gbifparser}
+\begin{botherref}
+gbifparser: v0.1.0
+(2015).
+doi:\doiurl{10.5281/zenodo.34848}.
+\url{http://dx.doi.org/10.5281/zenodo.34848}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 31
+\bibitem{ubio:parser}
+\begin{botherref}
+uBio Name Parser.
+\url{http://www.ubio.org/tools/explode.php}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 32
+\bibitem{botsociety:parser}
+\begin{botherref}
+Botanical Society of Britain and Ireland Taxon Name Parser.
+\url{http://bsbidb.org.uk/taxonnameparser.php}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 33
+\bibitem{Sautter2006}
+\begin{barticle}
+\bauthor{\bsnm{Sautter}, \binits{G.}},
+\bauthor{\bsnm{B{\"{o}}hm}, \binits{K.}},
+\bauthor{\bsnm{Agosti}, \binits{D.}}:
+\batitle{{A combining approach to Find All taxon names ( FAT ) in legacy
+  biosystematics literature}}.
+\bjtitle{Biodiversity Informatics}
+\bvolume{3},
+\bfpage{46}--\blpage{58}
+(\byear{2006}).
+doi:\doiurl{10.2307/1216144}
+\end{barticle}
+\endbibitem
+
+%%% 34
+\bibitem{Akella2012}
+\begin{barticle}
+\bauthor{\bsnm{Akella}, \binits{L.M.}},
+\bauthor{\bsnm{Norton}, \binits{C.N.}},
+\bauthor{\bsnm{Miller}, \binits{H.}}:
+\batitle{{NetiNeti: discovery of scientific names from text using machine
+  learning methods.}}
+\bjtitle{BMC bioinformatics}
+\bvolume{13}(\bissue{1}),
+\bfpage{211}
+(\byear{2012}).
+doi:\doiurl{10.1186/1471-2105-13-211}
+\end{barticle}
+\endbibitem
+
+%%% 35
+\bibitem{Kluyver2013}
+\begin{barticle}
+\bauthor{\bsnm{Kluyver}, \binits{T.A.}},
+\bauthor{\bsnm{Osborne}, \binits{C.P.}}:
+\batitle{Taxonome: a software package for linking biological species data}.
+\bjtitle{Ecology and Evolution}
+\bvolume{3}(\bissue{5}),
+\bfpage{1262}--\blpage{1265}
+(\byear{2013}).
+doi:\doiurl{10.1002/ece3.529}
+\end{barticle}
+\endbibitem
+
+%%% 36
+\bibitem{gnparser}
+\begin{botherref}
+GlobalNamesArchitecture/gnparser: Split scientific names to meaningful elements
+  with meta information.
+\url{https://github.com/GlobalNamesArchitecture/gnparser}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+%%% 37
+\bibitem{FNA2002}
+\begin{bbook}
+\bauthor{\bsnm{{Flora of North America Editorial Committee}}, \binits{E.}}:
+\bbtitle{{Flora of North America. Vol. 23, Magnoliophyta: Commelinidae (in
+  Part): Cyperaceae}},
+p. \bfpage{551}
+(\byear{2002})
+\end{bbook}
+\endbibitem
+
+%%% 38
+\bibitem{gnparser-web}
+\begin{botherref}
+Global Names Parser Web App.
+\url{http://parser.globalnames.org}
+Accessed 15 September 2016
+\end{botherref}
+\endbibitem
+
+\end{thebibliography}

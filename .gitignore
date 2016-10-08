@@ -2,10 +2,11 @@
 *.fdb_latexmk
 *.fls
 *.log
-*.bbl
 *.blg
 *.dvi
 *.rtf
+*.fff
+*.lof
 gnparser.html
 t
 .latexmkrc
