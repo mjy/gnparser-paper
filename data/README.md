@@ -12,6 +12,30 @@ Files
 `100k.txt`
 : 100,000 name-strings randomly taken from Global Names Index dataset. These names had been used to calculate precision of detecting non name-strings.
 
+``pr-biodiversity.tsv``
+: parsing results of 1000 name-strings for ``biodiversity`` parser
+
+``pr-gbif.tsv``
+: parsing results of 1000 name-strings for GBIF ``name-parser``
+
+``pr-gnparser.tsv``
+: parsing results of 1000 name-strings for ``gnparser``
+
+``pr-imarine``
+: parsing results of 1000 name-strings for `YASMEEN` parser
+
+``unparsed-biodiversity.txt``
+: log of strings non-parseable by ``biodiversity`` parser from ``100k.txt``
+
+``unparsed-comparisons.txt``
+: differences in unparsed result sets from GBIF ``name-parser`` and ``gnparser``
+
+``unparsed-gbif.txt``
+: log of strings non-parseable by GBIF ``name-parser`` from ``100k.txt``
+
+``unparsed-gnparser.txt``
+: log of strings non-parseable by ``gnparser`` from ``100k.txt``
+
 Precision/Recall Calculation
 ----------------------------
 
@@ -45,4 +69,3 @@ We parsed 100 000 names and then selected only unparsed names from the mix for a
 Differences between parsed and unparsed results are in
 
 ``unparsed_comparisons.txt``
-
