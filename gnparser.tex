@@ -122,6 +122,24 @@
     {[}{{{\color{delim}{[}}}}{1}
     {]}{{{\color{delim}{]}}}}{1}
     {ü}{{{\"u}}}{1}}
+
+  % "define" Scala
+  \lstdefinelanguage{scala}{
+    morekeywords={abstract,case,catch,class,def,%
+      do,else,extends,false,final,finally,%
+      for,if,implicit,import,match,mixin,%
+      new,null,object,override,package,%
+      private,protected,requires,return,sealed,%
+      super,this,throw,trait,true,try,%
+      type,val,var,while,with,yield},
+    otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+    sensitive=true,
+    morecomment=[l]{//},
+    morecomment=[n]{/*}{*/},
+    morestring=[b]",
+    morestring=[b]',
+    morestring=[b]"""
+  }
 \endlocaldefs
 
 
@@ -293,6 +311,39 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
 % <put your article body there>
+
+\section*{Addendum (Alex)}
+
+We designed \textit{gnparser} for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally. That means \textit{gnparser} accepts only a string that represents scientific name (up to 30 words [TODO: compute quantiles]). Also \textit{gnparser} doesn't have access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc. \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (\textbf{x} for hybrid formula, \textbf{ssp.} for subspecies rank, \textbf{var.} for variance, etc.), digits for years, etc. and their inter-dependencies. Taking into account possible amount of input, \textit{gnparser} needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (\textit{gnparser} should provide meta information on every part of input string). \textbf{f.} is parsed as \textbf{forma} and not as \textbf{filius} (warning is fired instead of ambiguity results).
+
+It makes natural language processing techniques such as named entity recognition [?], statistical parsing [?], strict and fuzzy context-free grammars [?] that produces ambiguous non-deterministic results not applicable to our demands.
+
+\
+
+\textit{gnparser 0.3.x} contains 76 rules in total. \textit{gnparser} rules in basics are based on primitive rules provided by \textit{parboiled2}. Consider \textbf{yearNumber} rule. Line \#2 states that it matches a year represented as string in form of \textbf{1955}, \textbf{200?}, \textbf{17??}, etc. To keep parsing rule simple, the rule also matches ``ridiculous'' years such as \textbf{10??}, \textbf{2999}. That analysis is up to semantics module that could emit corresponding warnings. Line \#1 tells the parser to capture matched year string with its coordinates (start and end position) in input string. It then passed as a parameter of parser action at line \#3. Parser action is a Scala function (lambda, predefined $def$, or case class apply method) that can produce side effects (such as warnings based on parsed chunk) and return a class instance of type that is provided is rule type signature (\textbf{Rule[Year]}).
+
+\begin{lstlisting}[language=scala]
+def yearNumber: Rule[Year] = rule { capturePos( // #1
+    CharPredicate("12") ~ CharPredicate("0789") ~ Digit ~ (Digit|'?') ~ '?'.? // #2
+  ) ~> { (yPos: CapturePosition) => // #3
+    FactoryAST.year(yPos) // #4
+  }
+}
+\end{lstlisting}
+
+Having notion of \textbf{yearNumber}, we then can assemble more complex inter-dependent rules (lines \#1 to \#6). And finally the notion of \textbf{year} on line \#7 that is prioritized alternative of previously defined rules.
+
+\begin{lstlisting}[language=scala]
+def yearWithChar = rule { yearNumber ~ capturePos(Alpha) } // #1
+def yearWithParens = rule { '(' ~ (yearWithChar | yearNumber) ~ ')' } // #2
+def yearWithPage = rule { (yearWithChar | yearNumber) ~ ':' ~ oneOrMore(Digit) } // #3
+def yearApprox = rule { '[' ~ yearNumber ~ ']' } // #4
+def yearWithDot = rule { yearNumber ~ '.' } // #5
+def yearRange = rule { yearNumber ~ '-' ~ capturePos(Digit.+) ~ (Alpha ++ "?").* } // #6
+def year = rule { yearRange | yearApprox | yearWithParens | // #7
+  yearWithPage | yearWithDot | yearWithChar | yearNumber
+}
+\end{lstlisting}
 
 \section*{Conventions}
 
