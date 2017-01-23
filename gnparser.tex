@@ -64,6 +64,11 @@
 \usepackage{enumitem}
 \usepackage{bera}
 \usepackage{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=large]{todonotes}
+\usepackage[top=1.5cm, bottom=1.5cm, outer=4cm, inner=4cm, heightrounded, marginparwidth=3.5cm, marginparsep=0.2cm]{geometry}
+% \usepackage{marginnote}
+% \setmarginnotefont{\color{blue}}
+
 % \usepackage[nomarkers,figuresonly]{endfloat}
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
@@ -85,7 +90,7 @@
 
 %\def\includegraphic{}
 %\def\includegraphics{}
-\errorcontextlines 10000
+\errorcontextlines1000
 
 % \makeatletter
 % \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
@@ -490,7 +495,9 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 
 \subsection*{Testing Methods}
 
-Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million name-strings of the Global Names Index \cite{gn:index}.  The resulting datasets consisted of strings acquired from a variety of data sources and were a mixture of well-formed names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names.
+\todo{Editor: it's not very clear (to me or the reviewers, apparently) what the evaluation data actually was}
+
+Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI) \cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources. Therefore the resulting datasets should represent data existing ``in the wild'' quite well. The datasets consist out of a randomly chosen mixture of well-formed names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Evaluation data are included in the supplementary material.
 
 We compared performance of \textit{gnparser} with two other projects: \textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by Global Names team), and GBIF \textit{name-parser} \cite{gbifNameParser}. For comparison, we calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a dataset consisted of 1000 name-strings. Another project we considered was the YASMEEN parser from iMarine \cite{VandenBerghe2015}. We found that with our dataset YASMEEN generated dramatically more mistakes than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to finish a full dataset without crashing. We excluded it from further tests.
 
