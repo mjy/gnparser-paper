@@ -522,7 +522,7 @@ def authorsYear: RuleNodeMeta[AuthorsGroup] = rule {
 
 \todo{Editor: it's not very clear (to me or the reviewers, apparently) what the evaluation data actually was}
 
-Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI) \cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources. Therefore the resulting datasets should represent data existing ``in the wild'' quite well. The datasets consist out of a randomly chosen mixture of well-formed names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Evaluation data are included in the supplementary material.
+Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI) \cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources. Therefore the resulting datasets should represent data existing ``in the wild'' quite well. The datasets consist out of a randomly chosen mixture of well-formed names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Name-strings in the sets are independent of each other. Evaluation datasets are included in the supplementary material.
 
 We compared performance of \textit{gnparser} with two other projects: \textit{biodiversity} parser \cite{Boyle2013, biodiversity} (also developed by Global Names team), and GBIF \textit{name-parser} \cite{gbifNameParser}. For comparison, we calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a dataset consisted of 1000 name-strings. Another project we considered was the YASMEEN parser from iMarine \cite{VandenBerghe2015}. We found that with our dataset YASMEEN generated dramatically more mistakes than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to finish a full dataset without crashing. We excluded it from further tests.
 
@@ -780,7 +780,11 @@ We pay close attention to documentation, trying to keep it detailed, clear, and 
 
 This commitment to accessibility creates a larger potential audience for the parser, and will help many researchers and programmers to deal with the problems that arise from variant forms of scientific names.
 
-The summary of results and discussion is depicted in Table~\ref{table:summary}
+\section*{Conclusions}
+
+The summary of results and discussion is depicted in Table~\ref{table:summary}.\todo{What is the difference between biodiversity and gnparser?} We can see that there is a significant similarity between two PEG-based parsers --- \textit{biodiversity} and \textit{gnparser}. Both of them are based on the same algorithmic approach and follow similar design goals. We definitely could continue to modify rules for \textit{biodiversity} and achieve the same or higher level of $Accuracy$ as we have now with \textit{gnparser}. Instead we decided to create a completely new tool from scratch because we found that \textit{biodiversity} is limited in speed, scalability and accessibility. For example at Global Names we often need to reparse 24 million name-strings, and the process was too slow for a production system. Also \textit{gnparser} can be used natively by larger variety of programming languages than \textit{biodiversity}, because JVM-based languages and tools are so widely spread. When we started to work on \textit{gnparser} our first goal was the complete coverage of the \textit{biodiversity}'s test suite. After we achieved the same level of quality the following tuning continued on \textit{gnparser} alone, and \textit{biodiversity} entered maintanance mode. That explains a slight difference in $Accuracy$ by these two parsers.
+
+\textit{gbif-parser} is a high quality product as well, however its regular-expressions-based algorithm limits its usability. Recursive nature of scientific names creates significant obstacles for intrinsically non-recursive algorithms such as regular-expressions. Coverage of multi-infraspecific names as well as hybrids, dealing with recursive patterns in authorship is prohibitively expensive for such approach.
 
 \begin{table}[htb]
   \begin{center}
@@ -807,9 +811,10 @@ The summary of results and discussion is depicted in Table~\ref{table:summary}
   \end{center}
 \end{table}
 
-\section*{Conclusions}
 
-This paper describes \textit{gnparser}, a powerful tool designed to break names of taxa into their semantic elements. This then allows standardization of names by transforming them into a canonical form, a step that in turn dramatically improves name matching and data integration. Parsing aids the discovery of names in sources, and sharing them in standardised forms (for example to create a common index). Parsing further allows users to extract, compare and analyse metadata within the name-strings, and allowing comparisons of the efforts of individuals or to map trends over time. The \textit{gnparser} tool is released under MIT Open source license, contains command line executable, socket, web, and REST services, and is optimized for use as a library in languages like Scala, Java, R, Jython, JRuby.
+
+
+In conclusion in this paper we describe \textit{gnparser}, a powerful tool designed to break names of taxa into their semantic elements. This then allows standardization of names by transforming them into a canonical form, a step that in turn dramatically improves name matching and data integration. Parsing aids the discovery of names in sources, and sharing them in standardised forms (for example to create a common index). Parsing further allows users to extract, compare and analyse metadata within the name-strings, and allowing comparisons of the efforts of individuals or to map trends over time. The \textit{gnparser} tool is released under MIT Open source license, contains command line executable, socket, web, and REST services, and is optimized for use as a library in languages like Scala, Java, R, Jython, JRuby.
 
 \section*{Additional Files}
 
