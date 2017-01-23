@@ -395,10 +395,10 @@ We were pleased with PEG approach for scientific names parsing, but now regard t
 
 \todo{Alternative approaches to parsing: named entity recognition, statistical parsers.}
 
-There is an explosion of algorithms and tools in machine learning and natural language processing and collection of approaches for recognizing parts of texts is growing rapidly. For example there are statistical parsing[?], strict and fuzzy context-free grammars[?], named entity recognition[?]. Unsupervised deep learning in particular looks very interesting in ability to increase quality of entity recognition without extensive curation and programming efforts by a human. At the moment the following design goals influence our decision do not move in these directions for parsing scientific name-strings.
+There is an explosion of algorithms and tools in machine learning and natural language processing and collection of approaches for recognizing parts of texts is growing rapidly. For example there are statistical parsing \cite{charniak1996statistical}, context-free grammars \cite{aho1972theory}, fuzzy context-free grammars \cite{asveld1995fuzzy}, named entity recognition \cite{nadeau2007survey}. Unsupervised deep learning \cite{mikolov2013distributed, schmidhuber2015deep} in particular looks very interesting in ability to increase quality of entity recognition without extensive curation and programming efforts by a human. At the moment the following design goals influence our decision do not move in these directions for parsing scientific name-strings.
 
 \begin{itemize}
-  \item Scale and throuput. We need a name-string parser for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally.
+  \item Scale and throughput. We need a name-string parser for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally.
 
   \item Limited scope. A parser would accept only strings that represents scientific names of limited size and content (usually 1--15 words and mostly representing only a name-string with optional formal annotation). A name-string parser does not have a requirement for scientific name recognition in large bodies of literature.
 
