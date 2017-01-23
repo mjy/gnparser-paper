@@ -321,12 +321,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
 % <put your article body there>
 
-\section*{Addendum (Alex)}
-
-% We designed \textit{gnparser} for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally. That means \textit{gnparser} accepts only a string that represents scientific name (up to 30 words [TODO: compute quantiles]). Also \textit{gnparser} doesn't have access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc. \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (\textbf{x} for hybrid formula, \textbf{ssp.} for subspecies rank, \textbf{var.} for variance, etc.), digits for years, etc. and their inter-dependencies. Taking into account possible amount of input, \textit{gnparser} needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (\textit{gnparser} should provide meta information on every part of input string). \textbf{f.} is parsed as \textbf{forma} and not as \textbf{filius} (warning is fired instead of ambiguity results).
-%
-% It makes natural language processing techniques such as named entity recognition [\?], statistical parsing [\?], strict and fuzzy context-free grammars [\?] that produces ambiguous non-deterministic results not applicable to our demands.
-
 \section*{Conventions}
 
 Throughout the paper we distinguish ``name'', ``scientific name'', and ``name-string''. ``Name'' refers to one or several words that act(s) as a label for a taxon. A ``scientific name'' is a name formed in compliance with a nomenclatural code (Code) or, if beyond the scope of the Codes, is consistent with the expectations of a Code. The term ``name-string'' is the sequence of characters (letters, numbers, punctuation, spaces, symbols) that forms the name. A name can be expressed by many name-strings (for example see Figure~\ref{figure:carex}). There are millions of legitimately formed scientific names and probably billions of possible name-strings for them. We use the term ``elements'' for  components of a name or name-string. Traditionally, scientific names for genera, and taxa below genus are presented in \textit{italics}. In this paper, where we wish to emphasize examples of name-strings, we use \textbf{bold font}.
@@ -396,6 +390,24 @@ In 2008, as a part of the Global Names project, we created a specialized parsing
 The PEG approach allowed us to deal with complex scientific names gracefully.  It gave us flexibility to incorporate edge cases and to detect common mistakes during the parsing process. The library \textit{biodiversity} enjoyed considerable popularity. At the time of writing, it had been downloaded more than 150,000 times \cite{bdiv-downloads}, it is used by many taxon name resolution projects (e.g. Encyclopedia of Life \cite{eol}, Canadian Register of Marine Species (CARMS) \cite{carms}, the iPlant TNRS \cite{iplant}, and World Registry of Marine Species (WoRMS) \cite{worms}. According to statistics compiled by BioRuby, \textit{biodiversity}, at the time of writing, has been the most popular bio-library in the Ruby language \cite{biogems}.
 
 We were pleased with PEG approach for scientific names parsing, but now regard the \textit{biodiversity} parser library as a working prototype. It has allowed us to make further improvements and deliver a better, faster parser.
+
+\subsection*{Other approaches}
+
+\todo{Alternative approaches to parsing: named entity recognition, statistical parsers.}
+
+There is an explosion of algorithms and tools in machine learning and natural language processing and collection of approaches for recognizing parts of texts is growing rapidly. For example there are statistical parsing[?], strict and fuzzy context-free grammars[?], named entity recognition[?]. Unsupervised deep learning in particular looks very interesting in ability to increase quality of entity recognition without extensive curation and programming efforts by a human. At the moment the following design goals influence our decision do not move in these directions for parsing scientific name-strings.
+
+\begin{itemize}
+  \item Scale and throuput. We need a name-string parser for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally.
+
+  \item Limited scope. A parser would accept only strings that represents scientific names of limited size and content (usually 1--15 words and mostly representing only a name-string with optional formal annotation). A name-string parser does not have a requirement for scientific name recognition in large bodies of literature.
+
+  \item Formal grammar. A name-string parser is closer in approach to parsers of programming languages than to tools designed for working with natural languages. Scientific names' grammar is determined by well-defined and formal codes of nomenclature, and therefore have a rather predictable and rigid structure.
+
+  \item Stand-alone approach. A parser doesn't need access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc.\ \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (``x'' for hybrid formula, ``ssp.'' for subspecies rank, ``var.'' for variance, etc.), digits for years, and their inter-dependencies.
+
+  \item Determinism. From our experience we see that in vast majority of cases a parser needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (a parser does not need to recognize a scientific name in text and it should provide meta information on every part of the input string).
+\end{itemize}
 
 \subsection*{Adoption of Scala}
 
