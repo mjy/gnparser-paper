@@ -790,7 +790,18 @@ By `accessibility' we refer to the ability of the software code to be used by a 
 
 Parsing of scientific names is essential for organizing biodiversity data, such that many biodiversity database environments and projects include a parsing algorithm. Examples are uBio \cite{ubio:parser}, the Botanical Society of Britain and Ireland \cite{botsociety:parser}, FAT \cite{Sautter2006}, NetiNeti \cite{Akella2012}, and Taxonome \cite{Kluyver2013}. A modular approach offers an option of re-use and avoids replication of effort. \textit{biodiversity} was the first biodiversity parser to be released as a stand-alone package that could be used as a module --- as it was with the iPlant project \cite{Boyle2013}.  The same approach has now been adopted with the GBIF \textit{name-parser} \cite{gbifNameParser}, \textit{YASMEEN} \cite{VandenBerghe2015}, and \textit{gnparser}.
 
-We designed \textit{gnparser} with accessibility in mind from the outset. Scala language allows the use of \textit{gnparser} as a library in Scala, Java, Jython, JRuby and a variety of other languages based on Java Virtual Machine it can also be used natively in R and Python via JVM-binding libraries. If programmers want to use \textit{gnparser} in some JVM-incompatible language they can connect to the parser via a socket server interface. There is also a command line tool, a web interface, and a RESTful API.
+We designed \textit{gnparser} with accessibility in mind from the outset. Scala language allows the use of \textit{gnparser} as a library in Scala, Java, Jython, JRuby and a variety of other languages based on Java Virtual Machine it can also be used natively in R and Python via JVM-binding libraries. Apache Spark, a Big Data framwork, is also supported. \todo{Show how parser can be used by clients} Here is an example how a client written in Jython can access the \textit{gnparser} functionality.
+
+\begin{lstlisting}{language=python}
+from org.globalnames.parser import ScientificNameParser
+snp = ScientificNameParser.instance()
+result = snp.fromString("Homo sapiens L.").renderCompactJson()
+print result
+\end{lstlisting}
+
+
+If programmers want to use \textit{gnparser} in some JVM-incompatible language they can connect to the parser via a socket server interface. There is also a command line tool, a web interface, and a RESTful API\@. In 2016 Encyclopedia of Life started to parse name-strings using \textit{gnparser} socket server.
+
 
 We pay close attention to documentation, trying to keep it detailed, clear, and up to date. We have an extensive test suite [see additional file test\_data.txt] that describes the parser's behavior and contains examples of \textit{gnparser} functionality and output format.
 
