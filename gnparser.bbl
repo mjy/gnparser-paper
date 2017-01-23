@@ -1,5 +1,5 @@
 \newcommand{\noop}[1]{}
-\begin{thebibliography}{38}
+\begin{thebibliography}{39}
 % BibTex style file: bmc-mathphys.bst (version 1.01), 2012-01-06
 \ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
 \ifx \binits  \undefined \def \binits#1{#1}\fi
@@ -333,6 +333,19 @@ Accessed 15 September 2016
 \endbibitem
 
 %%% 26
+\bibitem{Linne1753}
+\begin{bbook}
+\bauthor{\bsnm{Linne}, \binits{C.V.}}:
+\bbtitle{Plantarum: Exhibentes Plantas Rite Cognitas Ad Genera Relatas Cum
+  Differentiis Specificis, Nominibus Trivialibus, Synonymis Selectis, Locis
+  Natalibus Secundum},
+p. \bfpage{583}
+(\byear{1753}).
+\burl{http://books.google.com/books?hl=en{\&}lr={\&}id=jQ0AAAAAQAAJ{\&}oi=fnd{\&}pg=PA1{\&}dq=Species+plantarum:+exhibentes+plantas+rite+cognitas,+ad+genera+relatas,+cum+differentiis+specificis,+nominibus+trivialibus,+synonymis+selectis,+locis+natalibus,+secundum+systema+sexu}
+\end{bbook}
+\endbibitem
+
+%%% 27
 \bibitem{maven-globalnames}
 \begin{botherref}
 Maven Central: Global Names Artifacts.
@@ -341,7 +354,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 27
+%%% 28
 \bibitem{gnparser-docker}
 \begin{botherref}
 Global Names Parser Docker Image.
@@ -350,7 +363,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 28
+%%% 29
 \bibitem{gn:index}
 \begin{botherref}
 Global Names Index.
@@ -359,7 +372,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 29
+%%% 30
 \bibitem{Boyle2013}
 \begin{barticle}
 \bauthor{\bsnm{Boyle}, \binits{B.}},
@@ -386,7 +399,7 @@ doi:\doiurl{10.1186/1471-2105-14-16}
 \end{barticle}
 \endbibitem
 
-%%% 30
+%%% 31
 \bibitem{gbifparser}
 \begin{botherref}
 gbifparser: v0.1.0
@@ -397,7 +410,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 31
+%%% 32
 \bibitem{ubio:parser}
 \begin{botherref}
 uBio Name Parser.
@@ -406,7 +419,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 32
+%%% 33
 \bibitem{botsociety:parser}
 \begin{botherref}
 Botanical Society of Britain and Ireland Taxon Name Parser.
@@ -415,7 +428,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 33
+%%% 34
 \bibitem{Sautter2006}
 \begin{barticle}
 \bauthor{\bsnm{Sautter}, \binits{G.}},
@@ -431,7 +444,7 @@ doi:\doiurl{10.2307/1216144}
 \end{barticle}
 \endbibitem
 
-%%% 34
+%%% 35
 \bibitem{Akella2012}
 \begin{barticle}
 \bauthor{\bsnm{Akella}, \binits{L.M.}},
@@ -447,7 +460,7 @@ doi:\doiurl{10.1186/1471-2105-13-211}
 \end{barticle}
 \endbibitem
 
-%%% 35
+%%% 36
 \bibitem{Kluyver2013}
 \begin{barticle}
 \bauthor{\bsnm{Kluyver}, \binits{T.A.}},
@@ -461,7 +474,7 @@ doi:\doiurl{10.1002/ece3.529}
 \end{barticle}
 \endbibitem
 
-%%% 36
+%%% 37
 \bibitem{gnparser}
 \begin{botherref}
 GlobalNamesArchitecture/gnparser: Split scientific names to meaningful elements
@@ -471,7 +484,7 @@ Accessed 15 September 2016
 \end{botherref}
 \endbibitem
 
-%%% 37
+%%% 38
 \bibitem{FNA2002}
 \begin{bbook}
 \bauthor{\bsnm{{Flora of North America Editorial Committee}}, \binits{E.}}:
@@ -482,7 +495,7 @@ p. \bfpage{551}
 \end{bbook}
 \endbibitem
 
-%%% 38
+%%% 39
 \bibitem{gnparser-web}
 \begin{botherref}
 Global Names Parser Web App.

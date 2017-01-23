@@ -64,8 +64,9 @@
 \usepackage{enumitem}
 \usepackage{bera}
 \usepackage{xcolor}
-\usepackage[colorinlistoftodos,prependcaption,textsize=large]{todonotes}
-\usepackage[top=1.5cm, bottom=1.5cm, outer=4cm, inner=4cm, heightrounded, marginparwidth=3.5cm, marginparsep=0.2cm]{geometry}
+\usepackage[colorinlistoftodos,prependcaption, textsize=large]{todonotes}
+\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=3cm, heightrounded,
+  marginparwidth=4.5cm, marginparsep=0.2cm]{geometry}
 % \usepackage{marginnote}
 % \setmarginnotefont{\color{blue}}
 
@@ -293,6 +294,9 @@
 %\end{fmbox}% uncomment this for twcolumn layout
 
 \end{frontmatter}
+\newpage
+
+\listoftodos[Notes]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -319,36 +323,9 @@
 
 \section*{Addendum (Alex)}
 
-We designed \textit{gnparser} for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally. That means \textit{gnparser} accepts only a string that represents scientific name (up to 30 words [TODO: compute quantiles]). Also \textit{gnparser} doesn't have access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc. \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (\textbf{x} for hybrid formula, \textbf{ssp.} for subspecies rank, \textbf{var.} for variance, etc.), digits for years, etc. and their inter-dependencies. Taking into account possible amount of input, \textit{gnparser} needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (\textit{gnparser} should provide meta information on every part of input string). \textbf{f.} is parsed as \textbf{forma} and not as \textbf{filius} (warning is fired instead of ambiguity results).
-
-It makes natural language processing techniques such as named entity recognition [?], statistical parsing [?], strict and fuzzy context-free grammars [?] that produces ambiguous non-deterministic results not applicable to our demands.
-
-\
-
-\textit{gnparser 0.3.x} contains 76 rules in total. \textit{gnparser} rules in basics are based on primitive rules provided by \textit{parboiled2}. Consider \textbf{yearNumber} rule. Line \#2 states that it matches a year represented as string in form of \textbf{1955}, \textbf{200?}, \textbf{17??}, etc. To keep parsing rule simple, the rule also matches ``ridiculous'' years such as \textbf{10??}, \textbf{2999}. That analysis is up to semantics module that could emit corresponding warnings. Line \#1 tells the parser to capture matched year string with its coordinates (start and end position) in input string. It then passed as a parameter of parser action at line \#3. Parser action is a Scala function (lambda, predefined $def$, or case class apply method) that can produce side effects (such as warnings based on parsed chunk) and return a class instance of type that is provided is rule type signature (\textbf{Rule[Year]}).
-
-\begin{lstlisting}[language=scala]
-def yearNumber: Rule[Year] = rule { capturePos( // #1
-    CharPredicate("12") ~ CharPredicate("0789") ~ Digit ~ (Digit|'?') ~ '?'.? // #2
-  ) ~> { (yPos: CapturePosition) => // #3
-    FactoryAST.year(yPos) // #4
-  }
-}
-\end{lstlisting}
-
-Having notion of \textbf{yearNumber}, we then can assemble more complex inter-dependent rules (lines \#1 to \#6). And finally the notion of \textbf{year} on line \#7 that is prioritized alternative of previously defined rules.
-
-\begin{lstlisting}[language=scala]
-def yearWithChar = rule { yearNumber ~ capturePos(Alpha) } // #1
-def yearWithParens = rule { '(' ~ (yearWithChar | yearNumber) ~ ')' } // #2
-def yearWithPage = rule { (yearWithChar | yearNumber) ~ ':' ~ oneOrMore(Digit) } // #3
-def yearApprox = rule { '[' ~ yearNumber ~ ']' } // #4
-def yearWithDot = rule { yearNumber ~ '.' } // #5
-def yearRange = rule { yearNumber ~ '-' ~ capturePos(Digit.+) ~ (Alpha ++ "?").* } // #6
-def year = rule { yearRange | yearApprox | yearWithParens | // #7
-  yearWithPage | yearWithDot | yearWithChar | yearNumber
-}
-\end{lstlisting}
+% We designed \textit{gnparser} for very particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally. That means \textit{gnparser} accepts only a string that represents scientific name (up to 30 words [TODO: compute quantiles]). Also \textit{gnparser} doesn't have access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc. \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (\textbf{x} for hybrid formula, \textbf{ssp.} for subspecies rank, \textbf{var.} for variance, etc.), digits for years, etc. and their inter-dependencies. Taking into account possible amount of input, \textit{gnparser} needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (\textit{gnparser} should provide meta information on every part of input string). \textbf{f.} is parsed as \textbf{forma} and not as \textbf{filius} (warning is fired instead of ambiguity results).
+%
+% It makes natural language processing techniques such as named entity recognition [\?], statistical parsing [\?], strict and fuzzy context-free grammars [\?] that produces ambiguous non-deterministic results not applicable to our demands.
 
 \section*{Conventions}
 
@@ -480,6 +457,54 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 \end{enumerate}
 
 ``\textit{parser}`` and ``\textit{examples}`` can run in JVM~1.6+.  ``\textit{runner}'' requires JVM~1.8+. Documentation is available in a README file [see additional file README.rst.html].
+
+\subsection*{Parsing rules}
+
+\todo{How many PEG rules did you create? Please provide a set of sample rules and discuss}
+\textit{gnparser} v0.3.3 contains 76 PEG rules. These rules in turn make use of more elementary rules provided by \textit{parboiled2} library. The rules distill knowledge received through many hours of conversations with leading taxonomists, studying nomenclatural codes, implementing feedback of the users.
+Lets follow a few of such rules as an example:
+
+A \textit{yearNumber} rule detects a year when a name was published. \textit{Rule[Year]} is a type of the returning value of the rule. Using domain-specific language and elementary rules of \textit{parboiled2} we capture the start and the end positions of a year substring (lines \#1 and \#2). This capture matches a substring that is a common representation of a year in scientific name-strings. A publication year is usually a number between 1753 \cite{Linne1753} and present. A year substring might have one or two digits substituted with question marks if the exact year of a publication is unknown. The capture is then passed as a parameter to a parser action (line \#3). Parser action, which is a Scala function, might produce side effects (such as warnings) and returns a class instance of defined type (\textit{Rule[Year]} in this case).
+
+\begin{lstlisting}[language=scala]
+def yearNumber: Rule[Year] = rule { capturePos( // #1
+    CharPredicate("12") ~ CharPredicate("0789") ~ \
+      Digit ~ (Digit|'?') ~ '?'.? // #2
+  ) ~> { (yPos: CapturePosition) => // #3
+    FactoryAST.year(yPos) // #4
+  }
+}
+\end{lstlisting}
+
+Later we assemble more complex inter-dependent rules (lines \#5 to \#10). And finally the we combine all of them into the rule \textit{year} on line \#11 that consists of prioritized alternatives of all previously defined rules.
+
+\begin{lstlisting}[language=scala]
+def yearWithChar = rule { yearNumber ~ capturePos(Alpha) } // #5
+def yearWithParens = rule { '(' ~ (yearWithChar |\
+  yearNumber) ~ ')' } // #6
+def yearWithPage = rule { (yearWithChar | yearNumber) ~\
+  ':' ~ oneOrMore(Digit) } // #7
+def yearApprox = rule { '[' ~ yearNumber ~ ']' } // #8
+def yearWithDot = rule { yearNumber ~ '.' } // #9
+def yearRange = rule { yearNumber ~ '-' ~\
+  capturePos(Digit.+) ~ (Alpha ++ "?").* } // #10
+def year = rule { yearRange | yearApprox |\
+  yearWithParens | yearWithPage | yearWithDot |\
+  yearWithChar | yearNumber // #11
+}
+\end{lstlisting}
+
+Now we can incorporate the \textit{year} rule into all cases where it might be needed. For example on line \#12 we indicate that \textit{year} must be present in the matcher for the \textit{authorsYear} rule.
+
+\begin{lstlisting}{language=scala}
+def authorsYear: RuleNodeMeta[AuthorsGroup] = rule {
+  authorsGroup ~ softSpace ~ (',' ~ softSpace).? ~ year ~> { // #12
+    (aM: NodeMeta[AuthorsGroup], yM: NodeMeta[Year]) =>
+      val a1 = for { a <- aM; y <- yM } yield a.copy(year = y.some)
+      a1.changeWarningsRef((aM.node, a1.node))
+  }
+}
+\end{lstlisting}
 
 \subsection*{Installation}
 
@@ -873,7 +898,7 @@ Not applicable
 \bibliographystyle{bmc-mathphys} % Style BST file
 \bibliography{gnparser}      % Bibliography file (usually '*.bib' )
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                                         %%
 %%                          Figures                        %%
