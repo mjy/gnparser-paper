@@ -532,7 +532,7 @@ def authorsYear: RuleNodeMeta[AuthorsGroup] = rule {
 
 \subsection*{Testing Methods}
 
-\todo{Editor: it's not very clear (to me or the reviewers, apparently) what the evaluation data actually was}
+\todo{It's not very clear what the evaluation data actually was}
 
 Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI) \cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources. Therefore the resulting datasets should represent data existing ``in the wild'' quite well. The datasets consist out of a randomly chosen mixture of well-formed names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Name-strings in the sets are independent of each other. Evaluation datasets are included in the supplementary material.
 
@@ -638,12 +638,16 @@ Our testing also revealed differences between regular expressions and PEG approa
 If we want to connect biological data using scientific names, no name-strings should be missed or rejected, no matter how complex they are. During our testing we found that $Accuracy$ of GBIF's \textit{name-parser} was negatively affected because of how it managed (or did not manage) hybrid formulae and infrasubspecific names (names with more then one infraspecific epithet). This is where the regular expression approach reveals its limitations. For example the following names were not parsed by the GBIF \textit{name-parser}:
 
 \vspace{0.5cm}
-
+\todo{Explain examples where GBIF parser failed in more detail}
 \begin{verbatim}
     Crataegus chlorosarca subtaxon pubescens E.L.Wolf
+      (could not parse two instances of intraspecific epethets)
     Erigeron peregrinus ssp.callianthemus var. eucallianthemus
+      (could not parse two instances of infraspecific epithets)
     Salvelinus fontinalis x Salmo gairdneri
+      (could not parse a hybrid formula)
     Echinocereus fasciculatus var. bonkerae × E. fasciculatus var. fasciculatus
+      (could not parse a hybrid formula)
 \end{verbatim}
 
 \vspace{0.5cm}
