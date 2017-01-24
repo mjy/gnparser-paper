@@ -1,6 +1,0 @@
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ Alternative approaches to parsing: named entity recognition, statistical parsers.}{5}{section*.7}
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ How many PEG rules did you create? Please provide a set of sample rules and discuss}{8}{section*.11}
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ It's not very clear what the evaluation data actually was}{9}{section*.14}
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ Explain examples where GBIF parser failed in more detail}{13}{section*.18}
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ Show how parser can be used by clients}{16}{section*.22}
-\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color {orange}o}}\ What is the difference between biodiversity and gnparser?}{16}{section*.24}

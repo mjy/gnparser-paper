@@ -296,8 +296,6 @@
 \end{frontmatter}
 \newpage
 
-\listoftodos[Notes]
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
 %% The Main Body begins here                %%
@@ -398,10 +396,10 @@ The  growth of algorithms and tools in machine learning and natural language pro
 
 \begin{itemize}
   \item The limited scope of a parser. A parser of scientific names needs to work with name-strings of 1--15 words.
-  
+
    \item No need for recognition.  A name-string parser is normally applied to a pre-existing list of scientific names. There is no requirement to recognize scientific names in larger bodies of literature, for which other scientific name recognition and discovery tools are available.
 
-  \item Formal grammar. A name-string parser is closer in approach to parsers of programming languages than to tools designed to work with natural languages. Scientific names are formed in compliance with well-defined and formal codes of nomenclature, and have predictable structures with limited variation..
+  \item Formal grammar. A name-string parser is closer in approach to parsers of programming languages than to tools designed to work with natural languages. Scientific names are formed in compliance with well-defined and formal codes of nomenclature, and have predictable structures with limited variation.
 
   \item Scale and throughput. We created the parser to serve the  needs of biodiversity aggregators. A core design requirement was to develop a lightweight library for inputs of up to millions of scientific name-strings per second, and to be processed locally.
 
@@ -461,7 +459,7 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 
 \end{itemize}
 
-  \item The ``\textit{spark-python}'' module contains facilities to use ``\textit{gnparser}'' with Apache Spark scripts written in Python. Apache Spark is a highly distributive and scalable development environment for processing massive sets of data (``Big Data''). Spark is written in Scala, but can also be used with Python, R and Java languages. Spark programs written in Java and Scala are able to run ``\textit{parser}'' in distributed fashion natively. 
+  \item The ``\textit{spark-python}'' module contains facilities to use ``\textit{gnparser}'' with Apache Spark scripts written in Python. Apache Spark is a highly distributive and scalable development environment for processing massive sets of data (``Big Data''). Spark is written in Scala, but can also be used with Python, R and Java languages. Spark programs written in Java and Scala are able to run ``\textit{parser}'' in distributed fashion natively.
 
   \item The ``\textit{examples}'' module contains examples to assist developers in adding ``\textit{parser}'' functionality into other popular programming languages such as Java, Scala, Jython, JRuby, and R.
 
@@ -474,7 +472,7 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 \subsection*{Parsing rules}
 
 
-\textit{gnparser} v0.3.3 contains 76 PEG rules. In turn, these rules make use of more elementary rules provided by the \textit{parboiled2} library. The rules are domain-specific based on hours of conversations with leading taxonomists, nomenclatural codes, and feedback of the users. 
+\textit{gnparser} v0.3.3 contains 76 PEG rules. In turn, these rules make use of more elementary rules provided by the \textit{parboiled2} library. The rules are domain-specific based on hours of conversations with leading taxonomists, nomenclatural codes, and feedback of the users.
 
 As an example, the \textit{yearNumber} rule detects a year when a name was published. \textit{Rule[Year]} is a type of the returning value of the rule. Using domain-specific language and elementary rules of \textit{parboiled2} we capture the start and the end positions of a year substring (lines \#1 and \#2). This matches a substring that represents a year in scientific name-strings. A publication year is usually a number between 1753 \cite{Linne1753} and the present. A year substring might have one or two digits substituted with question marks if the exact year of a publication is unknown. The capture is then passed as a parameter to a parser action (line \#3). Parser action,  a Scala function, might produce warnings or a class instance of defined type (\textit{Rule[Year]}).
 
@@ -561,7 +559,7 @@ Some names in the dataset were not well-formed. If a human could extract the can
 
 Parsers analyze the structure of name-strings, but they cannot determine if a string is a ``real'' name. For example, in the case of a name-string that has the same form as a subspecies such as \textbf{"Example name Word var.\ something Capitalized Words, 1900"}. In such a case, the identification of a canonical form as \textbf{"Example name something"} and terminal authorship as \textbf{"Capitalized Words, 1900"} would be considered a true positive.  Clearly, it will be important for name-management services to distinguish between name-strings of scientific names, names of viruses, surrogate names, and non-names. To find out how well parsers distinguished strings which are not scientific names, we calculated $Precision$ for discarded/non-parsed strings.  If the parser has worked well, not-parsed strings would include only names of viruses and terms that do not comply with the codes of zoological, prokaryotic, and botanical nomenclature.
 
-We processed 100,000 name-strings with each parser. Each parser discarded close to 1000 name-strings as not-parseable. $Precision$, as noted above, provided the percentage of correctly discarded names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers. 
+We processed 100,000 name-strings with each parser. Each parser discarded close to 1000 name-strings as not-parseable. $Precision$, as noted above, provided the percentage of correctly discarded names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers.
 
 To establish the throughput of parsing we used a computer with an Intel i7-4930K CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840 EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing 1,000,000 random name-strings from Global Names database.
 
@@ -637,11 +635,11 @@ If we want to connect biological data using scientific names, no name-strings sh
 
 \vspace{0.5cm}
 
-   \textbf{ Erigeron peregrinus ssp.callianthemus var. eucallianthemus} (a name-string with two infraspecific epithets)
-      
-   \textbf{ Salvelinus fontinalis x Salmo gairdneri} (hybrid formula)
-   
-   \textbf{ Echinocereus fasciculatus var. bonkerae × E. fasciculatus var. fasciculatus} (hybrid formula)
+   \textbf{Erigeron peregrinus ssp.callianthemus var.\ eucallianthemus} (a name-string with two infraspecific epithets)
+
+   \textbf{Salvelinus fontinalis x Salmo gairdneri} (hybrid formula)
+
+   \textbf{Echinocereus fasciculatus var.\ bonkerae × E. fasciculatus var.\ fasciculatus} (hybrid formula)
 
 
 \vspace{0.5cm}
@@ -803,7 +801,7 @@ This commitment to accessibility creates a larger potential audience for the par
 
 \section*{Conclusions}
 
-The performance of the scientific names parsers is summarised  in Table~\ref{table:summary}.There is a significant similarity between two PEG-based parsers --- \textit{biodiversity} and \textit{gnparser}. Both of them are based on the same algorithmic approach and follow similar design goals. We can continue to modify the rules for \textit{biodiversity} to achieve the same or higher level of $Accuracy$ as we have now with \textit{gnparser}. Instead we decided to create a completely new tool from scratch because we found that \textit{biodiversity} is limited in speed, scalability and accessibility. For example at Global Names we often need to reparse 24 million name-strings, and the process took more time than was appropriate.  \textit{gnparser} can be used natively by larger variety of programming languages than \textit{biodiversity}, because JVM-based languages and tools are so widely used. Our first goal \textit{gnparser} was complete coverage of the \textit{biodiversity}'s test suite. We continued to improve \textit{gnparser} while \textit{biodiversity} entered maintanance mode. That explains a slight difference in $Accuracy$ by these two parsers.
+The performance of the scientific names parsers is summarised  in Table~\ref{table:summary}.There is a significant similarity between two PEG-based parsers --- \textit{biodiversity} and \textit{gnparser}. Both of them are based on the same algorithmic approach and follow similar design goals. We can continue to modify the rules for \textit{biodiversity} to achieve the same or higher level of $Accuracy$ as we have now with \textit{gnparser}. Instead we decided to create a completely new tool from scratch because we found that \textit{biodiversity} is limited in speed, scalability and accessibility. For example at Global Names we often need to reparse 24 million name-strings, and the process took more time than was appropriate.  \textit{gnparser} can be used natively by larger variety of programming languages than \textit{biodiversity}, because JVM-based languages and tools are so widely used. Our first goal for \textit{gnparser} was complete coverage of the \textit{biodiversity}'s test suite. We continued to improve \textit{gnparser} while \textit{biodiversity} entered maintanance mode. That explains a slight difference in $Accuracy$ by these two parsers.
 
 \textit{gbif-parser} is a high quality product, however its regular-expressions-based algorithm limits its usability. Recursive nature of scientific names creates significant obstacles for intrinsically non-recursive algorithms such as regular-expressions. Coverage of multi-infraspecific names as well as hybrids, dealing with recursive patterns in authorship is prohibitively expensive for such approach.
 
