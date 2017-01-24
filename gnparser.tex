@@ -404,7 +404,7 @@ There is an explosion of algorithms and tools in machine learning and natural la
 
   \item Scale and throughput. We create a name-string parser for particular needs of biodiversity aggregators. The core design requirement is to develop a lightweight library for massive inputs (millions of scientific names per second) processed locally.
 
-  \item Stand-alone approach. A parser doesn't need access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc.\ \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (``\times'' for hybrid formula, ``ssp.'' for subspecies rank, ``var.'' for variance, etc.), digits for years, and their inter-dependencies.
+  \item Stand-alone approach. A parser doesn't need access (neither locally nor remotely) to previously known information of genera, species, author names, other scientific names in a batch request, etc.\ \textit{gnparser} can only parse a string based on morphological features of limited amount of words: word letters case, stable nomenclature qualifiers (``x'' for hybrid formula, ``ssp.'' for subspecies rank, ``var.'' for variance, etc.), digits for years, and their inter-dependencies.
 
   \item Determinism. From our experience we see that in vast majority of cases a parser needs to produce only single ``best'' result. Here ``best'' is meant in statistical notion. For example, parsing more input in greedy fashion is better than parsing less (a parser does not need to recognize a scientific name in text and it should provide meta information on every part of the input string).
 \end{itemize}
