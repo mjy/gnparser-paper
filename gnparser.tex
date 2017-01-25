@@ -64,9 +64,9 @@
 \usepackage{enumitem}
 \usepackage{bera}
 \usepackage{xcolor}
-\usepackage[colorinlistoftodos, prependcaption, textsize=large]{todonotes}
-\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=3cm, heightrounded,
-  marginparwidth=4.5cm, marginparsep=0.2cm]{geometry}
+% \usepackage[colorinlistoftodos, prependcaption, textsize=large]{todonotes}
+% \usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=3cm, heightrounded,
+%   marginparwidth=4.5cm, marginparsep=0.2cm]{geometry}
 % \usepackage{marginnote}
 % \setmarginnotefont{\color{blue}}
 
@@ -92,6 +92,7 @@
 %\def\includegraphic{}
 %\def\includegraphics{}
 \errorcontextlines1000
+
 
 % \makeatletter
 % \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
@@ -438,7 +439,7 @@ The pre-existing \textit{biodiversity} package has performance and scalability i
 
 \end{itemize}
 
-While many of the properties are true for Ruby, other properties, such as high performance, scalability and interoperability, are not. To meet all requirements, and exploiting what we had learned from \textit{biodiversity}, we refactored the code using Scala --- the Java virtual machine programming language~\cite{odersky2004overview}, and the Open source \textit{parboiled2} library~\cite{parboiled2, myltsev-parboiled2} with our improvements~\cite{parboiled2-gna}. The \textit{parboiled2} library implements PEG in Scala\footnote{An alternative to \textit{parboiled2} is the Scala parser combinators library~\cite{moors2008parser} but it has known problems with speed and memory consumption making \textit{parboiled2} our preferred choice.}.
+While many of the properties are true for Ruby, other properties, such as high performance, scalability and interoperability, are not. To meet all requirements, and exploiting what we had learned from \textit{biodiversity}, we refactored the code using Scala --- the Java virtual machine programming language~\cite{odersky2004overview}, and the Open source \textit{parboiled2} library~\cite{parboiled2, Myltsev:inpress-a} with our improvements~\cite{parboiled2-gna}. The \textit{parboiled2} library implements PEG in Scala\footnote{An alternative to \textit{parboiled2} is the Scala parser combinators library~\cite{moors2008parser} but it has known problems with speed and memory consumption making \textit{parboiled2} our preferred choice.}.
 
 The functional programming features of Scala allowed us to build a domain specific language that describes the rules of the grammars to parse scientific names. This produces a Parsing Expression Grammar with considerably more flexibility than external lexers such as Bison or Yacc. As this domain specific language is within \textit{parboiled2} it can take advantage of the Macro capacity of Scala~\cite{Burmako:2013:SML:2489837.2489840} to optimize the compilation of the code and the subsequent running of the program. As a result, the software performs with high efficiency. With this combination, the \textit{gnparser} library achieved a significant boost in speed, scalability, and portability.
 
@@ -638,11 +639,13 @@ If we want to connect biological data using scientific names, no name-strings sh
 
 \vspace{0.5cm}
 
-   \textbf{Erigeron peregrinus ssp.callianthemus var.\ eucallianthemus} (a name-string with two infraspecific epithets)
+\textbf{Erigeron peregrinus ssp.callianthemus var.\ eucallianthemus} (a name-string with two infraspecific epithets)
 
-   \textbf{Salvelinus fontinalis x Salmo gairdneri} (hybrid formula)
+\textbf{Polyporus varius var.\ nummularius f.\ undulatus (Pilát) Domanski, Orlos \& Skirg.} (two infraspecific epithets)
 
-   \textbf{Echinocereus fasciculatus var.\ bonkerae × E. fasciculatus var.\ fasciculatus} (hybrid formula)
+\textbf{Salvelinus fontinalis x Salmo gairdneri} (hybrid formula)
+
+\textbf{Echinocereus fasciculatus var.\ bonkerae × E. fasciculatus var.\ fasciculatus} (hybrid formula)
 
 
 \vspace{0.5cm}
@@ -657,13 +660,13 @@ The PEG approach supports nested parsing rules to create progressively more comp
       \hline
                              & gnparser & gbif-parser & biodiversity \\
       \hline
-      \textit{True Positive} & 976      & 955         & 971          \\
+      \textit{True Positive} & 978      & 955         & 971          \\
       \textit{True Negative} & 13       & 12          & 13           \\
-      \textit{False Positive}& 11       & 32          & 16           \\
+      \textit{False Positive}& 9        & 32          & 16           \\
       \textit{False Negative}& 0        & 1           & 0            \\
-      \textit{Precision}     & 0.9888551& 0.967578    & 0.9837893    \\
-      \textit{Recall}        & 1.0      & 0.998954    & 1.0          \\
-      \textit{F1}            & 0.9943963& 0.983016    & 0.9918284    \\
+      \textit{Precision}     & 0.989    & 0.968       & 0.984        \\
+      \textit{Recall}        & 1.0      & 0.999       & 1.0          \\
+      \textit{F1}            & 0.994    & 0.983       & 0.992        \\
       \textit{Accuracy}      & 0.989    & 0.967       & 0.984        \\
       \hline
     \end{tabular}
@@ -673,16 +676,16 @@ The PEG approach supports nested parsing rules to create progressively more comp
 
 \begin{table}[htb]
   \begin{center}
-    \caption{Precision for names  out of 100 000
+    \caption{Accuracy of unparseable names detection out of 100,000
     name-strings}\label{table:unparsed}
     \resizebox{10cm}{!} {\begin{tabular}{| l | *{3}{l} |}
       \hline
-                              & gnparser & gbif-parser & biodiversity \\
+                                     & gnparser & gbif-parser & biodiversity \\
       \hline
-      \textit{Total discarded}& 1131     & 1082        & 1161         \\
-      \textit{True Positive}  & 1129     & 940         & 1152         \\
-      \textit{False Positive} & 2        & 142         & 9            \\
-      \textit{Precision}      & 0.998231 & 0.868761    & 0.9922481    \\
+      \textit{Total discarded}       & 1131     & 1082        & 1161         \\
+      \textit{Correctly discarded}   & 1129     & 940         & 1152         \\
+      \textit{Incorrectly discarded} & 2        & 142         & 9            \\
+      \textit{Accuracy}              & 0.998    & 0.869       & 0.992        \\
       \hline
     \end{tabular}
   }
