@@ -326,12 +326,14 @@ Accessed 15 September 2016
 \endbibitem
 
 %%% 25
-\bibitem{myltsev-parboiled2}
-\begin{botherref}
-\oauthor{\bsnm{Myltsev}, \binits{A.}},
-\oauthor{\bsnm{Doenitz}, \binits{M.}}:
-parboiled2: Improved parsing expression grammars parsers generator in scala
-\end{botherref}
+\bibitem{Myltsev:inpress-a}
+\begin{bchapter}
+\bauthor{\bsnm{Myltsev}, \binits{A.}},
+\bauthor{\bsnm{Doenitz}, \binits{M.}}:
+\bctitle{parboiled2: Improved parsing expression grammars parsers generator in
+  scala}.
+(\byear{\noop{2017}in preparation})
+\end{bchapter}
 \endbibitem
 
 %%% 26
