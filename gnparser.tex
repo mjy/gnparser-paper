@@ -258,7 +258,7 @@
 
 \begin{abstract} % abstract
 
-  \parttitle{Background} We are able to investigate biology on grander scales by integrating biological data from multiple sources. The use of scientific names of organisms as metadata allows the aggregation of digital information on the same taxa located in many different places. There are impediments to such aggregation because names are often spelled with variations. Sometimes names are misspelled, abbreviated, or annotated. Its author forms part of the scientific name but the information about the author may vary dramatically. To match different scientific names for the same taxon to each other we need to divide them into their elements and classify each element according to its role. We refer to this as `parsing' the name.  This significantly improves the matching of different spellings for the same species by emphasizing the most widely used elements of names and then fine-tune matched results using other elements of names.
+  \parttitle{Background} We are able to investigate biology on grander scales by integrating biological data from multiple sources. The use of scientific names of organisms as metadata allows the aggregation of digital information on the same taxa located in many different places. There are impediments to such aggregation because names are often spelled with variations. Sometimes names are misspelled, abbreviated, or annotated. Authorship is a part of the scientific name but the information about the authors may vary dramatically. To match different scientific names for the same taxon to each other we need to divide them into their elements and classify each element according to its role. We refer to this as `parsing' the name.  This significantly improves the matching of different spellings for the same species by emphasizing the most widely used elements of names and then fine-tune matched results using other elements of names.
 
   \parttitle{Results} We introduce Global Names Parser (\textit{gnparser}). It is a Java tool written in Scala language (a language for Java Virtual Machine) to parse scientific names. It is based on a Parsing Expression Grammar. The parser can be applied to scientific names of any complexity. It assigns a semantic meaning (such as genus name, species epithet, rank, year of publication, authorship, annotations, etc.) to all elements of a name.  It is able to work with nested structures as in the names of hybrids. \textit{gnparser} performs with $\approx99\%$ accuracy and processes 30 million name-strings/hour per CPU thread. The \textit{gnparser} library is compatible with Scala, Java, R, Jython, and JRuby. The parser can be used as a command line application, as a socket server, a web-app or as a RESTful http-service. It is released under an Open source MIT license.
 
@@ -325,7 +325,7 @@
 
 \subsection*{Conventions}
 
-Throughout the paper we distinguish ``name'', ``scientific name'', and ``name-string''. ``Name'' refers to one or several words that act as a label for a taxon. A ``scientific name'' is a name formed in compliance with a nomenclatural code (Code) or, if beyond the scope of the Codes, is consistent with the expectations of a Code. The term ``name-string'' is the sequence of characters (letters, numbers, punctuation, spaces, symbols) that forms the name. A name can be expressed by many name-strings (for example see Figure~\ref{figure:carex}). There are about two and a half million names extinct and extant species. There are tens of millions of legitimately formed scientific names and hundreds of millions of possible name-strings for them. We use the term ``elements'' for  components of a scientific name or name-string. Traditionally, scientific names for genera, and taxa below genus are presented in \textit{italics}. In this paper, where we wish to emphasize examples of name-strings, we use \textbf{bold font}.
+Throughout the paper we distinguish ``name'', ``scientific name'', and ``name-string''. ``Name'' refers to one or several words that act as a label for a taxon. A ``scientific name'' is a name formed in compliance with a nomenclatural code (Code) or, if beyond the scope of the Codes, is consistent with the expectations of a Code. The term ``name-string'' is the sequence of characters (letters, numbers, punctuation, spaces, symbols) that forms the name. A name can be expressed by many name-strings (for example see Figure~\ref{figure:carex}). There are about two and a half million currently accepted names for extinct and extant species. There are tens of millions of legitimately formed scientific names and hundreds of millions of possible name-strings for them. We use the term ``elements'' for  components of a scientific name or name-string. Traditionally, scientific names for genera, and taxa below genus are presented in \textit{italics}. In this paper, where we wish to emphasize examples of name-strings, we use \textbf{bold font}.
 
 \subsection*{Introduction}
 
@@ -381,7 +381,7 @@ Parsing Expression Grammars (PEG)~\cite{Ford2004} have been introduced for parsi
 
   \item scientific name-strings are short enough to avoid problems with computational complexity and memory consumption;
 
-  \item programming a parser with PEGs can describe parsing rules in a domain-specific language such as biodiversity;
+  \item programming a parser with PEGs can describe parsing rules in a domain-specific language;
 
   \item domain-specific language offers great flexibility for logic within the rules, for example to report errors in name-strings.
 
@@ -407,7 +407,7 @@ The  growth of algorithms and tools in machine learning and natural language pro
 
   \item Scale and throughput. We created the parser to serve the  needs of biodiversity aggregators. A core design requirement was to develop a lightweight library for inputs of up to millions of scientific name-strings per second, and to be processed locally.
 
-  \item Stand-alone approach. A parser does not rely on access to local or remote previously known information of genera, species, author names, or other scientific names \ \textit{gnparser} relies instead on morphological features of: limited amount of words, case, sequence of words, stable nomenclature qualifiers (``x'' for hybrid formula, ``ssp.'' for subspecies rank, ``var.'' for variety, etc.), digits for years, and their inter-dependencies.
+  \item Stand-alone approach. A parser does not rely on access to local or remote previously known information of genera, species, author names, or other scientific names. \textit{gnparser} relies instead on morphological features of: limited amount of words, case, sequence of words, stable nomenclature qualifiers (``x'' for hybrid formula, ``ssp.'' for subspecies rank, ``var.'' for variety, etc.), digits for years, and their inter-dependencies.
 
   \item Determinism. A parser needs to produce a single ``correct'' result for each string that is input. Biologists know that there is only a single correct parsed version of a scientific name. A parser should provide meta information on every part of the input string.
 \end{itemize}
@@ -635,7 +635,7 @@ Our testing also revealed differences between regular expressions and PEG approa
 
 \subsection*{Global Scope}
 
-If we want to connect biological data using scientific names, no name-strings should be missed or rejected, no matter how complex they are. During our testing we found that $Accuracy$ of GBIF's \textit{name-parser} lowered because of how it mis-managed  hybrid formulae and infrasubspecific names with more then one infraspecific epithet. This case underscores the limitations of the regular expression approach. As examples, the following were not parsed by the GBIF \textit{name-parser}:
+If we want to connect biological data using scientific names, no name-strings should be missed or rejected, no matter how complex they are. During our testing we found that $Accuracy$ of GBIF's \textit{name-parser} lowered partially because the parser did not recognize hybrid formulae and infrasubspecific names with more then one infraspecific epithet. This case underscores the limitations of the regular expression approach. As examples, the following were not parsed by the GBIF \textit{name-parser}:
 
 \vspace{0.5cm}
 
@@ -835,9 +835,6 @@ The performance of the scientific names parsers is summarised  in Table~\ref{tab
   }
   \end{center}
 \end{table}
-
-
-
 
 In conclusion, this paper describes \textit{gnparser}, a powerful tool for working with biodiversity information. It transforms names of taxa into their semantic elements. This  allows standardization of names by representing them as canonical forms, a step that in turn dramatically improves name matching and data integration. Parsing can be used to aid the discovery of names in sources, and in creating a common index to multiple sources. Parsing further allows users to extract, compare and analyse metadata within the name-strings, and allowing comparisons of the efforts of individuals or to map trends over time. The \textit{gnparser} tool is released under MIT Open source license, contains command line executable, socket, web, and REST services, and is optimized for use as a library in languages like Scala, Java, R, Jython, JRuby.
 
