@@ -194,6 +194,7 @@
    email={alexander@myltsev.com}   % email address
 ]{\inits{AAM}\fnm{Alexander A.} \snm{Myltsev}}
 \author[
+   % id of corresponding address, if any
    addressref={aff3},
    email={dpatterson.mbl@gmail.com}
 ]{\inits{DJP}\fnm{David J.} \snm{Patterson}}
@@ -218,7 +219,6 @@
 \address[id=aff2]{\orgname{IP Myltsev},
                   \street{Kaslinskaya St.},
                   \city{Chelyabinsk},
-                  \state{},
                   \postcode{454084},
                   \cny{Russia}}
 
@@ -319,11 +319,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
 % <put your article body there>
 
-\section*{Conventions}
+
+\section*{Background}
+
+\subsection*{Conventions}
 
 Throughout the paper we distinguish ``name'', ``scientific name'', and ``name-string''. ``Name'' refers to one or several words that act as a label for a taxon. A ``scientific name'' is a name formed in compliance with a nomenclatural code (Code) or, if beyond the scope of the Codes, is consistent with the expectations of a Code. The term ``name-string'' is the sequence of characters (letters, numbers, punctuation, spaces, symbols) that forms the name. A name can be expressed by many name-strings (for example see Figure~\ref{figure:carex}). There are about two and a half million names extinct and extant species. There are tens of millions of legitimately formed scientific names and hundreds of millions of possible name-strings for them. We use the term ``elements'' for  components of a scientific name or name-string. Traditionally, scientific names for genera, and taxa below genus are presented in \textit{italics}. In this paper, where we wish to emphasize examples of name-strings, we use \textbf{bold font}.
 
-\section*{Background}
+\subsection*{Introduction}
 
 Biology is entering a ``Big Data'' age, where global and fast access to all knowledge is envisaged. Progress towards this vision is still limited in scope. One impediment, especially for the long tail of smaller sources (of which some are not yet digital), is the absence of devices to inter-connect distributed data. The names of organisms are invaluable in ``Big Data'' biology because they can be treated as metadata that can be used to discover, index, organize, and interconnect distributed information about species and other taxa~\cite{Patterson2010}. The use of names for informatics purposes is not straightforward because, for example, there may be many legitimate spellings for a name (Figure~\ref{figure:carex}). A cyber-infrastructure that uses names to manage information about organisms must determine which name-strings represent the same scientific name.
 
@@ -536,7 +539,7 @@ We compared the performance of \textit{gnparser} with two other projects: \texti
 
 To estimate the quality of the parsers, we relied on their performance in representing canonical forms and terminal authorships. A canonical form represents the scientific (latinised) elements of scientific names, while the terminal authorship refers to the author of the lowest subtaxon found in a scientific name. For example, with \textbf{Oriastrum lycopodioides Wedd.\ var.\ glabriusculum Reiche}, the canonical form is \textbf{Oriastrum lycopodioides glabriusculum} and the terminal authorship is \textbf{Reiche}, not \textbf{Wedd.}.
 
-When both the canonical form and the terminal authorship were determined correctly we marked the result as true positive ($N_{tp}$). If one or both of them were determined incorrectly, the result was marked as a false positive ($N_{fp}$). Name-strings correctly discarded from parsing were marked as true negatives ($N_{tn}$). False negatives ($N_{fn}$) were ``suitable'' name-strings which should have been parsed, but were not. The following parameters where used for analysis:
+When both the canonical form and the terminal authorship were determined correctly we marked the result as true positive ($N_{tp}$). If one or both of them were determined incorrectly, the result was marked as a false positive ($N_{fp}$). Name-strings correctly discarded from parsing were marked as true negatives ($N_{tn}$). False negatives ($N_{fn}$) were ``suitable'' name-strings which should have been parsed, but were not. The following parameters where used for analysis summarized in Table~\ref{table:precision}:
 
 $Accuracy$ --- the proportion of all results that were correct. It is calculated as:
 
@@ -559,7 +562,7 @@ Some names in the dataset were not well-formed. If a human could extract the can
 
 Parsers analyze the structure of name-strings, but they cannot determine if a string is a ``real'' name. For example, in the case of a name-string that has the same form as a subspecies such as \textbf{``Example name Word var.\ something Capitalized Words, 1900''}. In such a case, the identification of a canonical form as \textbf{``Example name something''} and terminal authorship as \textbf{``Capitalized Words, 1900''} would be considered a true positive.  Clearly, it will be important for name-management services to distinguish between name-strings of scientific names, names of viruses, surrogate names, and non-names. To find out how well parsers distinguished strings which are not scientific names, we calculated $Precision$ for discarded/non-parsed strings.  If the parser has worked well, not-parsed strings would include only names of viruses and terms that do not comply with the codes of zoological, prokaryotic, and botanical nomenclature.
 
-We processed 100,000 name-strings with each parser. Each parser discarded close to 1000 name-strings as not-parseable. $Precision$, as noted above, provided the percentage of correctly discarded names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers.
+We processed 100,000 name-strings with each parser. Each parser discarded close to 1000 name-strings as not-parseable. $Precision$, as noted above, provided the percentage of correctly discarded names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers as shown in Table~\ref{table:unparsed}.
 
 To establish the throughput of parsing we used a computer with an Intel i7-4930K CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840 EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing 1,000,000 random name-strings from Global Names database.
 
@@ -573,7 +576,7 @@ We discuss and compare \textit{gnparser}, GBIF \textit{name-parser} and \textit{
 
 \subsection*{High Quality Parsing}
 
-Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision}.
+Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision} and Table~\ref{table:unparsed}.
 
 If test data contain a large proportion of true negatives ($N_{tn}$) $Accuracy$ will not be a good measure as it favors algorithms that distinguish negative results, rather than finding positive ones. We manually checked our test datasets and established that $\approx1\%$ were not scientific names. Given that true negatives are rare, they will have very limited influence on $Accuracy$. $Recall$ for all parsers was high, hence false negatives are not important.
 
@@ -899,7 +902,7 @@ The authors declare that they have no competing interests.
 
 Not applicable
 
-\section*{Ethics approval and consent to participate}
+\section*{Ethics approval and concent to participate}
 
 Not applicable
 
