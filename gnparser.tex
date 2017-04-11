@@ -186,7 +186,7 @@
 \author[
    addressref={aff1},
      noteref={n1},
-    corref={aff1},                       % id of corresponding address, if any
+    corref={aff1},       % id of corresponding address, if any
    email={mozzheri@illinois.edu}
 ]{\inits{DYM}\fnm{Dmitry Y.} \snm{Mozzherin}}
 \author[                  % id's of addresses, e.g. {aff1,aff2}
@@ -531,7 +531,7 @@ def authorsYear: RuleNodeMeta[AuthorsGroup] = rule {
 
 \subsection*{Testing Methods}
 
-Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI)~\cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources and are pre-identified as scientific names. While GNI contains some incorrectly classified strings, it is the largest compilation of name-strings representing scientific names. It is not biased towards any particular taxon or particular variant of name, and so the extracted datasets are believed to represent naturally occurring data quite well. The datasets are randomly chosen mixtures of well-formed names, lexical variants of names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Name-strings in the sets are independent of each other. Evaluation datasets are included in the supplementary material.
+Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI)~\cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources and are pre-identified as scientific names. While GNI contains some incorrectly classified strings, it is the largest compilation of name-strings representing scientific names. It is not biased towards any particular taxon or particular variant of name, and so the extracted datasets are believed to represent naturally occurring data quite well. The datasets are randomly chosen mixtures of well-formed names, lexical variants of names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Name-strings in the sets are independent of each other. Evaluation dataset with 1,000 names is included in the supplementary material.
 
 We compared the performance of \textit{gnparser} with two other projects: \textit{biodiversity} parser~\cite{Boyle2013, biodiversity} (also developed by Global Names team), and GBIF \textit{name-parser}~\cite{gbifNameParser}. The following versions were used: \textit{gnparser} v.  0.3.1, GBIF \textit{name-parser} v. 0.1.0, \textit{biodiversity} v. 3.4.1. To make comparisons, we calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a dataset consisting of 1000 name-strings. We also tested the YASMEEN parser from iMarine~\cite{VandenBerghe2015}. With our dataset, YASMEEN generated many more mistakes than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to finish a full dataset without crashing. We excluded it from further tests.
 
@@ -574,7 +574,7 @@ We discuss and compare \textit{gnparser}, GBIF \textit{name-parser} and \textit{
 
 \subsection*{High Quality Parsing}
 
-Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision} and Table~\ref{table:unparsed}.
+Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision} and Table~\ref{table:unparsed}. We also include 1,000 tested names as a supplementary file.
 
 If test data contain a large proportion of true negatives ($N_{tn}$) $Accuracy$ will not be a good measure as it favors algorithms that distinguish negative results, rather than finding positive ones. We manually checked our test datasets and established that $\approx1\%$ were not scientific names. Given that true negatives are rare, they will have very limited influence on $Accuracy$. $Recall$ for all parsers was high, hence false negatives are not important.
 
@@ -693,7 +693,7 @@ The PEG approach supports nested parsing rules to create progressively more comp
 
 The extraction of canonical forms from name-strings representing scientific names is the most beneficial and widely used parsing goal. Sometimes, however, this may not be sufficient because the canonical form does not always distinguish a name completely.
 
-In the example in Figuire~\ref{figure:carex} \textbf{Carex scirpoidea convoluta} is a canonical form for \textbf{Carex scirpoidea var.\ convoluta Kükenthal} and \textbf{Carex scirpoidea ssp.\ convoluta (Kük.) Dunlop.} The first unparsed name-string refers to the variety \textbf{convoluta} of \textbf{Carex scirpoidea} that had been described by \textbf{Kükenthal}. The second captures Dunlop's reclassification of \textbf{convoluta} as a subspecies. We are not able to distinguish between these two different names without knowing the rank and/or the corresponding authorship. Furthermore, it is useful to see in the second example that \textbf{(Kük.)} was the original author and \textbf{Dunlop} was the author of the new combination. Also, canonical forms do not distinguish between homonyms. The heather,  \textit{Pieris japonica} (Thunb.) D. Don ex G. Don and the butterfly, \textit{Pieris japonica} Shirôzu, 1952 have the same canonical form \textbf{Pieris japonica}.
+In the example in Figuire~\ref{figure:carex} \textbf{Carex scirpoidea convoluta} is a canonical form for \textbf{Carex scirpoidea var.\ convoluta Kükenthal} and \textbf{Carex scirpoidea ssp.\ convoluta (Kük.) Dunlop.} The first non-parsed name-string refers to the variety \textbf{convoluta} of \textbf{Carex scirpoidea} that had been described by \textbf{Kükenthal}. The second captures Dunlop's reclassification of \textbf{convoluta} as a subspecies. We are not able to distinguish between these two different names without knowing the rank and/or the corresponding authorship. Furthermore, it is useful to see in the second example that \textbf{(Kük.)} was the original author and \textbf{Dunlop} was the author of the new combination. Also, canonical forms do not distinguish between homonyms. The heather,  \textit{Pieris japonica} (Thunb.) D. Don ex G. Don and the butterfly, \textit{Pieris japonica} Shirôzu, 1952 have the same canonical form \textbf{Pieris japonica}.
 
 After matching by canonical form, rank, authors, and ``types'' of authorship help to distinguish name-strings with similar or identical canonical names. The name-string \textbf{Carex scirpoidea Michx.\ var.\ convoluta Kükenth.} adds  information not evident in the examples in the paragraph above, that the species \textbf{Carex scirpoidea} was described by \textbf{Michx}.
 
@@ -843,6 +843,8 @@ In conclusion, this paper describes \textit{gnparser}, a powerful tool for worki
 
   \subsection*{Additional file 3 --- README.rst.html} README.rst file that is converted to HTML format. It is also available at project home page~\cite{gnparser}.
 
+  \subsection*{Additional file 4 --- 1000-name-strings.txt} Randomly selected 1,000 name-strings used to determine $Accuracy$, $Precision$ and $Recall$ data (Table~\ref{table:precision}).
+
 \section*{Abbreviations}
 
 \begin{description}
@@ -860,18 +862,18 @@ In conclusion, this paper describes \textit{gnparser}, a powerful tool for worki
   \item[REST] -- Representational State Transfer
 \end{description}
 
-\section*{Acknowledgements}
-
-This work is supported by National Science Foundation under grant number NSF DBI-1356347. The authors thank administrators of the Species File Group for generous and much needed financial and logistic support during the transfer of the GNA grant from the Marine Biological Laboratory to University of Illinois.
-
 \section*{Declarations}
 
 All authors have gone through the manuscript and contents of this article have
 not been published elsewhere.
 
+\section*{Acknowledgements}
+
+The authors thank administrators of the Species File Group for the much needed support during the transfer of the GNA grant from the Marine Biological Laboratory to University of Illinois.
+
 \section*{Funding}
 
-We thank National Science Foundation for supporting this work via grant number NSF DBI-1356347. We also thank the Species File Group of the University of Illinois for additional funding.
+This work is supported by the National Science Foundation (NSF DBI-1356347). The authors also thank the Species File Group of the University of Illinois for additional funding. The funders had no role in the study design, data collection and analysis, decision to publish, or preparation of the manuscript.
 
 \section*{Availability and Requirements}
 
@@ -902,6 +904,10 @@ Not applicable
 \section*{Ethics approval and consent to participate}
 
 Not applicable
+
+\section*{Author Information}
+
+Dmitry Y. Mozzherin (mozzheri@illinois.edu), Alexander A. Myltsev (alexander@myltsev.com), David J. Patterson (patterson.david.joseph@gmail.com)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%
