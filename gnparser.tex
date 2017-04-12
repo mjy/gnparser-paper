@@ -345,6 +345,21 @@ Figure~\ref{figure:carex} illustrates different legitimate variants of a scienti
 
 In the past, the need to parse scientific names to form normalized names has mostly been achieved manually. A person familiar with rules of botanical nomenclature would be able to analyse the example of 24 name-strings with relative ease, but not thousands or millions of name-strings to which more than one nomenclatural code may be applied. The manual splitting of names into even only two parts --- the latinized elements of taxon names that make up the canonical form and the authorship --- is expensive, slow, and inflexible. To scale this exercise up requires an algorithmic solution, a scientific name parser!
 
+\begin{figure}
+  \begin{center}
+
+  \caption{Some legitimate versions of the scientific name for the `Northern
+    Bulrush' or `Singlespike Sedge'. The genus (\textit{Carex}), species
+    (\textit{scirpoidea}), and subspecies (\textit{convoluta}) may be annotated
+    (var., subsp., and ssp.) or include or omit the name of the original
+    authority for the infraspecies (Kükenthal), the species (Michaux), the
+    current infraspecific combination (Dunlop), sometimes be abbreviated,
+    differently spelled, and with or without initials and dates. This list is
+    not complete. Image courtesy of~\cite{FNA2002}.}\label{figure:carex}
+
+  \end{center}
+\end{figure}
+
 The strategy of the algorithmic approach is to identify which combinations of the most atomic parts of a name-string (i.e.\ the UTF-8 encoded characters) represent words (such as genus name, species name, authors, annotations) or dates. An early algorithmic approach to parsing scientific names was with regular language implemented as regular expression~\cite{Leary2007}. A regular expression is a sequence of characters that describes a search pattern~\cite{aho1992foundations}. For example, a regular expression ``[A-Z][a-z]\{2\}'' recognizes a word that starts from a capital letter followed by two small letters (e.g. ``Zoo''). Scientific names almost universally follow patterns: such as the use of spaces to separate words, capitalization of generic names and authors, or the inclusion of four digit dates between the middle of the 18th century and the present. This makes most names amenable to parsing by regular expressions.  Examples of parsers based on regular expressions are GBIF's \textit{name-parser}~\cite{gbifNameParser}, and \textit{YASMEEN}~\cite{VandenBerghe2015}.
 
 While regular expression is a powerful approach to string parsing, it has limitations. It cannot elegantly deal with name-strings where an authorship element is present in the middle of the name (for example \textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A.Dunlop}). Indeed regular expressions are not well suited to any targets with recursive (nested) elements~\cite{yu1997handbook}, such as hybrid formulae (e.g. \textbf{Brassica oleracea L.\ subsp.\ capitata (L.) DC.\ convar.\ fruticosa (Metzg.) Alef.\ $\times$ B.  oleracea L.\ subsp.\ capitata (L.) var.\ costata DC.}). Name parsing built on regular expressions is impractical for complex name-strings.
@@ -459,6 +474,14 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
   \item \textit{JSON renderer}, the parsing result is converted to JSON~\cite{bray2014javascript} to allow developers to work with the output from other languages. The output (Figure~\ref{figure:webgui}, also see \hyperref[sec:discussion]{Discussion}) has the following information: \textbf{'details'} contains the JSON-representation of a parsed scientific name; \textbf{'quality\_warnings'} describes potential problems if names are not well-formed; \textbf{'quality'} depicts a quality level of the parsed name; and \textbf{'positions'} maps the positions of every element in a parsed name to the semantic meaning of the element. Full and formal explanation of all parser fields is given as a JSON schema and can be found online~\cite{gnparser-json} [also see additional file gnparser.json].
 
 \end{itemize}
+
+\begin{figure}
+  \begin{center}
+
+    \caption{Web Graphical User Interface~\cite{gnparser-web}. In this example a user entered a name-string of a hybrid name consisted of 21 elements.  The ``Results'' section contains detailed parsed output using compact JSON format.}\label{figure:webgui}
+
+  \end{center}
+\end{figure}
 
   \item The ``\textit{spark-python}'' module contains facilities to use ``\textit{gnparser}'' with Apache Spark scripts written in Python. Apache Spark is a highly distributive and scalable development environment for processing massive sets of data (``Big Data''). Spark is written in Scala, but can also be used with Python, R and Java languages. Spark programs written in Java and Scala are able to run ``\textit{parser}'' in distributed fashion natively.
 
@@ -653,21 +676,6 @@ The PEG approach supports nested parsing rules to create progressively more comp
   \begin{center}
     \caption{Precision/Recall for parsers applied to 1000
     name-strings}\label{table:precision}
-    \resizebox{10cm}{!} {\begin{tabular}{|l|*{3}{l}|}
-      \hline
-                             & gnparser & gbif-parser & biodiversity \\
-      \hline
-      \textit{True Positive} & 978      & 955         & 971          \\
-      \textit{True Negative} & 13       & 12          & 13           \\
-      \textit{False Positive}& 9        & 32          & 16           \\
-      \textit{False Negative}& 0        & 1           & 0            \\
-      \textit{Precision}     & 0.989    & 0.968       & 0.984        \\
-      \textit{Recall}        & 1.0      & 0.999       & 1.0          \\
-      \textit{F1}            & 0.994    & 0.983       & 0.992        \\
-      \textit{Accuracy}      & 0.989    & 0.967       & 0.984        \\
-      \hline
-    \end{tabular}
-    }
   \end{center}
 \end{table}
 
@@ -675,17 +683,6 @@ The PEG approach supports nested parsing rules to create progressively more comp
   \begin{center}
     \caption{Accuracy of non-parseable names detection out of 100,000
     name-strings}\label{table:unparsed}
-    \resizebox{10cm}{!} {\begin{tabular}{| l | *{3}{l} |}
-      \hline
-                                     & gnparser & gbif-parser & biodiversity \\
-      \hline
-      \textit{Total discarded}       & 1131     & 1082        & 1161         \\
-      \textit{Correctly discarded}   & 1129     & 940         & 1152         \\
-      \textit{Incorrectly discarded} & 2        & 142         & 9            \\
-      \textit{Accuracy}              & 0.998    & 0.869       & 0.992        \\
-      \hline
-    \end{tabular}
-  }
   \end{center}
 \end{table}
 
@@ -777,6 +774,16 @@ In the areas of performance discussed above, there is little difference between 
 
 Results on the speed performance are given in Figure~\ref{figure:throughput}.  Depending on a number of CPU threads, \textit{gnparser} had been $\approx10-20\%$ faster than \textit{gbif-parser}. On 1 thread \textit{gnparser} was 7 times faster than \textit{biodiversity}, 10 times faster on 4 threads, and 14 times faster on 12 threads.
 
+\begin{figure}
+  \begin{center}
+
+    \caption{Names parsed per second by GN, GBIF and Biodiversity parsers
+      (running on 1--12 parallel threads).}
+    \label{figure:throughput}
+
+  \end{center}
+\end{figure}
+
 \textit{gnparser} displays functionality not presented in the GBIF \textit{name-parser} as described in previous sections. In spite of this additional functionality \textit{gnparser} outperformed other tested parsers.
 
 \subsection*{Accessibility}
@@ -812,24 +819,6 @@ The performance of the scientific names parsers is summarised  in Table~\ref{tab
   \begin{center}
     \caption{Summary comparison of Scientific Name Parsers}
     \label{table:summary}
-    \resizebox{12.5cm}{!} {\begin{tabular}{|l|*{3}{l}|}
-      \hline
-                             & gnparser & gbif-parser & biodiversity \\
-      \hline
-      \textit{Accuracy}                     & $98.9\%$ & $96.7\%$ & $98.4\%$\\
-      \textit{Hybrid formulas support}      & Yes      & No       & Yes     \\
-      \textit{Infrasubspecies support}      & Yes      & No       & Yes     \\
-      \textit{Throughput (names/s/thread)}  & 8178     & 6389     & 1111    \\
-      \textit{Parsing details}              & Complete & Partial  & Complete\\
-      \textit{Library for the same language}& Yes      & Yes      & Yes     \\
-      \textit{Library for other languages}  & Yes      & Yes      & No      \\
-      \textit{Command line tool}            & Yes      & No       & Yes     \\
-      \textit{Socket server}                & Yes      & No       & Yes     \\
-      \textit{Web Interface}                & Yes      & Yes      & Yes     \\
-      \textit{RESTful service}              & Yes      & Yes      & Yes     \\
-      \hline
-    \end{tabular}
-  }
   \end{center}
 \end{table}
 
@@ -927,95 +916,5 @@ Dmitry Y. Mozzherin (mozzheri@illinois.edu), Alexander A. Myltsev (alexander@myl
 % if your bibliography is in bibtex format, use those commands:
 \bibliographystyle{bmc-mathphys} % Style BST file
 \bibliography{gnparser}      % Bibliography file (usually '*.bib' )
-
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                                         %%
-%%                          Figures                        %%
-%%                                                         %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{figure}
-  \begin{center}
-
-  \caption{Some legitimate versions of the scientific name for the `Northern
-    Bulrush' or `Singlespike Sedge'. The genus (\textit{Carex}), species
-    (\textit{scirpoidea}), and subspecies (\textit{convoluta}) may be annotated
-    (var., subsp., and ssp.) or include or omit the name of the original
-    authority for the infraspecies (Kükenthal), the species (Michaux), the
-    current infraspecific combination (Dunlop), sometimes be abbreviated,
-    differently spelled, and with or without initials and dates. This list is
-    not complete. Image courtesy of~\cite{FNA2002}.}\label{figure:carex}
-
-  \vspace{5mm}
-    \resizebox{0.95\textwidth}{!}{
-      \begin{tabular}{| l | c |}
-      \hline
-      \textbf{Carex scirpoidea convoluta} &
-      \multirow{26}{*}{\includegraphics[scale=0.5]{1.png}} \\
-      & \\
-      \textbf{Carex scirpoidea var.\ convoluta} & \\
-      \textbf{Carex scirpoidea convoluta Kükenth.} & \\
-      \textbf{Carex scirpoidea var.\ convoluta Kuk.} & \\
-      \textbf{Carex scirpoidea var.\ convoluta Kük.} & \\
-      \textbf{Carex scirpoidea var.\ convoluta Kükenth.} & \\
-      \textbf{Carex scirpoidea var.\ convoluta Kükenthal} & \\
-      \textbf{Carex scirpoidea Michx.\ var.\ convoluta Kük.} & \\
-      \textbf{Carex scirpoidea Michx.\ var.\ convoluta Kükenth.} & \\
-      \textbf{Carex scirpoidea Michaux var.\ convoluta Kükenthal} & \\
-      & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta} & \\
-      \textbf{Carex scirpoidea ssp.\ convoluta (Kük.) Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kük.) Dunlop} & \\
-      \textbf{Carex scirpoidea ssp.\ convoluta (Kukenth.) Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kük.) D.A.Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kük.) D.A. Dunlop} & \\
-      \textbf{Carex scirpoidea Michx.\ ssp.\ convoluta (Kük.) Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kuk.) D. A. Dunlop} & \\
-      \textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) Dunlop} & \\
-      \textbf{Carex scirpoidea Michx.\ ssp.\ convoluta (Kükenth.) Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kükenthal) D.A. Dunlop} & \\
-      \textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A.Dunlop} & \\
-      \textbf{Carex scirpoidea Michx.\ subsp.\ convoluta (Kük.) D.A. Dunlop} & \\
-      \textbf{Carex scirpoidea subsp.\ convoluta (Kükenthal 1909) D.A. Dunlop 1998} & \\
-      \hline
-      \end{tabular}
-    }
-  \end{center}
-\end{figure}
-
-\begin{figure}
-  \begin{center}
-
-    \caption{Web Graphical User Interface~\cite{gnparser-web}. In this example a user entered a name-string of a hybrid name consisted of 21 elements.  The ``Results'' section contains detailed parsed output using compact JSON format.}\label{figure:webgui}
-
-    \vspace{5mm}
-    \includegraphics[scale=0.35]{2.png}
-  \end{center}
-\end{figure}
-
-\begin{figure}
-  \begin{center}
-    \caption{Names parsed per second by GN, GBIF and Biodiversity parsers
-      (running on 1--12 parallel threads).}
-    \label{figure:throughput}
-    \vspace{0.5cm}
-    \begin{tabular}{| l | *{3}{r} | c c c |}
-      \hline
-      \multirow{1}{*}Threads & gnparser & gbif-paser & biodiversity
-      & \multicolumn{3}{c |}{Ratio} \\
-      \cline{5-7}
-      & & & & gn & gbif & bio \\
-      \hline
-      1  & 8178  & 6389  & 1111 & 1 & 0.78 & 0.14 \\
-      2  & 14125 & 12638 & 1722 & 1 & 0.89 & 0.12 \\
-      4  & 25125 & 21994 & 2556 & 1 & 0.88 & 0.10 \\
-      8  & 33541 & 30972 & 2777 & 1 & 0.92 & 0.08 \\
-      12 & 36369 & 31833 & 2527 & 1 & 0.88 & 0.07 \\
-      \hline
-    \end{tabular}
-    \include{throughput}
-  \end{center}
-\end{figure}
 
 \end{document}

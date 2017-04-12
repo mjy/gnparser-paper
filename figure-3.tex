@@ -1,0 +1,29 @@
+\documentclass{article}
+% All LaTeX documents including
+% tikz() output must use this
+% package!
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[top=0.5cm, bottom=0.5cm, outer=0.5cm, inner=0.5cm, heightrounded,
+  marginparwidth=0.5cm, marginparsep=0.2cm]{geometry}
+\begin{document}
+\begin{figure}[!h]
+\centering
+    \begin{tabular}{| l | *{3}{r} | c c c |}
+      \hline
+      \multirow{1}{*}Threads & gnparser & gbif-parser & biodiversity
+      & \multicolumn{3}{c |}{Ratio} \\
+      \cline{5-7}
+      & & & & gn & gbif & bio \\
+      \hline
+      1  & 8178  & 6389  & 1111 & 1 & 0.78 & 0.14 \\
+      2  & 14125 & 12638 & 1722 & 1 & 0.89 & 0.12 \\
+      4  & 25125 & 21994 & 2556 & 1 & 0.88 & 0.10 \\
+      8  & 33541 & 30972 & 2777 & 1 & 0.92 & 0.08 \\
+      12 & 36369 & 31833 & 2527 & 1 & 0.88 & 0.07 \\
+      \hline
+    \end{tabular}
+    \include{throughput}
+\end{figure}
+\end{document}

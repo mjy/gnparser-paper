@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[top=0.5cm, bottom=0.5cm, outer=0.5cm, inner=0.5cm, heightrounded,
+  marginparwidth=0.5cm, marginparsep=0.2cm]{geometry}
+\begin{document}
+    \resizebox{20cm}{!} {\begin{tabular}{| l | *{3}{l} |}
+      \hline
+                                     & gnparser & gbif-parser & biodiversity \\
+      \hline
+      \textit{Total discarded}       & 1131     & 1082        & 1161         \\
+      \textit{Correctly discarded}   & 1129     & 940         & 1152         \\
+      \textit{Incorrectly discarded} & 2        & 142         & 9            \\
+      \textit{Accuracy}              & 0.998    & 0.869       & 0.992        \\
+      \hline
+    \end{tabular}
+  }
+\end{document}
