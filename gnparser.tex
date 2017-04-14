@@ -471,7 +471,7 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 
   \item \textit{canonizer} creates canonical forms of the latinized elements of names; and with
 
-  \item \textit{JSON renderer}, the parsing result is converted to JSON~\cite{bray2014javascript} to allow developers to work with the output from other languages. The output (Figure~\ref{figure:webgui}, also see \hyperref[sec:discussion]{Discussion}) has the following information: \textbf{'details'} contains the JSON-representation of a parsed scientific name; \textbf{'quality\_warnings'} describes potential problems if names are not well-formed; \textbf{'quality'} depicts a quality level of the parsed name; and \textbf{'positions'} maps the positions of every element in a parsed name to the semantic meaning of the element. Full and formal explanation of all parser fields is given as a JSON schema and can be found online~\cite{gnparser-json} [also see additional file gnparser.json].
+  \item \textit{JSON renderer}, the parsing result is converted to JSON~\cite{bray2014javascript} to allow developers to work with the output from other languages. The output (Figure~\ref{figure:webgui}, also see \hyperref[sec:discussion]{Discussion}) has the following information: \textbf{'details'} contains the JSON-representation of a parsed scientific name; \textbf{'quality\_warnings'} describes potential problems if names are not well-formed; \textbf{'quality'} depicts a quality level of the parsed name; and \textbf{'positions'} maps the positions of every element in a parsed name to the semantic meaning of the element. Full and formal explanation of all parser fields is given as a JSON schema and can be found online~\cite{gnparser-json} [also see Additional file 1].
 
 \end{itemize}
 
@@ -491,7 +491,7 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 
 \end{enumerate}
 
-``\textit{parser}`` and ``\textit{examples}`` can run in JVM~1.6+.  ``\textit{runner}'' requires JVM~1.8+. Documentation is available in a README file [see additional file README.rst.html].
+``\textit{parser}`` and ``\textit{examples}`` can run in JVM~1.6+.  ``\textit{runner}'' requires JVM~1.8+. Documentation is available in a README file [see Additional file 3].
 
 \subsection*{Parsing rules}
 
@@ -556,7 +556,7 @@ def authorsYear: RuleNodeMeta[AuthorsGroup] = rule {
 
 Data for our tests were sets of 1,000 and 100,000 name-strings randomly chosen from 24 million unique name-strings of the Global Names Index (GNI)~\cite{gn:index}. The name-strings in GNI are collected from a large variety of biodiversity data sources and are pre-identified as scientific names. While GNI contains some incorrectly classified strings, it is the largest compilation of name-strings representing scientific names. It is not biased towards any particular taxon or particular variant of name, and so the extracted datasets are believed to represent naturally occurring data quite well. The datasets are randomly chosen mixtures of well-formed names, lexical variants of names, names with formatting and spelling mistakes, and name-strings that were misrepresented as names. Name-strings in the sets are independent of each other. Evaluation dataset with 1,000 names is included as Additional file 4.
 
-We compared the performance of \textit{gnparser} with two other projects: \textit{biodiversity} parser~\cite{Boyle2013, biodiversity} (also developed by Global Names team), and GBIF \textit{name-parser}~\cite{gbifNameParser}. The following versions were used: \textit{gnparser} v.  0.3.1, GBIF \textit{name-parser} v. 0.1.0, \textit{biodiversity} v. 3.4.1. To make comparisons, we calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a dataset consisting of 1,000 name-strings. We also tested the YASMEEN parser from iMarine~\cite{VandenBerghe2015}. With our dataset, YASMEEN generated many more mistakes than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to finish a full dataset without crashing. We excluded it from further tests.
+We compared the performance of \textit{gnparser} with two other projects: \textit{biodiversity} parser~\cite{Boyle2013, biodiversity} (also developed by Global Names team), and GBIF \textit{name-parser}~\cite{gbifNameParser}. The following versions were used: \textit{gnparser} v.  0.2.0, GBIF \textit{name-parser} v. 0.1.0, \textit{biodiversity} v. 3.4.1. To make comparisons, we calculated $Precision$, $Recall$ and $Accuracy$ (as described below) using a dataset consisting of 1,000 name-strings. We also tested the YASMEEN parser from iMarine~\cite{VandenBerghe2015}. With our dataset, YASMEEN generated many more mistakes than other parsers ($Precision$ 0.534, $Recall$ 1.0, $F1$ 0.6962), and was unable to finish a full dataset without crashing. We excluded it from further tests.
 
 To estimate the quality of the parsers, we relied on their performance in representing canonical forms and terminal authorships. A canonical form represents the scientific (latinized) elements of scientific names, while the terminal authorship refers to the author of the lowest subtaxon found in a scientific name. For example, with \textbf{Oriastrum lycopodioides Wedd.\ var.\ glabriusculum Reiche}, the canonical form is \textbf{Oriastrum lycopodioides glabriusculum} and the terminal authorship is \textbf{Reiche}, not \textbf{Wedd.}.
 
@@ -566,7 +566,7 @@ $Accuracy$ --- the proportion of all results that were correct. It is calculated
 
 \[Accuracy = \dfrac{N_{tp} + N_{tn}}{N_{tp} + N_{tn} + N_{fp} + N_{fn}}\]
 
-$Precision$ --- the proportion of name-strings parsed correctly compared to all detected name-strings. It is is calculated as:
+$Precision$ --- the proportion of name-strings parsed correctly compared to all detected name-strings. It is calculated as:
 
 \[Precision = \dfrac{N_{tp}}{N_{tp} + N_{fp}}\]
 
@@ -597,7 +597,7 @@ We discuss and compare \textit{gnparser}, GBIF \textit{name-parser} and \textit{
 
 \subsection*{High Quality Parsing}
 
-Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision} and Table~\ref{table:unparsed}. We also include 1,000 tested names as Additional File 4.
+Quality is the most important of the 5 requirements. GBIF \textit{name-parser} uses regular expressions approach, while \textit{gnparser} and \textit{biodiversity} parsers use the PEG approach. Results for quality measurements are shown in Table~\ref{table:precision} and Table~\ref{table:unparsed}. We also include 1,000 tested names as Additional file 4.
 
 If test data contain a large proportion of true negatives ($N_{tn}$) $Accuracy$ will not be a good measure as it favors algorithms that distinguish negative results, rather than finding positive ones. We manually checked our test datasets and established that $\approx1\%$ were not scientific names. Given that true negatives are rare, they will have very limited influence on $Accuracy$. $Recall$ for all parsers was high, hence false negatives are not important.
 
@@ -792,7 +792,7 @@ By `accessibility' we refer to the ability of the software code to be used by a 
 
 Parsing of scientific names is essential for organizing biodiversity data, such that many biodiversity database environments and projects include a parsing algorithm. Examples are uBio~\cite{ubio:parser}, the Botanical Society of Britain and Ireland~\cite{botsociety:parser}, FAT~\cite{Sautter2006}, NetiNeti~\cite{Akella2012}, and Taxonome~\cite{Kluyver2013}. A modular approach offers an option of re-use and avoids replication of effort. \textit{biodiversity} was the first biodiversity parser to be released as a stand-alone package that could be used as a module --- as it was with the iPlant project~\cite{Boyle2013}.  The same approach has now been adopted with the GBIF \textit{name-parser}~\cite{gbifNameParser}, \textit{YASMEEN}~\cite{VandenBerghe2015}, and \textit{gnparser}.
 
-We designed \textit{gnparser} with accessibility in mind from the outset. Scala language allows the use of \textit{gnparser} as a library in Scala, Java, Jython, JRuby and a variety of other languages based on Java Virtual Machine it can also be used natively in R and Python via JVM-binding libraries. Apache Spark, a Big Data framework, is also supported.  Here is an example how a client written in Jython can access the \textit{gnparser} functionality.
+We designed \textit{gnparser} with accessibility in mind from the outset. Scala language allows the use of \textit{gnparser} as a library in Scala, Java, Jython, JRuby and a variety of other languages based on Java Virtual Machine it can also be used natively in R and Python via JVM-binding libraries. Apache Spark, a ``Big Data'' framework, is also supported.  Here is an example how a client written in Jython can access the \textit{gnparser} functionality.
 
 \begin{lstlisting}{language=python}
 from org.globalnames.parser import ScientificNameParser
@@ -805,7 +805,7 @@ print result
 If programmers want to use \textit{gnparser} in some JVM-incompatible language they can connect to the parser via a socket server interface. There is also a command line tool, a web interface, and a RESTful API\@. In 2016 Encyclopedia of Life started to parse name-strings using \textit{gnparser} socket server.
 
 
-We pay close attention to documentation, trying to keep it detailed, clear, and up to date. We have an extensive test suite [see additional file test\_data.txt] that describes the parser's behavior and contains examples of \textit{gnparser} functionality and output format.
+We pay close attention to documentation, trying to keep it detailed, clear, and up to date. We have an extensive test suite [see Additional file 2] that describes the parser's behavior and contains examples of \textit{gnparser} functionality and output format.
 
 This commitment to accessibility creates a larger potential audience for the parser, and will help many researchers and programmers to deal with the problems that arise from variant forms of scientific names.
 
@@ -843,7 +843,7 @@ In conclusion, this paper describes \textit{gnparser}, a powerful tool for worki
   \item[BHL] -- Biodiversity Heritage Library
   \item[DJP] -- David J. Patterson
   \item[DYM] -- Dmitry Y. Mozzherin
-  \item[GBIF] -- Global Biological Informatics Facility
+  \item[GBIF] -- Global Biodiversity Information Facility
   \item[GNA] -- Global Names Architecture
   \item[JSON] -- JavaScript Object Notation
   \item[JVM] -- Java Virtual Machine
