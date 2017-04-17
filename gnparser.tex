@@ -166,7 +166,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{``gnparser'': A powerful parser for scientific names based on
-  parsing expression grammars}
+  Parsing Expression Grammar}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -258,9 +258,9 @@
 
 \begin{abstract} % abstract
 
-  \parttitle{Background} We are able to investigate biology on grander scales by integrating biological data from multiple sources. The use of scientific names of organisms as metadata allows the aggregation of digital information on the same taxa located in many different places. There are impediments to such aggregation because names are often spelled with variations. Sometimes names are misspelled, abbreviated, or annotated. Authorship is a part of the scientific name but the information about the authors may vary dramatically. To match different scientific names for the same taxon to each other we need to divide them into their elements and classify each element according to its role. We refer to this as `parsing' the name.  This significantly improves the matching of different spellings for the same species by emphasizing the most widely used elements of names and then fine-tune matched results using other elements of names.
+  \parttitle{Background} Scientific names in biology are the universal link that allows to integrate information about organisms from a vast variety of sources. The integration of data is even more critical now when biology is entering the ``Big Data'' age. There are impediments to such aggregation because names are often spelled with variations. Sometimes scientific names are abbreviated, annotated, or misspelled. Authorship is a part of a scientific name but the information about the authors may vary dramatically. To match all varieties of a name for the same taxon we need to divide them into their elements and classify each element according to its role. We refer to this as `parsing' the name.  Parsing significantly improves the matching of different spellings for the same species. It emphasises the most stable elements of names and then allows to fine-tune matched results using the remaining elements.
 
-  \parttitle{Results} We introduce Global Names Parser (\textit{gnparser}). It is a Java tool written in Scala language (a language for Java Virtual Machine) to parse scientific names. It is based on a Parsing Expression Grammar. The parser can be applied to scientific names of any complexity. It assigns a semantic meaning (such as genus name, species epithet, rank, year of publication, authorship, annotations, etc.) to all elements of a name.  It is able to work with nested structures as in the names of hybrids. \textit{gnparser} performs with $\approx99\%$ accuracy and processes 30 million name-strings/hour per CPU thread. The \textit{gnparser} library is compatible with Scala, Java, R, Jython, and JRuby. The parser can be used as a command line application, as a socket server, a web-app or as a RESTful http-service. It is released under an Open source MIT license.
+  \parttitle{Results} We introduce Global Names Parser (\textit{gnparser}). It is a Java tool written in Scala language (a language for Java Virtual Machine) to parse scientific names. It is based on a Parsing Expression Grammar. The parser can be applied to scientific names of any complexity. It assigns a semantic meaning (such as genus name, species epithet, rank, year of publication, authorship, annotations, etc.) to all elements of a name.  It is able to work with nested structures as in the names of hybrids. \textit{gnparser} performs with $\approx99\%$ accuracy and processes 30 million name-strings/hour per CPU thread. The \textit{gnparser} library is compatible with Scala, Java, R, Jython, and JRuby. The parser can be used as a command line application, as a socket server, a web-app or as a RESTful HTTP-service. It is released under an Open source MIT license.
 
   \parttitle{Conclusions} Global Names Parser (\textit{gnparser}) is a fast, high precision tool for biodiversity informaticians and biologists working with large numbers of scientific names. It can replace expensive and error-prone manual parsing and standardization of scientific names in many situations, and can quickly enhance the interoperability of distributed biological information.
 
@@ -497,7 +497,7 @@ The \textit{gnparser} project is entirely written in Scala. It supports two majo
 \subsection*{Parsing rules}
 
 
-\textit{gnparser} v0.3.1 contains 76 PEG rules. In turn, these rules make use of more elementary rules provided by the \textit{parboiled2} library. The rules are domain-specific based on hours of conversations with leading taxonomists, nomenclatural codes, and feedback of the users.
+\textit{gnparser} v0.3.1 contains 76 PEG rules. In turn, these rules make use of more elementary rules provided by the \textit{parboiled2} library. The rules are domain-specific based on hours of conversations with leading taxonomists, study of nomenclatural codes, and feedback of the users.
 
 As an example, the \textit{yearNumber} rule is given below. It detects the year in which a name was published. \textit{Rule[Year]} is a type of the returning value of the rule. Using domain-specific language and elementary rules of \textit{parboiled2} we capture the start and the end positions of a year substring (lines \#1 and \#2). This matches a substring that represents a year in scientific name-strings. A publication year is usually a number between 1753~\cite{Linne1753} and the present. A year substring might have one or two digits substituted with question marks if the exact year of a publication is unknown. The capture is then passed as a parameter to a parser action (line \#3). Parser action,  a Scala function, might produce warnings or a class instance of defined type (\textit{Rule[Year]}).
 
@@ -584,7 +584,7 @@ Some names in the dataset were not well-formed. If a human could extract the can
 
 Parsers analyze the structure of name-strings, but they cannot determine if a string is a ``real'' name. For example, in the case of a name-string that has the same form as a subspecies such as \textbf{``Example name Word var.\ something Capitalized Words, 1900''}. In such a case, the identification of a canonical form as \textbf{``Example name something''} and terminal authorship as \textbf{``Capitalized Words, 1900''} would be considered a true positive.  Clearly, it will be important for name-management services to distinguish between name-strings of scientific names, names of viruses, surrogate names, and non-names. To find out how well parsers distinguished strings which are not scientific names, we calculated $Precision$ for discarded/non-parsed strings.  If the parser worked well, non-parsed strings would include only names of viruses and terms that do not comply with the codes of zoological, prokaryotic, and botanical nomenclature.
 
-We processed 100,000 name-strings with each parser. Each parser discarded close to 1,000 name-strings as non-parseable. $Precision$, as noted above, provided the percentage of correctly discarded names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers as shown in Table~\ref{table:unparsed}.
+We processed 100,000 name-strings with each parser. Each parser discarded close to 1,000 name-strings as non-parseable. $Accuracy$, in this case, provided the percentage of correctly discarded names out of all discarded by the parser names. We do not know $Recall$, as it was not reasonable to manually determine this for 100,000 names. To get a sense of names which should be discarded but were parsed instead, we analysed intersections and differences of the results between the three parsers as shown in Table~\ref{table:unparsed}.
 
 To establish the throughput of parsing we used a computer with an Intel i7-4930K CPU (6 cores, 12 threads, at 3.4 GHz), 64GB of memory, and 250GB Samsung 840 EVO SSD, running Ubuntu version 14.04. Throughput was determined by processing 1,000,000 random name-strings from Global Names database.
 
@@ -866,7 +866,7 @@ All authors have gone through the manuscript and contents of this article have n
 
 \section*{Acknowledgements}
 
-The authors thank administrators of the Species File Group for the much needed support during the transfer of the GNA grant from the Marine Biological Laboratory to University of Illinois.
+The authors thank David Mark Welch (Josephine Bay Paul Center, Marine Biological Laboratory) for the leadership at the beginning of the \textit{gnparser} project. The authors also thank administrators of the Species File Group for the much needed support during the transfer of the GNA grant from the Marine Biological Laboratory to University of Illinois.
 
 \section*{Funding}
 
@@ -888,7 +888,7 @@ The datasets supporting the conclusions of this article are available in the  ht
 
 \section*{Author's Contributions}
 
-DYM and AAM designed \textit{gnparser}. DYM created requirements and test suite. AAM optimized \textit{gnparser} for speed, refactored it into three internal subprojects. DYM set Docker containers and Kubernetes scripts. DYM and AAM wrote online documentation and JSON schema to formalize output. DJP corrected parser's results, calibrated quality output and errors output. DYM and AAM drafted manuscript and DJP edited its final version. All authors read and approved the final manuscript.
+DYM and AAM designed \textit{gnparser}. DYM created requirements, test suite and the original version of \textit{gnparser}. AAM optimized \textit{gnparser} for speed, refactored it into three internal subprojects. DYM set Docker containers and Kubernetes scripts. DYM and AAM wrote online documentation and JSON schema to formalize output. DJP corrected parser's results, calibrated quality output and errors output. DYM and AAM drafted manuscript and DJP edited its final version. All authors read and approved the final manuscript.
 
 \section*{Competing Interests}
 
